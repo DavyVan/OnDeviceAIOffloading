@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml",
+        "outputFile": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 181
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 2,
@@ -33,7 +33,7 @@
                     "endOffset": 350
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 2,
@@ -54,7 +54,7 @@
                     "endOffset": 774
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-v11/styles.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 2,
@@ -74,7 +74,7 @@
                     "endOffset": 839
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-v11/template-styles.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-v11/template-styles.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,

@@ -4,12 +4,46 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-12.
  */
 
+import java.util.Map;
+
 /**
- * \brief Contains the main API of On-Device offloading framework.
+ * \brief   Contains the main API of On-Device offloading framework.
  *
- * Users(developers) only need to call methods in this, and the framework take over all the staff of
- * computing.
+ *          Users(developers) only need to call methods in this, and the framework take over all the
+ *          staff of computing.
  */
 public interface FrontInterface {
-    public int commit();  //todo: params?
+    /**
+     * \brief   Users call this method to commit a task, including data and model, then the framework
+     *          handle the remaining.
+     *
+     * \param   data              Input data in Map with Tensor's name as key and value as value.
+     * \param   modelFileName     As its name.
+     * \param   appName           Caller's name.
+     * \return  errno
+     */
+    int commit(Map<String, Float[]> data, String modelFileName, String appName);
+
+    /**
+     * \brief   Initialize the whole system.
+     *
+     *          Instantiate all components, detect available compute devices and connect to them.
+     *
+     * \return  errno
+     */
+    int init();
+
+    /**
+     * \brief   Query the availability of offloading functionality.
+     *
+     * \return  Whether they're available or not.
+     */
+    boolean isOffloadingAvailable();
+
+    /**
+     * \brief   As its name.
+     *
+     * \param   listener        The listener which handle the result of computing.
+     */
+    void setOnResultListener(OnResultListener listener);
 }

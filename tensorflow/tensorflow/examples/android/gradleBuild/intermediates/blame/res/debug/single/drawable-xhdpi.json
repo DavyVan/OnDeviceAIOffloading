@@ -1,10 +1,10 @@
 [
     {
-        "merged": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/res/merged/debug/drawable-xhdpi/ic_launcher.png",
-        "source": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/drawable-xhdpi/ic_launcher.png"
+        "merged": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/res/merged/debug/drawable-xhdpi/ic_action_info.png",
+        "source": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/drawable-xhdpi/ic_action_info.png"
     },
     {
-        "merged": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/res/merged/debug/drawable-xhdpi/ic_action_info.png",
-        "source": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/drawable-xhdpi/ic_action_info.png"
+        "merged": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/res/merged/debug/drawable-xhdpi/ic_launcher.png",
+        "source": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/drawable-xhdpi/ic_launcher.png"
     }
 ]

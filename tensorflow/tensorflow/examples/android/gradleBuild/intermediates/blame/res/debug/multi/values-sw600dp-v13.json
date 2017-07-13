@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
+        "outputFile": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/gradleBuild/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 118
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-dimens.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-dimens.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 186
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-dimens.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-dimens.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -50,7 +50,7 @@
                     "endOffset": 431
                 },
                 "from": {
-                    "file": "/home/fanquan/Desktop/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-styles.xml",
+                    "file": "/home/fanquan/Desktop/OnDeviceAIOffloading/tensorflow/tensorflow/examples/android/res/values-sw600dp/template-styles.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
