@@ -15,4 +15,5 @@ public class Task {
     public boolean isDone;                      /**< Whether it has been processed */
     public String modelName;                    /**< Model file name */
     public String modelFileName;                /**< Model file path */
+    public int bufferIndex;                     /**< Index in buffer */
 }

@@ -28,5 +28,5 @@ public interface Scheduler {
      *
      * \sa      OffloadingBuffer::changeWindow
      */
-    void apply(OfflaadingBuffer buffer);
+    void apply(OffloadingBuffer buffer);
 }

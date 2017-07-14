@@ -6,123 +6,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92acf406-c9ae-4c4d-8936-70971f2ac1ac" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OnResultListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/android-profile/profile-2017-07-12-16-07-49-776.rawproto" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/generated/mockable-android-23.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/androidTest/debug/org/tensorflow/demo/test/BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/DataType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Graph$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Graph$Reference.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Graph.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Input.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/NativeLibrary.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Operation.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/OperationBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Output.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/SavedModelBundle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Session$Run.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Session$Runner$Reference.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Session$Runner.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Session.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Shape.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Tensor$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/Tensor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/TensorFlow.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/TensorFlowException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/contrib/android/RunStats.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/contrib/android/TensorFlowInferenceInterface$TensorId.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/contrib/android/TensorFlowInferenceInterface.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/AutoFitTextureView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$CompareSizesByArea.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$ConnectionCallback.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$ErrorDialog$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment$ErrorDialog.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/CameraConnectionFragment.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/Classifier$Recognition.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/Classifier.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/ClassifierActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/ClassifierActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/ClassifierActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/DetectorActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/DetectorActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/DetectorActivity$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/DetectorActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/OverlayView$DrawCallback.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/OverlayView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$drawable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$id.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$layout.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R$styleable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/R.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/RecognitionScoreView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/ResultsView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageGridAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageGridAdapter$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageGridAdapter$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageGridAdapter$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageGridAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity$ImageSlider.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/StylizeActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowImageClassifier$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowImageClassifier.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowMultiBoxDetector$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowMultiBoxDetector.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowYoloDetector$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/TensorFlowYoloDetector.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/MultiBoxTracker$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/MultiBoxTracker$TrackedRecognition.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/MultiBoxTracker.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker$FrameChange.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker$Keypoint.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker$PointChange.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker$TimestampedDeltas.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker$TrackedObject.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/demo/tracking/ObjectTracker.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/op/NameScope.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/classes/debug/org/tensorflow/op/Scope.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental-safeguard/androidTest/debug/tag.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental-safeguard/debug/tag.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/ModelManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingBuffer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-sw600dp-v13.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-sw600dp-v13.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v11.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v11.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v14.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v14.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v21.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values-v21.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/multi/values.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-hdpi.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-hdpi.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-mdpi.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-mdpi.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-xhdpi.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-xhdpi.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-xxhdpi.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/drawable-xxhdpi.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/layout.json" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/blame/res/debug/single/layout.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugAndroidTestResources/compile-file-map.properties" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugAndroidTestResources/compile-file-map.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugAndroidTestResources/merger.xml" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugAndroidTestResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugResources/compile-file-map.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugResources/merger.xml" afterPath="$PROJECT_DIR$/gradleBuild/intermediates/incremental/mergeDebugResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradleBuild/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/gradleBuild/outputs/logs/manifest-merger-debug-report.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android.iml" afterPath="$PROJECT_DIR$/android.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" />
     </list>
     <ignored path="android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -154,16 +47,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TensorFlow.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../java/src/main/java/org/tensorflow/TensorFlow.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="StylizeActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -199,18 +82,83 @@
       <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="71" selection-start-line="16" selection-start-column="71" selection-end-line="16" selection-end-column="71" />
+            <state relative-caret-position="306">
+              <caret line="17" column="71" selection-start-line="17" selection-start-column="71" selection-end-line="17" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scheduler.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Scheduler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+            <state relative-caret-position="540">
+              <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OffloadingBuffer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingBuffer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1188">
+              <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Profiler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="792">
+              <caret line="44" column="77" selection-start-line="44" selection-start-column="77" selection-end-line="44" selection-end-column="77" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#480#481#0" expanded="true" />
+                <element signature="e#543#544#0" expanded="true" />
+                <element signature="e#805#806#0" expanded="true" />
+                <element signature="e#854#855#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/ModelManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="594">
+              <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+              <folding>
+                <marker date="1500042040946" expanded="true" signature="148:251" ph="/**...*/" />
+                <marker date="1500042040946" expanded="true" signature="285:522" ph="/**...*/" />
+                <marker date="1500042040946" expanded="true" signature="629:857" ph="/**...*/" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="648">
+              <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+              <folding>
+                <element signature="e#695#696#0" expanded="true" />
+                <element signature="e#749#750#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -221,8 +169,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -1199,17 +1147,22 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OnResultListener.java" />
-        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingBuffer.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/ModelManager.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskManager.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="-4" />
+    <option name="y" value="24" />
     <option name="width" value="2495" />
-    <option name="height" value="1444" />
+    <option name="height" value="1416" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1258,6 +1211,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1346,10 +1300,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1682,11 +1635,20 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="2495" height="1444" extended-state="6" />
-    <editor active="true" />
+    <frame x="65" y="24" width="2495" height="1416" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1700,6 +1662,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13801552" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1712,7 +1675,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1735,7 +1697,65 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#1422#0" expanded="false" />
+            <element signature="e#1360#1361#0" expanded="false" />
+            <element signature="e#1390#1391#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1440">
+          <caret line="136" column="71" selection-start-line="136" selection-start-column="71" selection-end-line="136" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OnResultListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="57" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="71" selection-start-line="16" selection-start-column="71" selection-end-line="16" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/src/main/java/org/tensorflow/TensorFlow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#1422#0" expanded="false" />
+            <element signature="e#1360#1361#0" expanded="false" />
+            <element signature="e#1390#1391#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1785,7 +1805,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-          <folding />
+          <folding>
+            <element signature="e#0#1422#0" expanded="false" />
+            <element signature="e#1360#1361#0" expanded="false" />
+            <element signature="e#1390#1391#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1811,7 +1835,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-          <folding />
+          <folding>
+            <element signature="e#0#1422#0" expanded="false" />
+            <element signature="e#1360#1361#0" expanded="false" />
+            <element signature="e#1390#1391#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1837,7 +1865,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-          <folding />
+          <folding>
+            <element signature="e#0#1422#0" expanded="false" />
+            <element signature="e#1360#1361#0" expanded="false" />
+            <element signature="e#1390#1391#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1859,17 +1891,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-          <folding>
-            <element signature="class#Recognition#0;class#Classifier#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="71" selection-start-line="16" selection-start-column="71" selection-end-line="16" selection-end-column="71" />
-          <folding />
+        <state relative-caret-position="1440">
+          <caret line="136" column="71" selection-start-line="136" selection-start-column="71" selection-end-line="136" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1889,21 +1920,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="136" column="71" selection-start-line="136" selection-start-column="71" selection-end-line="136" selection-end-column="71" />
+        <state relative-caret-position="540">
+          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="71" selection-start-line="17" selection-start-column="71" selection-end-line="17" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1188">
+          <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Scheduler.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/ModelManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-          <folding />
+        <state relative-caret-position="594">
+          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+          <folding>
+            <marker date="1500042040946" expanded="true" signature="148:251" ph="/**...*/" />
+            <marker date="1500042040946" expanded="true" signature="285:522" ph="/**...*/" />
+            <marker date="1500042040946" expanded="true" signature="629:857" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="44" column="77" selection-start-line="44" selection-start-column="77" selection-end-line="44" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#480#481#0" expanded="true" />
+            <element signature="e#543#544#0" expanded="true" />
+            <element signature="e#805#806#0" expanded="true" />
+            <element signature="e#854#855#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+          <folding>
+            <element signature="e#695#696#0" expanded="true" />
+            <element signature="e#749#750#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
