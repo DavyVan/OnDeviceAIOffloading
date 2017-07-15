@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Profiler {
 
-    private Map<String, StreamInfo> databaseMap;        /**< Use a Map store the information */
+    private Map<String, StreamInfo> databaseMap;        /**< Use a Map to store the information */
 
     /**
      * /brief   Constructor. Initialize the database.

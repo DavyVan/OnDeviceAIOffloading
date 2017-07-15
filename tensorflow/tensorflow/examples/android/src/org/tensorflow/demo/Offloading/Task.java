@@ -10,6 +10,8 @@ import java.util.Map;
  * \brief   Act as a struct. Store information about offloading tasks.
  */
 public class Task {
+
+    public long id;                             /**< Unique ID */
     public String appName;                      /**< Which app commit this task */
     public Map<String, Float[]> rawData;        /**< Data to be processed */
     public boolean isDone;                      /**< Whether it has been processed */
