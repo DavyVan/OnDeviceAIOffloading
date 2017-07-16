@@ -6,9 +6,14 @@ import java.util.ArrayList;
  * Created by fanquan on 17-7-15.
  */
 
+/**
+ * \brief   Manage all the computing device.
+ * 
+ *          Discover, connect, transmit, keep alive, query.
+ */
 public class DeviceManager extends DeviceAdapter {
 
-    ArrayList<DeviceAdapter> devices;       /**< All the devices information are stored here */
+    private ArrayList<DeviceAdapter> devices;       /**< All the devices information are stored here */
 
     /**
      * \brief   Constructor.

@@ -13,6 +13,15 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
  */
 public class ModelManager {
 
+    private DeviceManager deviceManager;        /**< A DeviceManager instance to be used to perform transmittion */
+
+    /**
+     * \brief   Simple constructor
+     */
+    public ModelManager(DeviceManager deviceManager) {
+        this.deviceManager = deviceManager;
+    }
+
     /**
      * \brief   Query the server whether it has the model or not
      *

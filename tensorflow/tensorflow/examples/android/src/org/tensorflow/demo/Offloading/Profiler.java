@@ -36,7 +36,7 @@ public class Profiler {
     /**
      * \brief   Update new information about a data stream
      *
-     *          This method is usually called by TaskManager after a task is done.
+     *          This method is usually called by TaskExecuteEngine after a task is done.
      *
      * \param   modelName       Model file name, identifying the data stream
      * \param   newInfo         StreamInfo instance contain the latest information about the stream

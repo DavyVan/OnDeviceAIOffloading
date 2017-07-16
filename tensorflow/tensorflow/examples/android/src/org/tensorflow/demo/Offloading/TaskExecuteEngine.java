@@ -10,18 +10,21 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
  * \brief   Take over all of the execution of tasks, including get models ready (ModelManager),
  *          uploading data to server, starting the processing, listening and receiving the result, etc.
  */
-public class TaskManager {
+public class TaskExecuteEngine {
 
     private ModelManager modelManager;      /**< A ModelManager instance */
     private DeviceManager deviceManager;    /**< A DeviceManager instance that handle low layer data transmit */
+    private Scheduler scheduler;            /**< A Scheduler instance which will be called for getting next task */
 
     /**
-     * \brief   Constructor.
+     * \brief   Simple constructor.
      *
-     *          Initialize the ModelManager
+     *          Initialize the ModelManager, DeviceManager, Scheduler
      */
-    public TaskManager() {
-        this.modelManager = new ModelManager();
+    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, Scheduler scheduler) {
+        this.modelManager = modelManager;
+        this.deviceManager = deviceManager;
+        this.scheduler = scheduler;
     }
 
     /**
@@ -34,6 +37,15 @@ public class TaskManager {
      */
     public int runTask(Task task) {
         //todo:
+        return SUCCESS;
+    }
+
+    /**
+     * \brief   Start a group of threads and keep running to process tasks asynchronously
+     * 
+     * \return  error number
+     */
+    public int run() {
         return SUCCESS;
     }
 }

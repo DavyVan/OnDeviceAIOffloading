@@ -28,5 +28,31 @@ public interface Scheduler {
      *
      * \sa      OffloadingBuffer::changeWindow
      */
-    void apply(OffloadingBuffer buffer);
+    void apply();
+
+    /**
+     * \brief   Get next Task to be processed.
+     *          
+     *          This method is supposed to be called by TaskExecuteEngine
+     * 
+     * \param   deviceId        As its name
+     * \return  Task instance
+     */
+    Task next(int deviceId);
+
+    /**
+     * \brief   Mark a Task as completed, then re-schedule if needed.
+     * 
+     * \param   index       Task index in buffer
+     */
+    void markAsDone(int index);
+
+    /**
+     * \brief   Getter for profiler instance.
+     * 
+     *          This means a scheduler instance must contain a Profiler instance
+     * 
+     * \return  The instance of profiler
+     */
+    Profiler getProfiler();
 }

@@ -16,8 +16,6 @@ import static org.tensorflow.demo.Offloading.Constant.BUFFER_SIZE;
 public class OffloadingBuffer {
 
     private Task[] buffer;                  /**< Buffer itself */
-    private TaskManager taskManager;        /**< A reference to a TaskManager who will execute each task */
-
     private int nextSlot;                   /**< Indicate where the next new task should be located */
 
     /**
@@ -27,17 +25,6 @@ public class OffloadingBuffer {
         // Allocate memory for buffer
         buffer = new Task[BUFFER_SIZE];
         nextSlot = 0;
-    }
-
-    /**
-     * \brief   Mark a task in buffer as completed and move window forward if need.
-     *
-     * \param   index       Indicate which task is involved.
-     */
-    public void markAsDone(int index) {
-        buffer[index].isDone = true;
-
-        //todo: how can we move windows?
     }
 
     /**
@@ -59,21 +46,12 @@ public class OffloadingBuffer {
     }
 
     /**
-     * \brief   Decide which device should process the task and run.
-     *
-     * \param   index       Index of task in buffer
+     * \brief   Allow to query for a specific Task instance given the index
+     * 
+     * \param   The index
+     * \return  The Task instance
      */
-    private void runTask(int index) {
-        //todo: windows design; private?
-    }
-
-    /**
-     * \brief   Apply the windows computed by Scheduler
-     *
-     * \param   windows     The list of windows' size
-     * \sa      Called byScheduler::apply
-     */
-    public void changeWindows(ArrayList<Integer> windows) {
-        //todo: we may implement the windows' logic entirely in Scheduler
+    public Task get(int index) {
+        return buffer[index];
     }
 }
