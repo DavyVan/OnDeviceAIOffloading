@@ -24,12 +24,12 @@ public class Profiler {
     }
 
     /**
-     * \brief   Get infomation about a stream
+     * \brief   Get information about a stream
      *
      * \param   modelName       Model file name
      * \return  A StreamInfo contains information about the stream that the model indicates
      */
-    public StreamInfo fetchInfo(String modelName) {
+    public StreamInfo fetchInfoByModel(String modelName) {
         return databaseMap.get(modelName);
     }
 

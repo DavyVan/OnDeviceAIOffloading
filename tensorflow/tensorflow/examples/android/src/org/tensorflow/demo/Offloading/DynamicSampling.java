@@ -12,4 +12,13 @@ public interface DynamicSampling {
      * \return  Take it or drop it
      */
     boolean sample(String modelName);
+
+    /**
+     * \brief   Calculate sampling rate
+     *
+     *          This method will update the member variables of implementation class
+     *
+     * \param   modelName       To identify the data stream
+     */
+    void calcSamplingRate(String modelName);
 }

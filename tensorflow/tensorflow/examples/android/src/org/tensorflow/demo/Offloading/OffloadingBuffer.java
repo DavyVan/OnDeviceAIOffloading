@@ -3,6 +3,7 @@ package org.tensorflow.demo.Offloading;
 import java.util.ArrayList;
 
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_SIZE;
+import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 
 /**
  * Created by fanquan on 17-7-14.
@@ -19,9 +20,9 @@ public class OffloadingBuffer {
     private int nextSlot;                   /**< Indicate where the next new task should be located */
 
     /**
-     * /brief   Initialize buffer sub-system.
+     * /brief   Constructor. Initialize buffer sub-system.
      */
-    public void init() {
+    public OffloadingBuffer() {
         // Allocate memory for buffer
         buffer = new Task[BUFFER_SIZE];
         nextSlot = 0;
@@ -39,7 +40,6 @@ public class OffloadingBuffer {
     public boolean insert(Task task) {
         buffer[nextSlot] = task;
         buffer[nextSlot].bufferIndex = nextSlot;
-        runTask(nextSlot);
         nextSlot = (nextSlot + 1) % BUFFER_SIZE;
 
         return true;
@@ -53,5 +53,16 @@ public class OffloadingBuffer {
      */
     public Task get(int index) {
         return buffer[index];
+    }
+
+    /**
+     * \brief   Delete a task if the task is completed or disregarded
+     *
+     * \param   The index in buffer
+     * \return  error number
+     */
+    public int delete(int index) {
+        // TODO: 17-7-17
+        return SUCCESS;
     }
 }

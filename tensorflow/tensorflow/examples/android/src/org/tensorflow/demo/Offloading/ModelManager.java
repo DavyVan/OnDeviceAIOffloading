@@ -4,6 +4,10 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-14.
  */
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 
 /**
@@ -14,12 +18,14 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 public class ModelManager {
 
     private DeviceManager deviceManager;        /**< A DeviceManager instance to be used to perform transmittion */
+    private Map<String, ArrayList<Integer>> modelCache;      /**< A list of models that are already exist on device, <modelName, deviceIds> */
 
     /**
      * \brief   Simple constructor
      */
     public ModelManager(DeviceManager deviceManager) {
         this.deviceManager = deviceManager;
+        modelCache = new HashMap<>();
     }
 
     /**

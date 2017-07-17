@@ -13,21 +13,23 @@ package org.tensorflow.demo.Offloading;
 public abstract class DeviceAdapter {
 
     public boolean isRemote;        /**< Indicate whether this device is remote or local */
+    public boolean isParallel;      /**< Indicate whether this device can run tasks in parallel */
 
     /**
      * \brief   Constructor called by specific adapter.
      *
      * \param   isRemote        As its name
      */
-    public DeviceAdapter(boolean isRemote) {
+    public DeviceAdapter(boolean isRemote, boolean isParallel) {
         this.isRemote = isRemote;
+        this.isParallel = isParallel;
     }
 
     /**
      * \brief   Constructor called by DeviceManager
      */
     public DeviceAdapter() {
-        isRemote = false;
+        isRemote = isParallel = false;
     }
 
     /**

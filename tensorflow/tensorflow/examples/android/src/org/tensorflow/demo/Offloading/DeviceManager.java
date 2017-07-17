@@ -1,6 +1,12 @@
 package org.tensorflow.demo.Offloading;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+
+import static org.tensorflow.demo.Offloading.Constant.NO_DEVICE_AVAILABLE;
+import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
+import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
 
 /**
  * Created by fanquan on 17-7-15.
@@ -18,12 +24,11 @@ public class DeviceManager extends DeviceAdapter {
     /**
      * \brief   Constructor.
      *
-     *          Allocate memory for devices list and call DeviceManager::init
+     *          Allocate memory for devices list
      */
     public DeviceManager() {
         super();
         devices = new ArrayList<DeviceAdapter>();
-        init();
     }
 
     /**
@@ -31,8 +36,27 @@ public class DeviceManager extends DeviceAdapter {
      */
     @Override
     public int init() {
-        //todo:
-        return 0;
+        // Scan all possible devices
+        // 1. local
+        DeviceAdapter localDevice = new LocalDevice();
+        int errno = localDevice.init();
+        if (errno == SUCCESS)
+            devices.add(localDevice);
+        else
+            Log.e("FQ", getErrorMessage(errno));
+
+        // 2. Wi-Fi
+        DeviceAdapter wifiDevice = new WiFiDevice();
+        errno = wifiDevice.init();
+        if (errno == SUCCESS)
+            devices.add(wifiDevice);
+        else
+            Log.e("FQ", getErrorMessage(errno));
+
+        if (devices.size() == 0)
+            return NO_DEVICE_AVAILABLE;
+        else
+            return SUCCESS;
     }
 
     @Override
@@ -75,7 +99,7 @@ public class DeviceManager extends DeviceAdapter {
     /**
      * \brief   Return identifiers of all available devices
      *
-     *          Only device name is returned (index implies the device id
+     *          Only device name is returned (index implies the device id-1)
      *
      * \return  devices' name list in String
      */

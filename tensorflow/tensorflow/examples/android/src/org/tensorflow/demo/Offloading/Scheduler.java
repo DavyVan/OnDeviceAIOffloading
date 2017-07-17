@@ -4,6 +4,8 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-13.
  */
 
+import java.util.ArrayList;
+
 /**
  * \brief   All the offloading schedulers must extend this interface so that we can implement multiple
  *          scheduling policies.
@@ -55,4 +57,11 @@ public interface Scheduler {
      * \return  The instance of profiler
      */
     Profiler getProfiler();
+
+    /**
+     * \brief   Initialize scheduling policy
+     *
+     * \param   deviceNum       Number of all the devices
+     */
+    void init(int deviceNum);
 }
