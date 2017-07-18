@@ -9,6 +9,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static org.tensorflow.contrib.android.TensorFlowInferenceInterface.ASSET_FILE_PREFIX;
+import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
+import static org.tensorflow.demo.Offloading.Constant.FRAME_DROPPED;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.SYSTEM_NOT_INIT;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
@@ -26,16 +29,45 @@ public class OffloadingSystem implements FrontInterface {
     private DeviceManager deviceManager;
     private ModelManager modelManager;
     private TaskExecuteEngine taskExecuteEngine;
+    private static long nextTaskId = 0;
 
     @Override
-    public int commit(Map<String, Float[]> data, String modelFileName, String appName) {
+    public int commit(String modelFileName, String appName,
+                      ArrayList<String> inputNodes, ArrayList<float[]> inputValues, ArrayList<long[]> dims,
+                      String[] outputNodes) {
 
         // Make sure the system is initialized
         if (!isInitialized) {
             return SYSTEM_NOT_INIT;
         }
-        //todo:
-        return 0;
+
+        // Generate model name from model file name
+        boolean hasAssetPrefix = modelFileName.startsWith(ASSET_FILE_PREFIX);
+        String modelName = (hasAssetPrefix ? modelFileName.split(ASSET_FILE_PREFIX)[1] : modelFileName);
+
+        // Do sampling
+        if (!dynamicSampler.sample(modelName)) {        // dropped
+            return FRAME_DROPPED;
+        }
+
+        // Encapsulate into a Task
+        Task task = new Task(nextTaskId++, appName, inputNodes, inputValues, dims, outputNodes, modelName);
+
+        // Initialize stream metadata if meet this stream at the first time
+        if (profiler.fetchInfoByModel(modelName) == null) {
+            StreamInfo streamInfo = new StreamInfo(modelName, appName, deviceManager.getAllDevices());
+            profiler.updateInfo(modelName, streamInfo);
+        }
+
+        // Insert into buffer
+        if (offloadingBuffer.insert(task, false) == BUFFER_FULL) {      // buffer is full, trigger the dynamic sampling
+            dynamicSampler.calcSamplingRate(modelName);
+            if (dynamicSampler.sample(modelName))
+                offloadingBuffer.insert(task, true);
+            else
+                return FRAME_DROPPED;
+        }
+        return SUCCESS;
     }
 
     @Override
@@ -59,13 +91,14 @@ public class OffloadingSystem implements FrontInterface {
 
         scheduler.init(deviceManager.getAllDevices().length);
         taskExecuteEngine.run();
+        isInitialized = true;
         return SUCCESS;
     }
 
     @Override
     public boolean isOffloadingAvailable() {
-        //todo
-        return true;
+
+        return deviceManager.isAvailable(1);        // only remote device is considered
     }
 
     @Override

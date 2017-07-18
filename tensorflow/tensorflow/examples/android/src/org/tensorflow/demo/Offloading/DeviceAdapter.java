@@ -12,6 +12,7 @@ package org.tensorflow.demo.Offloading;
  */
 public abstract class DeviceAdapter {
 
+    public String deviceName;       /**< String identifier of current device */
     public boolean isRemote;        /**< Indicate whether this device is remote or local */
     public boolean isParallel;      /**< Indicate whether this device can run tasks in parallel */
 
@@ -20,9 +21,10 @@ public abstract class DeviceAdapter {
      *
      * \param   isRemote        As its name
      */
-    public DeviceAdapter(boolean isRemote, boolean isParallel) {
+    public DeviceAdapter(boolean isRemote, boolean isParallel, String deviceName) {
         this.isRemote = isRemote;
         this.isParallel = isParallel;
+        this.deviceName = deviceName;
     }
 
     /**
@@ -30,6 +32,7 @@ public abstract class DeviceAdapter {
      */
     public DeviceAdapter() {
         isRemote = isParallel = false;
+        deviceName = "N/A";
     }
 
     /**

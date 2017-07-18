@@ -4,6 +4,7 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-12.
  */
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -22,7 +23,9 @@ public interface FrontInterface {
      * \param   appName           Caller's name.
      * \return  errno
      */
-    int commit(Map<String, Float[]> data, String modelFileName, String appName);
+    int commit(String modelFileName, String appName,
+               ArrayList<String> inputNodes, ArrayList<float[]> inputValues, ArrayList<long[]> dims,
+               String[] outputNodes);
 
     /**
      * \brief   Initialize the whole system.

@@ -42,6 +42,13 @@ public class Profiler {
      * \param   newInfo         StreamInfo instance contain the latest information about the stream
      */
     public void updateInfo(String modelName, StreamInfo newInfo) {
-        //todo: this is not a simple replacement. need some stat calculation.
+
+        // if not exist, just insert
+        if (databaseMap.get(modelName) == null) {
+            databaseMap.put(modelName, newInfo);
+        }
+        else {
+            //todo: this is not a simple replacement. need some stat calculation.
+        }
     }
 }

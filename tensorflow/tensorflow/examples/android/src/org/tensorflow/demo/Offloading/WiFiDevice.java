@@ -6,7 +6,7 @@ package org.tensorflow.demo.Offloading;
 
 public class WiFiDevice extends DeviceAdapter {
     public WiFiDevice() {
-        super(true, true);
+        super(true, true, "WiFi");
     }
 
     @Override

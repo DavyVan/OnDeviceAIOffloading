@@ -45,7 +45,7 @@ import org.tensorflow.TensorFlow;
  */
 public class TensorFlowInferenceInterface {
   private static final String TAG = "TensorFlowInferenceInterface";
-  private static final String ASSET_FILE_PREFIX = "file:///android_asset/";
+  public static final String ASSET_FILE_PREFIX = "file:///android_asset/";
 
   /*
    * Load a TensorFlow model from the AssetManager or from disk if it is not an asset file.

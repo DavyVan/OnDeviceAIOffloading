@@ -84,6 +84,7 @@ public class DeviceManager extends DeviceAdapter {
     }
 
     /**
+     * \note    deviceId is used to indicate only remote device is considered(set to 1) or not(set to 0).
      * True:    Exist any available device
      * False:   No available device
      */
@@ -91,23 +92,19 @@ public class DeviceManager extends DeviceAdapter {
     public boolean isAvailable(int deviceId) {
         boolean ret = false;
         for (DeviceAdapter device : devices) {
-            ret |= device.isAvailable(-1);
+            if ((deviceId == 0) || (deviceId == 1 && device.isRemote == true)) {
+                ret |= device.isAvailable(-1);
+            }
         }
         return ret;
     }
 
     /**
-     * \brief   Return identifiers of all available devices
+     * \brief   Return all available devices
      *
-     *          Only device name is returned (index implies the device id-1)
-     *
-     * \return  devices' name list in String
+     * \return  devices' list
      */
-    public String[] getAllDevices() {
-        String[] names = new String[devices.size()];
-        for (int i = 0; i < devices.size(); i++) {
-            names[i] = devices.get(i).getClass().getName();
-        }
-        return names;
+    public DeviceAdapter[] getAllDevices() {
+        return (DeviceAdapter[]) devices.toArray();
     }
 }

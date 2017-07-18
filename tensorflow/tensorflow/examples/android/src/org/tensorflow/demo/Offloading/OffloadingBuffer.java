@@ -1,9 +1,9 @@
 package org.tensorflow.demo.Offloading;
 
-import java.util.ArrayList;
-
+import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_SIZE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
+import static org.tensorflow.demo.Offloading.Constant.TASK_NOT_EXIST;
 
 /**
  * Created by fanquan on 17-7-14.
@@ -29,20 +29,26 @@ public class OffloadingBuffer {
     }
 
     /**
-     * \brief   Insert a new task into buffer and dispatch it to a device if it can.
+     * \brief   Insert a new task into buffer.
      *
      *          This method will modify Task::bufferIndex
      *          If buffer is full, the oldest task will be overwritten
      *
      * \param   task        The new task instance
-     * \return  Insertion succeed or failed
+     * \return  Status code
      */
-    public boolean insert(Task task) {
-        buffer[nextSlot] = task;
-        buffer[nextSlot].bufferIndex = nextSlot;
-        nextSlot = (nextSlot + 1) % BUFFER_SIZE;
+    public int insert(Task task, boolean force) {
 
-        return true;
+        // if buffer is already full
+        if (buffer[nextSlot] != null && !force) {
+            return BUFFER_FULL;
+        }
+
+        // insert action
+        task.bufferIndex = nextSlot;
+        buffer[nextSlot] = task;
+        nextSlot = (nextSlot + 1) % BUFFER_SIZE;
+        return SUCCESS;
     }
 
     /**
@@ -58,11 +64,43 @@ public class OffloadingBuffer {
     /**
      * \brief   Delete a task if the task is completed or disregarded
      *
-     * \param   The index in buffer
+     * \param   index       The index in buffer
+     * \param   taskId      The unique ID, for identification
      * \return  error number
      */
-    public int delete(int index) {
-        // TODO: 17-7-17
-        return SUCCESS;
+    public int delete(int index, long taskId) {
+        if (taskId == buffer[index].id) {
+            buffer[index] = null;
+            return SUCCESS;
+        }
+        else
+            return TASK_NOT_EXIST;
+    }
+
+    /**
+     * \brief   Clean untouched(status==0) tasks because of adjustment of sampling rate
+     *
+     *          This method will sweep from rare to front
+     *
+     * \return  The number of task cleaned
+     */
+    public int cleanUntouchedTask() {
+        int counter = 0;
+        int p = nextSlot - 1;
+        while (p != nextSlot) {
+            if (buffer[p] == null) {
+                p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                continue;
+            }
+
+            if (buffer[p].status != 0)
+                break;
+            else {
+                buffer[p] = null;
+                counter++;
+                p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+            }
+        }
+        return counter;
     }
 }

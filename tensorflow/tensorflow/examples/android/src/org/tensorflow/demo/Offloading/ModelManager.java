@@ -36,7 +36,6 @@ public class ModelManager {
      * \note    As a dummy, always return true
      */
     public boolean isModelReady(String modelName) {
-        //todo: dummy
         return true;
     }
 
@@ -47,9 +46,9 @@ public class ModelManager {
      *
      * \param   modelName       Name of model file
      * \return  error number
+     * \note    As a dummy, never be called. If implemented, it should be asynchronous
      */
     public int getModelReady(String modelFileName) {
-        //todo: implement asynchronously, this method will return immediately. Need a listener to call back
         return SUCCESS;
     }
 }

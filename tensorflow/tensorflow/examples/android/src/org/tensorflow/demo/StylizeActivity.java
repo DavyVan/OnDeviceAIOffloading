@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+import org.tensorflow.demo.Offloading.OffloadingSystem;
 import org.tensorflow.demo.OverlayView.DrawCallback;
 import org.tensorflow.demo.env.BorderedText;
 import org.tensorflow.demo.env.ImageUtils;
@@ -590,6 +591,36 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
     inferenceInterface.run(new String[] {OUTPUT_NODE}, isDebug());
     inferenceInterface.fetch(OUTPUT_NODE, floatValues);
+
+    /**
+     * Offloading
+     */
+//    OffloadingSystem offloadingSystem = new OffloadingSystem();
+//    offloadingSystem.init();
+//    ArrayList<String> inputNodes = new ArrayList<>();
+//    ArrayList<float[]> inputValues = new ArrayList<>();
+//    ArrayList<long[]> dims = new ArrayList<>();
+//
+//    // feed INPUT_NODE
+//    inputNodes.add(INPUT_NODE);
+//    inputValues.add(floatValues);
+//    dims.add(new long[]{1, bitmap.getWidth(), bitmap.getHeight(), 3});
+//
+//    // feed STYLE_NODE
+//    inputNodes.add(STYLE_NODE);
+//    inputValues.add(styleVals);
+//    dims.add(new long[]{NUM_STYLES});
+//
+//    // output nodes
+//    String[] outputNodes = new String[]{OUTPUT_NODE};
+//
+//    // commit
+//    offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes);
+    // TODO: 17-7-18 How to fetch result and continue? Because we run asynchronously.
+    // TODO: 17-7-18 How to handle current frame is dropped?
+    /**
+     * Offloading - end
+     */
 
     for (int i = 0; i < intValues.length; ++i) {
       intValues[i] =

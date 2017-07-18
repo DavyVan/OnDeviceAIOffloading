@@ -7,7 +7,7 @@ package org.tensorflow.demo.Offloading;
 public class LocalDevice extends DeviceAdapter {
 
     public LocalDevice() {
-        super(false, false);
+        super(false, false, "Local");
     }
 
     @Override

@@ -22,8 +22,10 @@ public interface Scheduler {
      * \brief   Calculate how many task each device should take in one scheduling circle.
      *
      *          All of the information needed by scheduling process will be fetched from Profiler
+     *
+     * \param   modelName       Identify the stream
      */
-    void calculateQuota();
+    void calculateQuota(String modelName);
 
     /**
      * \brief   Apply the quota(a.k.a. the sliding window) to the buffer

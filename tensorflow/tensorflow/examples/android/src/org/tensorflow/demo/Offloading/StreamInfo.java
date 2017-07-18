@@ -4,26 +4,31 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-15.
  */
 
+import java.util.ArrayList;
+
 /**
  * \brief   Structure contains information about data stream
  */
 public class StreamInfo {
 
     public String modelName;        /**< Use model to identify a stream */
-    public String modelFileName;    /**< Full path of model file */
     public String appName;          /**< Which app this stream belongs to */
 
-    public Cost[] costs;        /**< %Cost for each device */
+    public ArrayList<Cost> costs;   /**< %Cost for each device, keep the order of device ID */
 
     /**
      * \brief   Constructor
      */
-    public StreamInfo(String modelName, String modelFileName, String appName) {
+    public StreamInfo(String modelName, String appName, DeviceAdapter[] devices) {
         this.modelName = modelName;
-        this.modelFileName = modelFileName;
         this.appName = appName;
 
-        //todo:
+        costs = new ArrayList<>();
+        int deviceNum = devices.length;
+        for (int i = 0; i < deviceNum; i++) {
+            Cost cost = new Cost(devices[i].isRemote);
+            costs.add(cost);
+        }
     }
 
     /**
@@ -64,22 +69,22 @@ public class StreamInfo {
         }
 
         /**
-         * \brief   Default constructor
+         * \brief   Simple constructor
          */
-        public Cost() {
+        public Cost(boolean isRemote) {
             post_process = 0;
             uploading = 0;
             computing = 0;
             downloading = 0;
             post_process = 0;
-            isRemote = false;
+            this.isRemote = isRemote;
             schedulingCost = 0;
         }
 
         /**
          * \brief   As its name
          */
-        private void calculateSchedulingCost() {
+        public void calculateSchedulingCost() {
             if (isRemote) {     // remote
                 if (pre_process + uploading > post_process + downloading)
                     schedulingCost = pre_process + uploading;

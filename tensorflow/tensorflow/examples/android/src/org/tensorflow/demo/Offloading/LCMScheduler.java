@@ -1,5 +1,7 @@
 package org.tensorflow.demo.Offloading;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -50,10 +52,10 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     }
 
     @Override
-    public void calculateQuota() {
+    public void calculateQuota(String modelName) {
         // TODO: 17-7-17
         apply();
-        sample(null);
+        calcSamplingRate(modelName);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     @Override
     public void markAsDone(int index) {
-        // TODO: 17-7-17
+        // TODO: 17-7-17 need to check index and unique id, slide the windows if needed
     }
 
     @Override
@@ -82,20 +84,30 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
      */
     @Override
     public boolean sample(String modelName) {
-        // TODO: 17-7-17
-        return false;
+
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSampleTime >= sampleInterval) {
+            lastSampleTime = currentTime;
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
     public void calcSamplingRate(String modelName) {        // the modelName is useless now
         double v = 0;
         StreamInfo streamInfo = profiler.fetchInfoByModel(modelName);
-        int n = streamInfo.costs.length;
+        int n = streamInfo.costs.size();
         for (int i = 0; i < n; i++) {
-            v += 1.0 / (double) streamInfo.costs[i].schedulingCost;     // the formula is simplified
+            v += 1.0 / (double) streamInfo.costs.get(i).schedulingCost;     // the formula is simplified
         }
         v = 1.0 / v;
         sampleInterval = (int) v;       // ground
+
+        // clean all untouched tasks in buffer
+        int c = offloadingBuffer.cleanUntouchedTask();
+        Log.i("FQ", String.format("Sampling rate changed, %d tasks were cleaned.", c));
     }
 
     /**
