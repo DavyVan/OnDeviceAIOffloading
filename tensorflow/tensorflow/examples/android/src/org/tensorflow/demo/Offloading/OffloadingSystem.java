@@ -67,6 +67,10 @@ public class OffloadingSystem implements FrontInterface {
             else
                 return FRAME_DROPPED;
         }
+
+        // Let TaskExecuteEngine check if there is a task could be ran by an idle device
+        taskExecuteEngine.checkAndPushToIdle();
+
         return SUCCESS;
     }
 
@@ -90,7 +94,7 @@ public class OffloadingSystem implements FrontInterface {
         }
 
         scheduler.init(deviceManager.getAllDevices().length);
-        taskExecuteEngine.run();
+//        taskExecuteEngine.run();
         isInitialized = true;
         return SUCCESS;
     }

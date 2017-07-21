@@ -15,6 +15,7 @@ public abstract class DeviceAdapter {
     public String deviceName;       /**< String identifier of current device */
     public boolean isRemote;        /**< Indicate whether this device is remote or local */
     public boolean isParallel;      /**< Indicate whether this device can run tasks in parallel */
+    public boolean isIdle;          /**< Indicate whether this device is idle or not */
 
     /**
      * \brief   Constructor called by specific adapter.
@@ -25,13 +26,14 @@ public abstract class DeviceAdapter {
         this.isRemote = isRemote;
         this.isParallel = isParallel;
         this.deviceName = deviceName;
+        isIdle = false;
     }
 
     /**
      * \brief   Constructor called by DeviceManager
      */
     public DeviceAdapter() {
-        isRemote = isParallel = false;
+        isRemote = isParallel = isIdle = false;
         deviceName = "N/A";
     }
 

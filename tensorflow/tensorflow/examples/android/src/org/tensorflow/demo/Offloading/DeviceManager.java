@@ -107,4 +107,8 @@ public class DeviceManager extends DeviceAdapter {
     public DeviceAdapter[] getAllDevices() {
         return (DeviceAdapter[]) devices.toArray();
     }
+
+    public void markAsIdle(int deviceId) {
+        devices.get(deviceId).isIdle = true;
+    }
 }

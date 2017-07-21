@@ -18,7 +18,10 @@ public class Task {
     public ArrayList<float[]> inputValues;      /**< Input values */
     public ArrayList<long[]> dims;              /**< Dimensions of input values */
     public String[] outputNodes;                /**< output node tag */
-    public int status;                          /**< 0:untouched, 1:uploaded, pending, 2:done */
+    public int status;                          /**< 0:untouched,
+                                                     1:scheduled,
+                                                     2:uploaded or pending for uploading,
+                                                     3:done */
     public String modelName;                    /**< Model file name */
     public int bufferIndex;                     /**< Index in buffer */
 

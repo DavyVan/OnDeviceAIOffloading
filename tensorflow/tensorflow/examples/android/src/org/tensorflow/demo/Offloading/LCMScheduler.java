@@ -39,11 +39,10 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
      */
     @Override
     public void init(int deviceNum) {
-        // TODO: 17-7-17  dynamic sampling
         // Scheduling policy - fill the currentWindows & deviceId
         for (int i = 0; i < deviceNum; i++) {
             currentWindows.add(new SingleWindow(1));
-            deviceId.add(i+1);
+            deviceId.add(i);
         }
 
         // Dynamic sampling - set sample interval as zero (no sampling)
@@ -65,7 +64,20 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     @Override
     public Task next(int deviceId) {
-        // TODO: 17-7-17 need an algo to deal with SingleWindow.position
+
+        SingleWindow window = currentWindows.get(deviceId);
+        int start = window.position;
+        int size = window.size;
+        Task task = null;
+
+        while (size-- > 0) {
+            task = offloadingBuffer.get(start);
+            if (task.status == 0) {
+                task.status = 1;
+                return task;
+            }
+            start++;
+        }
         return null;
     }
 
