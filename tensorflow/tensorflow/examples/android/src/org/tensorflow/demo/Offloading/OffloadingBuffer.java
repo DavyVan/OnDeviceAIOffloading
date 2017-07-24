@@ -1,7 +1,7 @@
 package org.tensorflow.demo.Offloading;
 
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
-import static org.tensorflow.demo.Offloading.Constant.BUFFER_SIZE;
+import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_SIZE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.TASK_NOT_EXIST;
 
@@ -18,6 +18,7 @@ public class OffloadingBuffer {
 
     private Task[] buffer;                  /**< Buffer itself */
     private int nextSlot;                   /**< Indicate where the next new task should be located */
+    private int head;                       /**< Indicate where is the first task slot (in our circle queue) */
 
     /**
      * /brief   Constructor. Initialize buffer sub-system.
@@ -26,6 +27,7 @@ public class OffloadingBuffer {
         // Allocate memory for buffer
         buffer = new Task[BUFFER_SIZE];
         nextSlot = 0;
+        head = 0;
     }
 
     /**
@@ -69,12 +71,22 @@ public class OffloadingBuffer {
      * \return  error number
      */
     public int delete(int index, long taskId) {
-        if (taskId == buffer[index].id) {
+        if (taskId != -1) {     // taskId is used
+            if (taskId == buffer[index].id) {
+                buffer[index] = null;
+                if (index == head)
+                    head++;
+                return SUCCESS;
+            }
+            else
+                return TASK_NOT_EXIST;
+        }
+        else {      // don't care taskId
             buffer[index] = null;
+            if (index == head)
+                head++;
             return SUCCESS;
         }
-        else
-            return TASK_NOT_EXIST;
     }
 
     /**
@@ -102,5 +114,15 @@ public class OffloadingBuffer {
             }
         }
         return counter;
+    }
+
+    /**
+     * \brief   To know whether the task is at the head of circle queue
+     *
+     * \param   index       As its name
+     * \return  the boolean
+     */
+    public boolean isHead(int index) {
+        return head == index;
     }
 }

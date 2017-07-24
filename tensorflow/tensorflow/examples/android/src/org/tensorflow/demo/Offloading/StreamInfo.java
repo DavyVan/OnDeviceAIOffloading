@@ -18,6 +18,10 @@ public class StreamInfo {
 
     /**
      * \brief   Constructor
+     *
+     * \param   modelName       ::modelName
+     * \param   appName         ::appName
+     * \param   devices         Device list to init cost list
      */
     public StreamInfo(String modelName, String appName, DeviceAdapter[] devices) {
         this.modelName = modelName;
@@ -32,11 +36,28 @@ public class StreamInfo {
     }
 
     /**
+     * \brief   Simple constructor
+     *
+     *          This constructor usually called after a task was complete
+     *
+     * \param   modelName       ::modelName
+     * \param   appName         ::appName
+     * \param   cost            Use a cost instance to create a StreamInfo instance
+     */
+    public StreamInfo(String modelName, String appName, Cost cost) {
+        this.modelName = modelName;
+        this.appName = appName;
+
+        costs = new ArrayList<>();
+        costs.add(cost);
+    }
+
+    /**
      * \brief   A sub-structure that contains time cost for each stage
      *
      *          All times are in ms
      */
-    public class Cost {
+    public static class Cost {
 
         public int pre_process;     /**< Time cost of pre-process stage */
         public int uploading;       /**< Time cost of uploading stage */
@@ -49,6 +70,7 @@ public class StreamInfo {
 
         /**
          * \brief   Constructor. Assign all the members
+         * \note    Maybe useless?
          *
          * \param   pre_process     ::pre_process
          * \param   uploading       ::uploading
@@ -70,6 +92,8 @@ public class StreamInfo {
 
         /**
          * \brief   Simple constructor
+         *
+         * \param   isRemote        ::isRemote
          */
         public Cost(boolean isRemote) {
             post_process = 0;
@@ -78,6 +102,19 @@ public class StreamInfo {
             downloading = 0;
             post_process = 0;
             this.isRemote = isRemote;
+            schedulingCost = 0;
+        }
+
+        /**
+         * \brief   Simple constructor without parameter.
+         */
+        public Cost() {
+            post_process = 0;
+            uploading = 0;
+            computing = 0;
+            downloading = 0;
+            post_process = 0;
+            isRemote = false;
             schedulingCost = 0;
         }
 

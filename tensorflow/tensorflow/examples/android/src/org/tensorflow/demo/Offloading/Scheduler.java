@@ -47,9 +47,10 @@ public interface Scheduler {
     /**
      * \brief   Mark a Task as completed, then re-schedule if needed.
      * 
-     * \param   index       Task index in buffer
+     * \param   task        Which task was just completed
+     * \param   deviceId    Which device processed this task
      */
-    void markAsDone(int index);
+    void markAsDone(Task task, int deviceId);
 
     /**
      * \brief   Getter for profiler instance.

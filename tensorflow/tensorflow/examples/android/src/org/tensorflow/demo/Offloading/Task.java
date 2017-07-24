@@ -5,6 +5,7 @@ package org.tensorflow.demo.Offloading;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,16 +15,21 @@ public class Task {
 
     public long id;                             /**< Unique ID */
     public String appName;                      /**< Which app commit this task */
-    public ArrayList<String> inputNodes;         /**< Input node tag */
-    public ArrayList<float[]> inputValues;      /**< Input values */
-    public ArrayList<long[]> dims;              /**< Dimensions of input values */
-    public String[] outputNodes;                /**< output node tag */
+    public String modelName;                    /**< Model file name */
+    public int bufferIndex;                     /**< Index in buffer */
     public int status;                          /**< 0:untouched,
                                                      1:scheduled,
                                                      2:uploaded or pending for uploading,
                                                      3:done */
-    public String modelName;                    /**< Model file name */
-    public int bufferIndex;                     /**< Index in buffer */
+
+    public ArrayList<String> inputNodes;         /**< Input node tag */
+    public ArrayList<float[]> inputValues;      /**< Input values */
+    public ArrayList<long[]> dims;              /**< Dimensions of input values */
+
+    public String[] outputNodes;                /**< output node tag */
+    public Map<String, float[]> outputs;        /**< Result data */
+
+    public StreamInfo.Cost cost;                /**< Cost instance tracking time cost for profiling */
 
     /**
      * \brief   Simple constructor, assign member variables
@@ -54,5 +60,7 @@ public class Task {
 
         status = 0;
         bufferIndex = -1;
+        outputs = new HashMap<>();
+        cost = new StreamInfo.Cost();
     }
 }

@@ -4,6 +4,7 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-17.
  */
 
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class OffloadingSystem implements FrontInterface {
         // Initialize stream metadata if meet this stream at the first time
         if (profiler.fetchInfoByModel(modelName) == null) {
             StreamInfo streamInfo = new StreamInfo(modelName, appName, deviceManager.getAllDevices());
-            profiler.updateInfo(modelName, streamInfo);
+            profiler.updateInfo(streamInfo, -1);
         }
 
         // Insert into buffer
@@ -106,7 +107,7 @@ public class OffloadingSystem implements FrontInterface {
     }
 
     @Override
-    public void setOnResultListener(OnResultListener listener) {
-        //todo
+    public void setOnResultHandler(Handler handler) {
+        taskExecuteEngine.setFrontEndHandler(handler);
     }
 }

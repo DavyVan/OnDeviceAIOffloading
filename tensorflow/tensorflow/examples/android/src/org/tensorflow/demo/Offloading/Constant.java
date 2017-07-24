@@ -10,7 +10,14 @@ import android.util.Log;
  * \brief   Store all of the configurable constants, e.g. buffer size, errno, etc.
  */
 public final class Constant {
-    public static final int BUFFER_SIZE = 100;
+
+    public static class Config {
+        public static final int BUFFER_SIZE = 100;
+
+        // Profiler
+        // 1-Exponential Smoothing
+        public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
+    }
 
     // Error
     public static final int SYSTEM_NOT_INIT = 1;
@@ -48,5 +55,34 @@ public final class Constant {
 
     public static boolean isVitalError(int errno) {
         return errno / 100 == 0;
+    }
+
+    public static class Tools {
+        private static double gcd(double a, double b) {
+            while (b > 0) {
+                double t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        private static double lcm(double a, double b) {
+            return a * (b / gcd(a, b));
+        }
+
+        public static double lcm(double[] input) {
+            double result = input[0];
+            for (int i = 1; i < input.length; i++)
+                result = lcm(result, input[i]);
+            return result;
+        }
+
+        public static double min(double[] input) {
+            double t = input[0];
+            for (int i = 1; i < input.length; i++)
+                t = Math.min(t, input[i]);
+            return t;
+        }
     }
 }

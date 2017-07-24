@@ -28,12 +28,14 @@ public class TaskExecuteEngine {
     private Handler callNextHandler;        /**< After a device uploaded a task, use this handler to send a message to TEE */
     private Handler onResultHandler;        /**< After result downloaded from a device, use this handler to tell TEE */
 
+    private Handler frontEndHandler;
+
     /**
      * \brief   Simple constructor.
      *
      *          Initialize the ModelManager, DeviceManager, Scheduler
      */
-    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, Scheduler scheduler) {
+    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, final Scheduler scheduler) {
         this.modelManager = modelManager;
         this.deviceManager = deviceManager;
         this.scheduler = scheduler;
@@ -43,6 +45,8 @@ public class TaskExecuteEngine {
             Looper.prepare();
             Looper.loop();
         }
+
+        frontEndHandler = null;
 
         callNextHandler = new Handler() {
             @Override
@@ -59,6 +63,27 @@ public class TaskExecuteEngine {
                 }
                 else {      // If no task to do, mark isIdle = true
                     TaskExecuteEngine.this.deviceManager.markAsIdle(deviceId);
+                }
+            }
+        };
+
+        onResultHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                Task resultTask = (Task) msg.obj;
+                Bundle bundle = msg.getData();
+                int deviceId = bundle.getInt("deviceId");
+
+                // Tell scheduler task is done
+                TaskExecuteEngine.this.scheduler.markAsDone(resultTask, deviceId);
+
+                // Call back to user front end
+                if (frontEndHandler != null) {
+                    Message messageToFrontEnd = Message.obtain();
+                    messageToFrontEnd.obj = resultTask;
+                    frontEndHandler.sendMessage(messageToFrontEnd);
                 }
             }
         };
@@ -120,5 +145,12 @@ public class TaskExecuteEngine {
             }
         }
         return SUCCESS;
+    }
+
+    public void setFrontEndHandler(Handler handler) {
+        if (frontEndHandler == null)
+            frontEndHandler = handler;
+        else
+            Log.i("FQ", "Front-end handler has been overwritten.");
     }
 }

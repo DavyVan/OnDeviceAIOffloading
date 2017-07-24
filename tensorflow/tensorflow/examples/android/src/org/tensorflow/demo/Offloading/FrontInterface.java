@@ -4,8 +4,8 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-12.
  */
 
+import android.os.Handler;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * \brief   Contains the main API of On-Device offloading framework.
@@ -46,7 +46,7 @@ public interface FrontInterface {
     /**
      * \brief   As its name.
      *
-     * \param   listener        The listener which handle the result of computing.
+     * \param   handler     The handler which handle the result of computing.
      */
-    void setOnResultListener(OnResultListener listener);
+    void setOnResultHandler(Handler handler);
 }
