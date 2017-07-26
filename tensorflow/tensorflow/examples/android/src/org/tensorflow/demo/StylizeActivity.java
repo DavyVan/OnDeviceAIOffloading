@@ -187,30 +187,36 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     /**
      * Offloading definition
      */
+    private int[] intValues_output;
+    private float[] floatValues_output;
+    private Bitmap croppedBitmap_output = null;
     private OffloadingSystem offloadingSystem;
 
-    private Handler onResultHandler = new Handler(super.) {
+    // Use super.handlerThread to process the following statements
+    private Handler onResultHandler = new Handler(super.handlerThread.getLooper()) {
         @Override
         public void handleMessage(Message msg) {
 
             Task task = (Task) msg.obj;
-            // Copy output to floatValues[]
-            System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues, 0, task.outputs.get(OUTPUT_NODE).length);
+            // Prepare data
+            floatValues_output = new float[desiredSize * desiredSize * 3];
+            intValues_output = new int[desiredSize * desiredSize];
+            croppedBitmap_output = Bitmap.createBitmap(desiredSize, desiredSize, Config.ARGB_8888);
+            System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues_output, 0, task.outputs.get(OUTPUT_NODE).length);
 
-            // NOTE: This section is thread safe because this won't run parallelled with onImageAvailable()
-            //       They are using a single looper i.e. the main looper
             // Comes from stylizeImage()
-            for (int i = 0; i < intValues.length; ++i) {
-                intValues[i] =
+            for (int i = 0; i < intValues_output.length; ++i) {
+                intValues_output[i] =
                         0xFF000000
-                                | (((int) (floatValues[i * 3] * 255)) << 16)
-                                | (((int) (floatValues[i * 3 + 1] * 255)) << 8)
-                                | ((int) (floatValues[i * 3 + 2] * 255));
+                                | (((int) (floatValues_output[i * 3] * 255)) << 16)
+                                | (((int) (floatValues_output[i * 3 + 1] * 255)) << 8)
+                                | ((int) (floatValues_output[i * 3 + 2] * 255));
             }
 
-            croppedBitmap.setPixels(intValues, 0, croppedBitmap.getWidth(), 0, 0, croppedBitmap.getWidth(), croppedBitmap.getHeight());
+            croppedBitmap_output.setPixels(intValues_output, 0, croppedBitmap_output.getWidth(), 0, 0, croppedBitmap_output.getWidth(), croppedBitmap_output.getHeight());
 
             // Comes from onImageAvailable runInBackground()
+            textureCopyBitmap = Bitmap.createBitmap(croppedBitmap_output);
             requestRender();
         }
     };
@@ -528,16 +534,11 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
                 return;
             }
 
-            /**
-             * Offloading
-             */
-//            if (computing) {
-//                image.close();
-//                return;
-//            }
-            /**
-             * Offloading - End
-             */
+            // We keep this if statement because we should still guarantee the commit() can be execute serialized
+            if (computing) {
+                image.close();
+                return;
+            }
 
             if (desiredSize != initializedSize) {
                 LOGGER.i(
@@ -615,12 +616,11 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
                         stylizeImage(croppedBitmap);
                         lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
 
-                        // for display
-                        textureCopyBitmap = Bitmap.createBitmap(croppedBitmap);
-
                         /**
                          * Offloading - Move to onResultHandler
                          */
+                        // for display
+//                        textureCopyBitmap = Bitmap.createBitmap(croppedBitmap);
 //                        requestRender();
                         /**
                          * Offloading - Move to onResultHandler - End
@@ -712,6 +712,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
     private void renderDebug(final Canvas canvas) {
         // TODO(andrewharp): move result display to its own View instead of using debug overlay.
+        // This means all picture are rendered on debug overlay, using matrix to control the position
         final Bitmap texture = textureCopyBitmap;
         if (texture != null) {
             final Matrix matrix = new Matrix();

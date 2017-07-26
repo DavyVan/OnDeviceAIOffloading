@@ -45,7 +45,7 @@ public abstract class CameraActivity extends Activity implements OnImageAvailabl
   private boolean debug = false;
 
   private Handler handler;
-  private HandlerThread handlerThread;
+  public HandlerThread handlerThread;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
