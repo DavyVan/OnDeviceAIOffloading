@@ -1,5 +1,7 @@
 package org.tensorflow.demo.Offloading;
 
+import android.app.Activity;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
 
 /**
- * Created by fanquan on 17-7-15.
+ * Created by fanquan on 17-7deviceId5.
  */
 
 /**
@@ -21,14 +23,21 @@ public class DeviceManager extends DeviceAdapter {
 
     private ArrayList<DeviceAdapter> devices;       /**< All the devices information are stored here */
 
+    public Handler callNextHandler;
+    public Handler onResultHandler;
+    public Activity mainActivity;
+
     /**
      * \brief   Constructor.
      *
      *          Allocate memory for devices list
      */
-    public DeviceManager() {
+    public DeviceManager(Activity activity) {
         super();
         devices = new ArrayList<DeviceAdapter>();
+        callNextHandler = null;
+        onResultHandler = null;
+        mainActivity = activity;
     }
 
     /**
@@ -38,7 +47,7 @@ public class DeviceManager extends DeviceAdapter {
     public int init() {
         // Scan all possible devices
         // 1. local
-        DeviceAdapter localDevice = new LocalDevice();
+        DeviceAdapter localDevice = new LocalDevice(this);
         int errno = localDevice.init();
         if (errno == SUCCESS)
             devices.add(localDevice);
@@ -46,7 +55,7 @@ public class DeviceManager extends DeviceAdapter {
             Log.e("FQ", getErrorMessage(errno));
 
         // 2. Wi-Fi
-        DeviceAdapter wifiDevice = new WiFiDevice();
+        DeviceAdapter wifiDevice = new WiFiDevice(this);
         errno = wifiDevice.init();
         if (errno == SUCCESS)
             devices.add(wifiDevice);
@@ -60,27 +69,39 @@ public class DeviceManager extends DeviceAdapter {
     }
 
     @Override
-    public int uploadTask(int deviceId, Task task) {
+    public int preprocess(int deviceId, Task task) {
         // forward directly
-        return devices.get(deviceId).uploadTask(-1, task);
+        return devices.get(deviceId).preprocess(deviceId, task);
+    }
+
+    @Override
+    public int uploadAndRun(int deviceId, Task task) {
+        // forward directly
+        return devices.get(deviceId).uploadAndRun(deviceId, task);
     }
 
     @Override
     public int startCompute(int deviceId) {
         // forward directly
-        return devices.get(deviceId).startCompute(-1);
+        return devices.get(deviceId).startCompute(deviceId);
     }
 
     @Override
     public int fetchResult(int deviceId) {
         // forward directly
-        return devices.get(deviceId).fetchResult(-1);
+        return devices.get(deviceId).fetchResult(deviceId);
+    }
+
+    @Override
+    public int postprocess(int deviceId, Task task) {
+        // forward directly
+        return devices.get(deviceId).postprocess(deviceId, task);
     }
 
     @Override
     public int uploadModel(int deviceId, String modelFileName) {
         // forward directly
-        return devices.get(deviceId).uploadModel(-1, modelFileName);
+        return devices.get(deviceId).uploadModel(deviceId, modelFileName);
     }
 
     /**
@@ -93,7 +114,7 @@ public class DeviceManager extends DeviceAdapter {
         boolean ret = false;
         for (DeviceAdapter device : devices) {
             if ((deviceId == 0) || (deviceId == 1 && device.isRemote == true)) {
-                ret |= device.isAvailable(-1);
+                ret |= device.isAvailable(deviceId);
             }
         }
         return ret;
@@ -110,5 +131,10 @@ public class DeviceManager extends DeviceAdapter {
 
     public void markAsIdle(int deviceId) {
         devices.get(deviceId).isIdle = true;
+    }
+
+    public void setHandlers(Handler callNextHandler, Handler onResultHandler) {
+        this.callNextHandler = callNextHandler;
+        this.onResultHandler = onResultHandler;
     }
 }

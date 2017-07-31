@@ -4,6 +4,8 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-15.
  */
 
+import android.os.Handler;
+
 /**
  * \brief   Define most functionalities that computing device should support
  *
@@ -26,14 +28,14 @@ public abstract class DeviceAdapter {
         this.isRemote = isRemote;
         this.isParallel = isParallel;
         this.deviceName = deviceName;
-        isIdle = false;
+        isIdle = true;
     }
 
     /**
      * \brief   Constructor called by DeviceManager
      */
     public DeviceAdapter() {
-        isRemote = isParallel = isIdle = false;
+        isRemote = isParallel = isIdle = true;
         deviceName = "N/A";
     }
 
@@ -45,15 +47,26 @@ public abstract class DeviceAdapter {
      * \return  error number
      */
     public abstract int init();
-    
+
     /**
-     * \brief   Upload raw data to the server
+     * \brief   Pre-process the data to be uploaded
+     *
+     *          Optional, just leave it blank.
      *
      * \param   deviceId        Which device will process the task
      * \param   task            Instance of task
      * \return  error number
      */
-    public abstract int uploadTask(int deviceId, Task task);
+    public abstract int preprocess(int deviceId, Task task);
+    
+    /**
+     * \brief   Upload raw data to the server, and launch the computing right after the offloading
+     *
+     * \param   deviceId        Which device will process the task
+     * \param   task            Instance of task
+     * \return  error number
+     */
+    public abstract int uploadAndRun(int deviceId, Task task);
 
     /**
      * \brief   Start the ready task on remote device.
@@ -70,11 +83,22 @@ public abstract class DeviceAdapter {
     public abstract int startCompute(int deviceId);
 
     /**
-     * \brief   todo: maybe this is the callback method?
+     * \brief   Do something about fetching results
      *
      * \param   deviceId        Which device will process the task
      */
     public abstract int fetchResult(int deviceId);
+
+    /**
+     * \brief   Post-process the data to be uploaded
+     *
+     *          Optional, just leave it blank.
+     *
+     * \param   deviceId        Which device will process the task
+     * \param   task            Instance of task
+     * \return  error number
+     */
+    public abstract int postprocess(int deviceId, Task task);
 
     /**
      * \brief   As its name

@@ -4,6 +4,7 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-17.
  */
 
+import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 
@@ -35,7 +36,7 @@ public class OffloadingSystem implements FrontInterface {
     @Override
     public int commit(String modelFileName, String appName,
                       ArrayList<String> inputNodes, ArrayList<float[]> inputValues, ArrayList<long[]> dims,
-                      String[] outputNodes) {
+                      String[] outputNodes, Map<String, long[]> odims) {
 
         // Make sure the system is initialized
         if (!isInitialized) {
@@ -52,7 +53,7 @@ public class OffloadingSystem implements FrontInterface {
         }
 
         // Encapsulate into a Task
-        Task task = new Task(nextTaskId++, appName, inputNodes, inputValues, dims, outputNodes, modelName);
+        Task task = new Task(nextTaskId++, appName, inputNodes, inputValues, dims, outputNodes, odims, modelName);
 
         // Initialize stream metadata if meet this stream at the first time
         if (profiler.fetchInfoByModel(modelName) == null) {
@@ -76,14 +77,14 @@ public class OffloadingSystem implements FrontInterface {
     }
 
     @Override
-    public int init() {
+    public int init(Activity activity) {
         // Instantiate, keep the order
         profiler = new Profiler();
         offloadingBuffer = new OffloadingBuffer();
         // TODO: 17-7-17 Use JAVA Reflection to dynamic load different scheduler
         scheduler = new LCMScheduler(profiler, offloadingBuffer);
         dynamicSampler = (DynamicSampling) scheduler;
-        deviceManager = new DeviceManager();
+        deviceManager = new DeviceManager(activity);
         modelManager = new ModelManager(deviceManager);
         taskExecuteEngine = new TaskExecuteEngine(modelManager, deviceManager, scheduler);
 

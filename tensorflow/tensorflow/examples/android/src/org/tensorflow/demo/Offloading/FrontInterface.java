@@ -4,8 +4,10 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-12.
  */
 
+import android.app.Activity;
 import android.os.Handler;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * \brief   Contains the main API of On-Device offloading framework.
@@ -25,7 +27,7 @@ public interface FrontInterface {
      */
     int commit(String modelFileName, String appName,
                ArrayList<String> inputNodes, ArrayList<float[]> inputValues, ArrayList<long[]> dims,
-               String[] outputNodes);
+               String[] outputNodes, Map<String, long[]> odims);
 
     /**
      * \brief   Initialize the whole system.
@@ -34,7 +36,7 @@ public interface FrontInterface {
      *
      * \return  errno
      */
-    int init();
+    int init(Activity activity);
 
     /**
      * \brief   Query the availability of offloading functionality.

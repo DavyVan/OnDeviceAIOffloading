@@ -28,6 +28,7 @@ public class Task {
 
     public String[] outputNodes;                /**< output node tag */
     public Map<String, float[]> outputs;        /**< Result data */
+    public Map<String, long[]> odims;           /**< Dimensions of output values */
 
     public StreamInfo.Cost cost;                /**< Cost instance tracking time cost for profiling */
 
@@ -49,6 +50,7 @@ public class Task {
                 ArrayList<float[]> inputValues,
                 ArrayList<long[]> dims,
                 String[] outputNodes,
+                Map<String, long[]> odims,
                 String modelName) {
         this.id = id;
         this.appName = appName;
@@ -56,6 +58,7 @@ public class Task {
         this.inputValues = inputValues;
         this.dims = dims;
         this.outputNodes = outputNodes;
+        this.odims = odims;
         this.modelName = modelName;
 
         status = 0;

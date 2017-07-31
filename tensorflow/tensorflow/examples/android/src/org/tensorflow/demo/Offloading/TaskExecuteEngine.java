@@ -87,6 +87,8 @@ public class TaskExecuteEngine {
                 }
             }
         };
+
+        deviceManager.setHandlers(callNextHandler, onResultHandler);
     }
 
     /**
@@ -112,7 +114,8 @@ public class TaskExecuteEngine {
         task.status = 2;
 
         // Call DeviceManager
-        int errno = deviceManager.uploadTask(deviceId, task);
+        deviceManager.preprocess(deviceId, task);
+        int errno = deviceManager.uploadAndRun(deviceId, task);
         if (isVitalError(errno))
             return errno;
         else
@@ -148,6 +151,9 @@ public class TaskExecuteEngine {
     }
 
     public void setFrontEndHandler(Handler handler) {
+        // Set two call back handler first
+        deviceManager.setHandlers(callNextHandler, onResultHandler);
+
         if (frontEndHandler == null)
             frontEndHandler = handler;
         else

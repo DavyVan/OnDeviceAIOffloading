@@ -55,6 +55,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
@@ -237,7 +239,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
          * Offloading Initialization
          */
         offloadingSystem = new OffloadingSystem();
-        offloadingSystem.init();
+        offloadingSystem.init(this);
         offloadingSystem.setOnResultHandler(onResultHandler);
         /**
          * Offloading Initialization - End
@@ -673,6 +675,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
         ArrayList<String> inputNodes = new ArrayList<>();
         ArrayList<float[]> inputValues = new ArrayList<>();
         ArrayList<long[]> dims = new ArrayList<>();
+        Map<String, long[]> odims = new HashMap<>();
 
         // feed INPUT_NODE
         inputNodes.add(INPUT_NODE);
@@ -686,9 +689,10 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
         // output nodes
         String[] outputNodes = new String[]{OUTPUT_NODE};
+        odims.put(OUTPUT_NODE, new long[]{desiredSize, desiredSize, 3});
 
         // commit
-        offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes);
+        offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes, odims);
         /**
          * Offloading - Commit - end
          */
