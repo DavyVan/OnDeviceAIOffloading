@@ -14,6 +14,7 @@ import android.os.Handler;
  */
 public abstract class DeviceAdapter {
 
+    public int id;                  /**< ID of current device */
     public String deviceName;       /**< String identifier of current device */
     public boolean isRemote;        /**< Indicate whether this device is remote or local */
     public boolean isParallel;      /**< Indicate whether this device can run tasks in parallel */

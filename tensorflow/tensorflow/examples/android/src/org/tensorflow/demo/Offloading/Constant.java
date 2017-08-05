@@ -17,11 +17,16 @@ public final class Constant {
         // Profiler
         // 1-Exponential Smoothing
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
+
+        // Network
+        public static final String SERVER_IP = "192.168.0.126";
+        public static final int SERVER_PORT = 2333;
     }
 
     // Error
     public static final int SYSTEM_NOT_INIT = 1;
     public static final int NO_DEVICE_AVAILABLE = 2;
+    public static final int IO_EXCEPTION = 3;
 
     // Info
     public static final int SUCCESS = 100;
@@ -32,9 +37,13 @@ public final class Constant {
 
     public static String getErrorMessage(int errno) {
         switch (errno) {
-            case SUCCESS:               return "Action completed successfully.";
+            // Error
             case SYSTEM_NOT_INIT:       return "Offloading system is not initialized yet.";
             case NO_DEVICE_AVAILABLE:   return "No device available after device discovery.";
+            case IO_EXCEPTION:          return "Vital IO exception occurred.";
+
+            // Info
+            case SUCCESS:               return "Action completed successfully.";
             case FRAME_DROPPED:         return "Current frame was dropped after dynamic sampling.";
             case BUFFER_FULL:           return "Buffer is full.";
             case TASK_NOT_EXIST:        return "Specific task doesn't exist any more. Maybe it's been cleaned.";

@@ -19,7 +19,7 @@ import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
  * 
  *          Discover, connect, transmit, keep alive, query.
  */
-public class DeviceManager extends DeviceAdapter {
+public class DeviceManager {
 
     private ArrayList<DeviceAdapter> devices;       /**< All the devices information are stored here */
 
@@ -43,22 +43,25 @@ public class DeviceManager extends DeviceAdapter {
     /**
      * Discover all devices, add them into devices list and initialize them.
      */
-    @Override
     public int init() {
         // Scan all possible devices
         // 1. local
         DeviceAdapter localDevice = new LocalDevice(this);
         int errno = localDevice.init();
-        if (errno == SUCCESS)
+        if (errno == SUCCESS) {
             devices.add(localDevice);
+            localDevice.id = devices.size() - 1;
+        }
         else
             Log.e("FQ", getErrorMessage(errno));
 
         // 2. Wi-Fi
         DeviceAdapter wifiDevice = new WiFiDevice(this);
         errno = wifiDevice.init();
-        if (errno == SUCCESS)
+        if (errno == SUCCESS) {
             devices.add(wifiDevice);
+            wifiDevice.id = devices.size() - 1;
+        }
         else
             Log.e("FQ", getErrorMessage(errno));
 
@@ -68,37 +71,32 @@ public class DeviceManager extends DeviceAdapter {
             return SUCCESS;
     }
 
-    @Override
     public int preprocess(int deviceId, Task task) {
         // forward directly
         return devices.get(deviceId).preprocess(deviceId, task);
     }
 
-    @Override
     public int uploadAndRun(int deviceId, Task task) {
         // forward directly
+        devices.get(deviceId).isIdle = false;
         return devices.get(deviceId).uploadAndRun(deviceId, task);
     }
 
-    @Override
-    public int startCompute(int deviceId) {
-        // forward directly
-        return devices.get(deviceId).startCompute(deviceId);
-    }
+//    public int startCompute(int deviceId) {
+//        // forward directly
+//        return devices.get(deviceId).startCompute(deviceId);
+//    }
 
-    @Override
-    public int fetchResult(int deviceId) {
-        // forward directly
-        return devices.get(deviceId).fetchResult(deviceId);
-    }
+//    public int fetchResult(int deviceId) {
+//        // forward directly
+//        return devices.get(deviceId).fetchResult(deviceId);
+//    }
 
-    @Override
     public int postprocess(int deviceId, Task task) {
         // forward directly
         return devices.get(deviceId).postprocess(deviceId, task);
     }
 
-    @Override
     public int uploadModel(int deviceId, String modelFileName) {
         // forward directly
         return devices.get(deviceId).uploadModel(deviceId, modelFileName);
@@ -109,7 +107,6 @@ public class DeviceManager extends DeviceAdapter {
      * True:    Exist any available device
      * False:   No available device
      */
-    @Override
     public boolean isAvailable(int deviceId) {
         boolean ret = false;
         for (DeviceAdapter device : devices) {

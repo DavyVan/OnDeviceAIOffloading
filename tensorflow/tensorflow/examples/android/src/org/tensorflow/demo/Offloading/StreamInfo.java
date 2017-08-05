@@ -62,7 +62,8 @@ public class StreamInfo {
         public int pre_process;     /**< Time cost of pre-process stage */
         public int uploading;       /**< Time cost of uploading stage */
         public int computing;       /**< Time cost of computing stage */
-        public int downloading;     /**< Time cost of downloading result stage */
+        public int downloading;     /**< Time cost of downloading result stage
+                                         Measured by sender: http://ieeexplore.ieee.org/document/917505*/
         public int post_process;    /**< Time cost of post-process stage */
 
         public boolean isRemote;    /**< Indicate whether the device which bind with current cost instance is remote or local */

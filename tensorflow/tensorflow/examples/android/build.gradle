@@ -188,4 +188,6 @@ dependencies {
     if (nativeBuildSystem == 'cmake' || nativeBuildSystem == 'none') {
         compile 'org.tensorflow:tensorflow-android:+'
     }
+    compile 'org.zeromq:jeromq:0.4.2'
+    compile 'org.msgpack:msgpack-core:0.8.13'
 }

@@ -92,5 +92,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="msgpack-core-0.8.13" level="project" />
+    <orderEntry type="library" exported="" name="jeromq-0.4.2" level="project" />
+    <orderEntry type="library" exported="" name="jnacl-0.1.0" level="project" />
   </component>
 </module>
