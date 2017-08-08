@@ -12,18 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92acf406-c9ae-4c4d-8936-70971f2ac1ac" name="Default" comment="Add">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jeromq_0_4_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jnacl_0_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/msgpack_core_0_8_13.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android.iml" afterPath="$PROJECT_DIR$/android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/StreamInfo.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/StreamInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java" />
     </list>
     <ignored path="android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,188 +45,81 @@
     <favorites_list name="android" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="StylizeActivity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4356">
-                  <caret line="609" column="17" selection-start-line="609" selection-start-column="8" selection-end-line="609" selection-end-column="17" />
-                  <folding>
-                    <element signature="e#0#28471#0" expanded="false" />
-                    <element signature="imports" expanded="false" />
-                    <element signature="class#4783:6817" expanded="false" />
-                    <element signature="method#onTouch#0;class#4783:6817" expanded="false" />
-                    <element signature="e#8617#8618#0" expanded="false" />
-                    <element signature="e#8667#8668#0" expanded="false" />
-                    <element signature="e#9254#9255#0" expanded="false" />
-                    <element signature="e#9320#9321#0" expanded="false" />
-                    <element signature="e#9385#9386#0" expanded="false" />
-                    <element signature="e#9428#9429#0" expanded="false" />
-                    <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
-                    <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
-                    <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
-                    <element signature="e#14878#14879#0" expanded="false" />
-                    <element signature="e#14936#14937#0" expanded="false" />
-                    <element signature="e#15271#15272#0" expanded="false" />
-                    <element signature="e#15330#15331#0" expanded="false" />
-                    <element signature="method#onPreviewSizeChosen#0;class#StylizeActivity#0" expanded="false" />
-                    <element signature="e#16595#16596#0" expanded="false" />
-                    <element signature="e#16662#16663#0" expanded="false" />
-                    <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
-                    <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="LocalDevice.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LocalDevice.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="918">
-                  <caret line="85" column="50" selection-start-line="85" selection-start-column="50" selection-end-line="85" selection-end-column="50" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DeviceManager.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="837">
-                  <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
-                  <folding>
-                    <marker date="1501927243280" expanded="true" signature="362:395" ph="/**...*/" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DeviceAdapter.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="288">
-                  <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="297">
-                  <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="WiFiDevice.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="249">
-                  <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../../../../../0MQtest/app/src/main/java/com/example/fanquan/a0mqtest/MainActivity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1136">
-                  <caret line="254" column="13" selection-start-line="245" selection-start-column="12" selection-end-line="254" selection-end-column="13" />
-                  <folding>
-                    <element signature="method#packing#0;class#MainActivity#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="WiFiDevice.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4041">
-                  <caret line="249" column="24" selection-start-line="249" selection-start-column="24" selection-end-line="249" selection-end-column="24" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#1863#2298#0" expanded="true" />
-                    <element signature="e#2297#2298#0" expanded="true" />
-                    <element signature="e#6302#9886#0" expanded="true" />
-                    <element signature="e#9885#9886#0" expanded="true" />
-                    <element signature="e#10200#10201#0" expanded="true" />
-                    <element signature="e#10227#10228#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Constant.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="359">
-                  <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Thread.java" pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/lang/Thread.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="11268">
-                  <caret line="685" column="25" selection-start-line="685" selection-start-column="25" selection-end-line="685" selection-end-column="25" />
-                  <folding>
-                    <element signature="e#0#44933#0" expanded="false" />
-                    <element signature="imports" expanded="false" />
-                    <element signature="e#6599#6600#0" expanded="false" />
-                    <element signature="e#6642#6643#0" expanded="false" />
-                    <element signature="e#7155#7156#0" expanded="false" />
-                    <element signature="e#7202#7203#0" expanded="false" />
-                    <element signature="e#9321#9322#0" expanded="false" />
-                    <element signature="e#9369#9370#0" expanded="false" />
-                    <element signature="e#15226#15227#0" expanded="false" />
-                    <element signature="e#15295#15296#0" expanded="false" />
-                    <element signature="e#15770#15771#0" expanded="false" />
-                    <element signature="e#15815#15816#0" expanded="false" />
-                    <element signature="e#16101#16102#0" expanded="false" />
-                    <element signature="e#16158#16159#0" expanded="false" />
-                    <element signature="e#16369#16370#0" expanded="false" />
-                    <element signature="e#16430#16431#0" expanded="false" />
-                    <element signature="e#18096#18097#0" expanded="false" />
-                    <element signature="e#18137#18138#0" expanded="false" />
-                    <element signature="e#18854#18855#0" expanded="false" />
-                    <element signature="e#18879#18880#0" expanded="false" />
-                    <element signature="e#18971#18972#0" expanded="false" />
-                    <element signature="e#18998#18999#0" expanded="false" />
-                    <element signature="e#19095#19096#0" expanded="false" />
-                    <element signature="e#19126#19127#0" expanded="false" />
-                    <element signature="e#19622#19623#0" expanded="false" />
-                    <element signature="e#19692#19693#0" expanded="false" />
-                    <element signature="e#23479#23480#0" expanded="false" />
-                    <element signature="e#23508#23509#0" expanded="false" />
-                    <element signature="e#27529#27530#0" expanded="false" />
-                    <element signature="e#27586#27587#0" expanded="false" />
-                    <element signature="e#28072#28073#0" expanded="false" />
-                    <element signature="e#28111#28112#0" expanded="false" />
-                    <element signature="e#36686#36687#0" expanded="false" />
-                    <element signature="e#36725#36726#0" expanded="false" />
-                    <element signature="e#37237#37238#0" expanded="false" />
-                    <element signature="e#37294#37295#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="StylizeActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="534">
+              <caret line="221" column="28" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
+              <folding>
+                <element signature="class#4783:6817" expanded="false" />
+                <element signature="method#onTouch#0;class#4783:6817" expanded="false" />
+                <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="method#onPreviewSizeChosen#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalDevice.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LocalDevice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1296">
+              <caret line="85" column="50" selection-start-line="85" selection-start-column="50" selection-end-line="85" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="972">
+              <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
+              <folding>
+                <marker date="1501927243280" expanded="true" signature="362:395" ph="/**...*/" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WiFiDevice.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1023">
+              <caret line="231" column="43" selection-start-line="231" selection-start-column="43" selection-end-line="231" selection-end-column="43" />
+              <folding>
+                <element signature="method#packAndSend#0;class#WiFiDevice#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1246,10 +1130,10 @@
     <scope name="Unnamed" pattern="src:org.tensorflow.demo.Offloading.*" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="2495" />
-    <option name="height" value="1416" />
+    <option name="x" value="3552" />
+    <option name="y" value="412" />
+    <option name="width" value="927" />
+    <option name="height" value="1028" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1362,8 +1246,10 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="AndroidView">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1374,84 +1260,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demo" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Offloading" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1797,37 +1606,37 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="2495" height="1416" extended-state="6" />
-    <editor active="true" />
+    <frame x="3552" y="412" width="927" height="1028" extended-state="4" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884312" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1118824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30874008" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884312" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884312" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299748" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299748" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1885,13 +1694,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DynamicSampling.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -2035,23 +1837,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_camera.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/camera_connection_fragment_stylize.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../contrib/android/java/org/tensorflow/contrib/android/TensorFlowInferenceInterface.java">
@@ -2062,51 +1864,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="62" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/CameraActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="751">
           <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4356">
-          <caret line="609" column="17" selection-start-line="609" selection-start-column="8" selection-end-line="609" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#28471#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="class#4783:6817" expanded="false" />
-            <element signature="method#onTouch#0;class#4783:6817" expanded="false" />
-            <element signature="e#8617#8618#0" expanded="false" />
-            <element signature="e#8667#8668#0" expanded="false" />
-            <element signature="e#9254#9255#0" expanded="false" />
-            <element signature="e#9320#9321#0" expanded="false" />
-            <element signature="e#9385#9386#0" expanded="false" />
-            <element signature="e#9428#9429#0" expanded="false" />
-            <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="e#14878#14879#0" expanded="false" />
-            <element signature="e#14936#14937#0" expanded="false" />
-            <element signature="e#15271#15272#0" expanded="false" />
-            <element signature="e#15330#15331#0" expanded="false" />
-            <element signature="method#onPreviewSizeChosen#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="e#16595#16596#0" expanded="false" />
-            <element signature="e#16662#16663#0" expanded="false" />
-            <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2132,7 +1893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5508">
           <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2140,52 +1900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-9819">
           <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11268">
-          <caret line="685" column="25" selection-start-line="685" selection-start-column="25" selection-end-line="685" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#44933#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#6599#6600#0" expanded="false" />
-            <element signature="e#6642#6643#0" expanded="false" />
-            <element signature="e#7155#7156#0" expanded="false" />
-            <element signature="e#7202#7203#0" expanded="false" />
-            <element signature="e#9321#9322#0" expanded="false" />
-            <element signature="e#9369#9370#0" expanded="false" />
-            <element signature="e#15226#15227#0" expanded="false" />
-            <element signature="e#15295#15296#0" expanded="false" />
-            <element signature="e#15770#15771#0" expanded="false" />
-            <element signature="e#15815#15816#0" expanded="false" />
-            <element signature="e#16101#16102#0" expanded="false" />
-            <element signature="e#16158#16159#0" expanded="false" />
-            <element signature="e#16369#16370#0" expanded="false" />
-            <element signature="e#16430#16431#0" expanded="false" />
-            <element signature="e#18096#18097#0" expanded="false" />
-            <element signature="e#18137#18138#0" expanded="false" />
-            <element signature="e#18854#18855#0" expanded="false" />
-            <element signature="e#18879#18880#0" expanded="false" />
-            <element signature="e#18971#18972#0" expanded="false" />
-            <element signature="e#18998#18999#0" expanded="false" />
-            <element signature="e#19095#19096#0" expanded="false" />
-            <element signature="e#19126#19127#0" expanded="false" />
-            <element signature="e#19622#19623#0" expanded="false" />
-            <element signature="e#19692#19693#0" expanded="false" />
-            <element signature="e#23479#23480#0" expanded="false" />
-            <element signature="e#23508#23509#0" expanded="false" />
-            <element signature="e#27529#27530#0" expanded="false" />
-            <element signature="e#27586#27587#0" expanded="false" />
-            <element signature="e#28072#28073#0" expanded="false" />
-            <element signature="e#28111#28112#0" expanded="false" />
-            <element signature="e#36686#36687#0" expanded="false" />
-            <element signature="e#36725#36726#0" expanded="false" />
-            <element signature="e#37237#37238#0" expanded="false" />
-            <element signature="e#37294#37295#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2197,19 +1911,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.zeromq/jeromq/0.4.2/a79c11530e58f950adce8c58ff0f7e13470f937b/jeromq-0.4.2-sources.jar!/zmq/SocketBase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
           <caret line="681" column="47" selection-start-line="681" selection-start-column="47" selection-end-line="681" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2217,7 +1922,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="138" column="28" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2225,10 +1929,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="2436" column="44" selection-start-line="2436" selection-start-column="44" selection-end-line="2436" selection-end-column="44" />
-          <folding>
-            <element signature="e#99886#99887#0" expanded="false" />
-            <element signature="e#99930#99931#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2243,18 +1943,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/StreamInfo.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LCMScheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="65" column="103" selection-start-line="65" selection-start-column="103" selection-end-line="65" selection-end-column="103" />
+        <state relative-caret-position="1404">
+          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/lang/Thread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="1197">
+          <caret line="685" column="25" selection-start-line="685" selection-start-column="25" selection-end-line="685" selection-end-column="25" />
+          <folding>
+            <element signature="e#23124#23125#0" expanded="false" />
+            <element signature="e#23164#23165#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="37" column="53" selection-start-line="37" selection-start-column="53" selection-end-line="37" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -2269,17 +1988,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="837">
+        <state relative-caret-position="972">
           <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
           <folding>
             <marker date="1501927243280" expanded="true" signature="362:395" ph="/**...*/" />
@@ -2289,32 +2000,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LocalDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
+        <state relative-caret-position="1296">
           <caret line="85" column="50" selection-start-line="85" selection-start-column="50" selection-end-line="85" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LCMScheduler.java">
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1404">
-          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+        <state relative-caret-position="468">
+          <caret line="29" column="62" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DynamicSampling.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="534">
+          <caret line="221" column="28" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
+          <folding>
+            <element signature="class#4783:6817" expanded="false" />
+            <element signature="method#onTouch#0;class#4783:6817" expanded="false" />
+            <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="method#onPreviewSizeChosen#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/StreamInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4041">
-          <caret line="249" column="24" selection-start-line="249" selection-start-column="24" selection-end-line="249" selection-end-column="24" />
+        <state relative-caret-position="1023">
+          <caret line="231" column="43" selection-start-line="231" selection-start-column="43" selection-end-line="231" selection-end-column="43" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1863#2298#0" expanded="true" />
-            <element signature="e#2297#2298#0" expanded="true" />
-            <element signature="e#6302#9886#0" expanded="true" />
-            <element signature="e#9885#9886#0" expanded="true" />
-            <element signature="e#10200#10201#0" expanded="true" />
-            <element signature="e#10227#10228#0" expanded="true" />
+            <element signature="method#packAndSend#0;class#WiFiDevice#0" expanded="false" />
           </folding>
         </state>
       </provider>
