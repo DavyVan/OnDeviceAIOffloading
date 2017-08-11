@@ -1,5 +1,7 @@
 package org.tensorflow.demo.Offloading;
 
+import android.util.Log;
+
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_SIZE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
@@ -50,6 +52,7 @@ public class OffloadingBuffer {
         task.bufferIndex = nextSlot;
         buffer[nextSlot] = task;
         nextSlot = (nextSlot + 1) % BUFFER_SIZE;
+//        Log.i("FQ", "New task-" + task.id + " inserted");
         return SUCCESS;
     }
 
@@ -98,7 +101,7 @@ public class OffloadingBuffer {
      */
     public int cleanUntouchedTask() {
         int counter = 0;
-        int p = nextSlot - 1;
+        int p = (nextSlot - 1 + BUFFER_SIZE) % BUFFER_SIZE;
         while (p != nextSlot) {
             if (buffer[p] == null) {
                 p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
@@ -118,6 +121,8 @@ public class OffloadingBuffer {
 
     /**
      * \brief   To know whether the task is at the head of circle queue
+     *
+     * \note    Last reviewed 2017.8.10 22:17
      *
      * \param   index       As its name
      * \return  the boolean

@@ -31,6 +31,8 @@ public class DeviceManager {
      * \brief   Constructor.
      *
      *          Allocate memory for devices list
+     *
+     * \note    Last reviewed 2017.8.10 21:24
      */
     public DeviceManager(Activity activity) {
         super();
@@ -42,6 +44,7 @@ public class DeviceManager {
 
     /**
      * Discover all devices, add them into devices list and initialize them.
+     * \note    Last reviewed 2017.8.10 21:24
      */
     public int init() {
         // Scan all possible devices
@@ -123,7 +126,7 @@ public class DeviceManager {
      * \return  devices' list
      */
     public DeviceAdapter[] getAllDevices() {
-        return (DeviceAdapter[]) devices.toArray();
+        return (DeviceAdapter[]) devices.toArray(new DeviceAdapter[0]);
     }
 
     public void markAsIdle(int deviceId) {

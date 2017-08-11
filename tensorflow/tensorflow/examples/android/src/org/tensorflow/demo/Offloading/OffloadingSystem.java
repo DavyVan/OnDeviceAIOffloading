@@ -33,6 +33,9 @@ public class OffloadingSystem implements FrontInterface {
     private TaskExecuteEngine taskExecuteEngine;
     private static long nextTaskId = 0;
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:33
+     */
     @Override
     public int commit(String modelFileName, String appName,
                       ArrayList<String> inputNodes, ArrayList<float[]> inputValues, ArrayList<long[]> dims,
@@ -76,6 +79,9 @@ public class OffloadingSystem implements FrontInterface {
         return SUCCESS;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:33
+     */
     @Override
     public int init(Activity activity) {
         // Instantiate, keep the order
@@ -84,11 +90,11 @@ public class OffloadingSystem implements FrontInterface {
         // TODO: 17-7-17 Use JAVA Reflection to dynamic load different scheduler
         scheduler = new LCMScheduler(profiler, offloadingBuffer);
         dynamicSampler = (DynamicSampling) scheduler;
-        deviceManager = new DeviceManager(activity);
+        deviceManager = new DeviceManager(activity);        // Constructor does nothing
         modelManager = new ModelManager(deviceManager);
         taskExecuteEngine = new TaskExecuteEngine(modelManager, deviceManager, scheduler);
 
-        // Initialize
+        // Initialize devices
         int errno = deviceManager.init();
         if (errno != SUCCESS) {
             Log.e("FQ", getErrorMessage(errno));
@@ -107,6 +113,9 @@ public class OffloadingSystem implements FrontInterface {
         return deviceManager.isAvailable(1);        // only remote device is considered
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:33
+     */
     @Override
     public void setOnResultHandler(Handler handler) {
         taskExecuteEngine.setFrontEndHandler(handler);

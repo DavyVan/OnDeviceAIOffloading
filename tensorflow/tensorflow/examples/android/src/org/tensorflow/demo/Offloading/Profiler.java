@@ -20,6 +20,8 @@ public class Profiler {
 
     /**
      * /brief   Constructor. Initialize the database.
+     *
+     * \note    Last reviewed 2017.8.10 21:24
      */
     public Profiler() {
         databaseMap = new HashMap<String, StreamInfo>();
@@ -27,6 +29,8 @@ public class Profiler {
 
     /**
      * \brief   Get information about a stream
+     *
+     * \note    Last reviewed 2017.8.10 21:24
      *
      * \param   modelName       Model file name
      * \return  A StreamInfo contains information about the stream that the model indicates
@@ -39,6 +43,8 @@ public class Profiler {
      * \brief   Update new information about a data stream
      *
      *          This method is usually called by TaskExecuteEngine after a task is done.
+     *
+     * \note    Last reviewed 2017.8.10 21:56
      *
      * \param   newInfo         StreamInfo instance contain the latest information about the stream
      * \param   deviceId        Additionally, we need device ID to know which device just processed the task
@@ -56,10 +62,14 @@ public class Profiler {
             StreamInfo.Cost _cost = _streamInfo.costs.get(deviceId);
             StreamInfo.Cost _newCost = newInfo.costs.get(0);
             if (_cost.isRemote) {
-                _cost.pre_process = (int) (_cost.pre_process * SMOOTHING_FACTOR + _newCost.pre_process * (1 - SMOOTHING_FACTOR));
-                _cost.uploading = (int) (_cost.uploading * SMOOTHING_FACTOR + _newCost.uploading * (1 - SMOOTHING_FACTOR));
-                _cost.downloading = (int) (_cost.downloading * SMOOTHING_FACTOR + _newCost.downloading * (1 - SMOOTHING_FACTOR));
-                _cost.post_process = (int) (_cost.post_process * SMOOTHING_FACTOR + _newCost.post_process * (1 - SMOOTHING_FACTOR));
+                if (_newCost.pre_process <= 0)
+                    _cost.pre_process = (int) (_cost.pre_process * SMOOTHING_FACTOR + _newCost.pre_process * (1 - SMOOTHING_FACTOR));
+                if (_newCost.uploading <= 0)
+                    _cost.uploading = (int) (_cost.uploading * SMOOTHING_FACTOR + _newCost.uploading * (1 - SMOOTHING_FACTOR));
+                if (_newCost.downloading <= 0)
+                    _cost.downloading = (int) (_cost.downloading * SMOOTHING_FACTOR + _newCost.downloading * (1 - SMOOTHING_FACTOR));
+                if (_newCost.post_process <= 0)
+                    _cost.post_process = (int) (_cost.post_process * SMOOTHING_FACTOR + _newCost.post_process * (1 - SMOOTHING_FACTOR));
             }
             _cost.computing = (int) (_cost.computing * SMOOTHING_FACTOR + _newCost.computing * (1 - SMOOTHING_FACTOR));
             _cost.calculateSchedulingCost();

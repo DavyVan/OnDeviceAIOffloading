@@ -61,10 +61,13 @@ def startServer():
     # sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    config.log_device_placement=False
+    # config.log_device_placement=True
+    config.allow_soft_placement=False
+    config.intra_op_parallelism_threads=1
+    config.inter_op_parallelism_threads=2
     sess = tf.Session(config=config)
 
-    for _ in range(10):
+    for _ in range(2):
         threading.Thread(target=run_inference, args=(sess,)).start()
 
 def main():

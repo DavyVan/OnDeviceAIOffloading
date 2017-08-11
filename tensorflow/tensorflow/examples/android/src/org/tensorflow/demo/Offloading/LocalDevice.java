@@ -23,6 +23,9 @@ public class LocalDevice extends DeviceAdapter {
     private DeviceManager deviceManager;
     private TensorFlowInferenceInterface tf;    /**< Instance of TF, for demo only. Lazy created */
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:37
+     */
     public LocalDevice(DeviceManager deviceManager) {
         super(false, false, "Local");
         currentTask = null;
@@ -30,6 +33,9 @@ public class LocalDevice extends DeviceAdapter {
         tf = null;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:24
+     */
     @Override
     public int init() {
 
@@ -46,6 +52,9 @@ public class LocalDevice extends DeviceAdapter {
         return SUCCESS;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 16:59
+     */
     @Override
     public int uploadAndRun(final int deviceId, Task task) {
         // record task
@@ -80,6 +89,9 @@ public class LocalDevice extends DeviceAdapter {
         return 0;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 16:59
+     */
     @Override
     public int fetchResult(int deviceId) {
         // Run - fetch

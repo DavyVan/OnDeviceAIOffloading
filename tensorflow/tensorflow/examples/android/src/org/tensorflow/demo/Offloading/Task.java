@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public class Task {
 
+    // Metadata
     public long id;                             /**< Unique ID */
     public String appName;                      /**< Which app commit this task */
     public String modelName;                    /**< Model file name */
@@ -22,14 +23,17 @@ public class Task {
                                                      2:uploaded or pending for uploading,
                                                      3:done */
 
+    // Input
     public ArrayList<String> inputNodes;         /**< Input node tag */
     public ArrayList<float[]> inputValues;      /**< Input values */
     public ArrayList<long[]> dims;              /**< Dimensions of input values */
 
+    // Output
     public String[] outputNodes;                /**< output node tag */
     public Map<String, float[]> outputs;        /**< Result data */
     public Map<String, long[]> odims;           /**< Dimensions of output values */
 
+    // Feed back
     public StreamInfo.Cost cost;                /**< Cost instance tracking time cost for profiling */
 
     /**

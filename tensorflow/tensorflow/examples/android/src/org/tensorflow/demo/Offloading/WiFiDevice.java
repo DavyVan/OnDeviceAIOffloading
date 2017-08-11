@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
+import android.util.SparseArray;
 
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
@@ -26,7 +27,7 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 
 public class WiFiDevice extends DeviceAdapter {
 
-//    private OffloadingBuffer buffer;        /**< Reuse OffloadingBuffer as internal buffer */
+    private SparseArray<Task> ibuffer;      /**< Reuse OffloadingBuffer as internal buffer */
     private Thread IThread;                 /**< Thread for network input */
     private HandlerThread OThread;          /**< Thread for network output */
     private Handler OThreadHandler;         /**< Handler for triggering the uploading */
@@ -42,9 +43,13 @@ public class WiFiDevice extends DeviceAdapter {
         this.deviceManager = deviceManager;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 17:12
+     */
     @Override
     public int init() {
-//        buffer = new OffloadingBuffer();
+        // Initialize internal buffer
+        ibuffer = new SparseArray<>();
 
         // Initialize output thread
         OThread = new HandlerThread("WiFi-upload");
@@ -67,11 +72,11 @@ public class WiFiDevice extends DeviceAdapter {
                 requester.setSendTimeOut(-1);       // Block
                 requester.connect("tcp://" + SERVER_IP + ":" + SERVER_PORT);
                 Log.i("FQ", "Server connected");
+
+                // Start to fetch result
+                fetchResult(WiFiDevice.this.id);
             }
         });
-
-        // Start to fetch result
-        fetchResult(this.id);
 
         return SUCCESS;
     }
@@ -81,8 +86,13 @@ public class WiFiDevice extends DeviceAdapter {
         return 0;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 17:13
+     */
     @Override
     public int uploadAndRun(int deviceId, Task task) {
+        // Insert task in buffer
+        ibuffer.put((int) task.id, task);
 
         // Call output thread to handle packing and sending
         Message msg = Message.obtain();
@@ -92,6 +102,9 @@ public class WiFiDevice extends DeviceAdapter {
         return SUCCESS;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 17:07
+     */
     private synchronized int packAndSend(Task task) {
         // msgpack
         long packStart = System.currentTimeMillis();
@@ -176,6 +189,9 @@ public class WiFiDevice extends DeviceAdapter {
         return 0;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 17:12
+     */
     @Override
     public int fetchResult(final int deviceId) {
         // init IThread:
@@ -187,7 +203,7 @@ public class WiFiDevice extends DeviceAdapter {
                     Log.i("FQ", "Receive a reply " + reply.length);
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
                     try {
-                        int id = unpacker.unpackInt();                      // Task::id
+                        long id = unpacker.unpackLong();                      // Task::id
                         Log.i("FQ", "Received task id: " + id);
                         String appName = unpacker.unpackString();           // Task::appName
                         String modelName = unpacker.unpackString();         // Task::modelName
@@ -224,7 +240,8 @@ public class WiFiDevice extends DeviceAdapter {
                             odims.put(key, value);
                         }
 
-                        Task replyTask = new Task(id, appName, null, null, null, outputNodes, odims, modelName);
+//                        Task replyTask = new Task(id, appName, null, null, null, outputNodes, odims, modelName);
+                        Task replyTask = ibuffer.get((int) id);
                         replyTask.bufferIndex = bufferIndex;
                         replyTask.outputs = outputs;
 

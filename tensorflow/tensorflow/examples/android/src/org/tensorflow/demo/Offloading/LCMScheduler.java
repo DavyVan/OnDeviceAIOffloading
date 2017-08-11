@@ -40,6 +40,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     /**
      * Scheduler
+     *
+     * \note    Last reviewed 2017.8.10 21:24
      */
     @Override
     public void init(int deviceNum) {
@@ -53,6 +55,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         lastSampleTime = System.currentTimeMillis();
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 22:15
+     */
     @Override
     public void calculateQuota(String modelName) {
 
@@ -73,8 +78,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
         // K'_i
         double min = Constant.Tools.min(temp);
-        for (double x : temp)
-            x = Math.ceil(x / min);
+        for (int i = 0; i < temp.length; i++)
+//            x = Math.ceil(x / min);
+            temp[i] = Math.ceil(temp[i] / min);
 
         // write results back into SingleWindow in deviceId-increment order (i.e. reset all windows)
         // NOTE: apply() MUST be called right after following assignments
@@ -82,11 +88,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             currentWindows.get(i).size = (int) temp[i];
             currentWindows.get(i).deviceId = i;
         }
-
         apply();
+
         calcSamplingRate(modelName);
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 22:15
+     */
     @Override
     public void apply() {
         // Sort currentWindows by size in descent order
@@ -108,6 +117,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         }
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:26
+     */
     @Override
     public Task next(int deviceId) {
 
@@ -128,6 +140,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         return null;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 16:57
+     */
     @Override
     public void markAsDone(Task task, int deviceId) {
 
@@ -175,6 +190,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     /**
      * DynamicSampling
+     *
+     * \note    Last reviewed 2017.8.10 22:15
      */
     @Override
     public boolean sample(String modelName) {
@@ -188,6 +205,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             return false;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 22:15
+     */
     @Override
     public void calcSamplingRate(String modelName) {        // the modelName is useless now
         double v = 0;
@@ -214,6 +234,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         return null;        // un-touchable statement
     }
 
+    /**
+     * \note    Last reviewed 2017.8.11 16:57
+     */
     private void allWindowsMoveForward(int offset) {
         for (SingleWindow window : currentWindows) {
             window.position += offset;

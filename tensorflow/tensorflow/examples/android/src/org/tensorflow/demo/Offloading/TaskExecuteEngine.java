@@ -34,8 +34,10 @@ public class TaskExecuteEngine {
      * \brief   Simple constructor.
      *
      *          Initialize the ModelManager, DeviceManager, Scheduler
+     *
+     * \note    Last reviewed 2017.8.11 16:57
      */
-    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, final Scheduler scheduler) {
+    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, Scheduler scheduler) {
         this.modelManager = modelManager;
         this.deviceManager = deviceManager;
         this.scheduler = scheduler;
@@ -51,8 +53,6 @@ public class TaskExecuteEngine {
         callNextHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
                 Bundle bundle = msg.getData();
                 int deviceId = bundle.getInt("deviceId");
 
@@ -70,8 +70,6 @@ public class TaskExecuteEngine {
         onResultHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
                 Task resultTask = (Task) msg.obj;
                 Bundle bundle = msg.getData();
                 int deviceId = bundle.getInt("deviceId");
@@ -95,6 +93,8 @@ public class TaskExecuteEngine {
      * \brief   Execute a task.
      *
      *          Hand task in DeviceManager and done.
+     *
+     * \note    Last reviewed 2017.8.10 21:27
      *
      * \param   task        instance of task to be processed
      * \param   deviceId    device ID
@@ -134,6 +134,8 @@ public class TaskExecuteEngine {
     /**
      * \brief   Check which device is idle and try to dispatch a task to it
      *
+     * \note    Last reviewed 2017.8.10 21:24
+     *
      * \return  error number
      */
     public int checkAndPushToIdle() {
@@ -141,8 +143,10 @@ public class TaskExecuteEngine {
         DeviceAdapter[] devices = deviceManager.getAllDevices();
         for (int i = 0; i < devices.length; i++) {
             if (devices[i].isIdle) {        // If it's idle, try to ask scheduler for a task
+                Log.i("FQ", "Detected device-" + devices[i].deviceName + " is idle");
                 Task _next = scheduler.next(i);
                 if (_next != null) {
+                    Log.i("FQ", "Run a new task on " + devices[i].deviceName);
                     logIfError(runTask(_next, i));
                 }
             }
@@ -150,13 +154,13 @@ public class TaskExecuteEngine {
         return SUCCESS;
     }
 
+    /**
+     * \note    Last reviewed 2017.8.10 21:24
+     */
     public void setFrontEndHandler(Handler handler) {
-        // Set two call back handler first
-        deviceManager.setHandlers(callNextHandler, onResultHandler);
-
         if (frontEndHandler == null)
             frontEndHandler = handler;
         else
-            Log.i("FQ", "Front-end handler has been overwritten.");
+            Log.i("FQ", "Front-end handler has been set.");
     }
 }

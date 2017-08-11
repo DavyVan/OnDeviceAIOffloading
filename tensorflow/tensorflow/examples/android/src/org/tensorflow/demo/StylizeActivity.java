@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Trace;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.Display;
@@ -194,34 +195,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     private Bitmap croppedBitmap_output = null;
     private OffloadingSystem offloadingSystem;
 
-    // Use super.handlerThread to process the following statements
-    private Handler onResultHandler = new Handler(super.handlerThread.getLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-
-            Task task = (Task) msg.obj;
-            // Prepare data
-            floatValues_output = new float[desiredSize * desiredSize * 3];
-            intValues_output = new int[desiredSize * desiredSize];
-            croppedBitmap_output = Bitmap.createBitmap(desiredSize, desiredSize, Config.ARGB_8888);
-            System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues_output, 0, task.outputs.get(OUTPUT_NODE).length);
-
-            // Comes from stylizeImage()
-            for (int i = 0; i < intValues_output.length; ++i) {
-                intValues_output[i] =
-                        0xFF000000
-                                | (((int) (floatValues_output[i * 3] * 255)) << 16)
-                                | (((int) (floatValues_output[i * 3 + 1] * 255)) << 8)
-                                | ((int) (floatValues_output[i * 3 + 2] * 255));
-            }
-
-            croppedBitmap_output.setPixels(intValues_output, 0, croppedBitmap_output.getWidth(), 0, 0, croppedBitmap_output.getWidth(), croppedBitmap_output.getHeight());
-
-            // Comes from onImageAvailable runInBackground()
-            textureCopyBitmap = Bitmap.createBitmap(croppedBitmap_output);
-            requestRender();
-        }
-    };
+    private Handler onResultHandler;
 
     /**
      * Offloading definition - End
@@ -237,10 +211,41 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
         super.onResume();
         /**
          * Offloading Initialization
+         * \note    Last reviewed 2017.8.10 21:24
          */
-        offloadingSystem = new OffloadingSystem();
+        // Use super.handlerThread to process the following statements
+        onResultHandler = new Handler(super.handlerThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+
+                Task task = (Task) msg.obj;
+                // Prepare data
+                floatValues_output = new float[desiredSize * desiredSize * 3];
+                intValues_output = new int[desiredSize * desiredSize];
+                croppedBitmap_output = Bitmap.createBitmap(desiredSize, desiredSize, Config.ARGB_8888);
+                System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues_output, 0, task.outputs.get(OUTPUT_NODE).length);
+
+                // Comes from stylizeImage()
+                for (int i = 0; i < intValues_output.length; ++i) {
+                    intValues_output[i] =
+                            0xFF000000
+                                    | (((int) (floatValues_output[i * 3] * 255)) << 16)
+                                    | (((int) (floatValues_output[i * 3 + 1] * 255)) << 8)
+                                    | ((int) (floatValues_output[i * 3 + 2] * 255));
+                }
+
+                croppedBitmap_output.setPixels(intValues_output, 0, croppedBitmap_output.getWidth(), 0, 0, croppedBitmap_output.getWidth(), croppedBitmap_output.getHeight());
+
+                // Comes from onImageAvailable runInBackground()
+                textureCopyBitmap = Bitmap.createBitmap(croppedBitmap_output);
+                requestRender();
+            }
+        };
+
+        offloadingSystem = new OffloadingSystem();      // Constructor does nothing. Must call init() next.
         offloadingSystem.init(this);
         offloadingSystem.setOnResultHandler(onResultHandler);
+        Log.i("FQ", "Offloading system initialized.");
         /**
          * Offloading Initialization - End
          */
@@ -439,7 +444,14 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
         borderedText = new BorderedText(textSizePx);
         borderedText.setTypeface(Typeface.MONOSPACE);
 
-        inferenceInterface = new TensorFlowInferenceInterface(getAssets(), MODEL_FILE);
+        /**
+         * Offloading - We don't need to instantiate TF here
+         * \note    Last reviewed 2017.8.10 21:24
+         */
+//        inferenceInterface = new TensorFlowInferenceInterface(getAssets(), MODEL_FILE);
+        /**
+         * Offloading - We don't need to instantiate TF here - End
+         */
 
         previewWidth = size.getWidth();
         previewHeight = size.getHeight();
@@ -620,6 +632,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
                         /**
                          * Offloading - Move to onResultHandler
+                         * \note    Last reviewed 2017.8.10 21:24
                          */
                         // for display
 //                        textureCopyBitmap = Bitmap.createBitmap(croppedBitmap);
@@ -664,6 +677,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
         /**
          * Offloading - Commit
+         * \note    Last reviewed 2017.8.10 21:24
          */
 //        inferenceInterface.feed(
 //                INPUT_NODE, floatValues, 1, bitmap.getWidth(), bitmap.getHeight(), 3);
@@ -699,6 +713,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
         /**
          * Offloading - Move to onResultHandler
+         * \note    Last reviewed 2017.8.10 21:24
          */
 //        for (int i = 0; i < intValues.length; ++i) {
 //            intValues[i] =
@@ -751,7 +766,15 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
         final Vector<String> lines = new Vector<>();
 
-        final String[] statLines = inferenceInterface.getStatString().split("\n");
+        /**
+         * Offloading - Get rid of inferenceInterface
+         * \note    Last reviewed 2017.8.10 21:24
+         */
+//        final String[] statLines = inferenceInterface.getStatString().split("\n");
+        final String[] statLines = new String[1];
+        /**
+         * Offloading - Get rid of inferenceInterface - End
+         */
         Collections.addAll(lines, statLines);
 
         lines.add("");
