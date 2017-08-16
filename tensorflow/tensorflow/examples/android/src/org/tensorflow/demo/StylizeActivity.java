@@ -732,6 +732,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     private void renderDebug(final Canvas canvas) {
         // TODO(andrewharp): move result display to its own View instead of using debug overlay.
         // This means all picture are rendered on debug overlay, using matrix to control the position
+        Log.i("FQ", "renderDebug called");
         final Bitmap texture = textureCopyBitmap;
         if (texture != null) {
             final Matrix matrix = new Matrix();

@@ -26,6 +26,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     private int sampleInterval;                         /**< in ms */
     private long lastSampleTime;                        /**< As its name */
 
+    private boolean isInitStatus;                       /**< This scheduler is currently under initial status or not */
+
 
     /**
      * \brief   Simple constructor only assign all member variables without initializing scheduling policy
@@ -47,12 +49,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     public void init(int deviceNum) {
         // Scheduling policy - fill the currentWindows & deviceId
         for (int i = 0; i < deviceNum; i++) {
-            currentWindows.add(new SingleWindow(1, i));
+            currentWindows.add(new SingleWindow(BUFFER_SIZE, i));
         }
 
         // Dynamic sampling - set sample interval as zero (no sampling)
         sampleInterval = 0;
         lastSampleTime = System.currentTimeMillis();
+
+        isInitStatus = true;
     }
 
     /**
@@ -91,6 +95,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         apply();
 
         calcSamplingRate(modelName);
+
+        isInitStatus = false;
     }
 
     /**
@@ -130,7 +136,20 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
         while (size-- > 0) {
             task = offloadingBuffer.get(start);
-            if (task.status == 0) {
+//            if ((task.status != 3 && isInitStatus) || (!isInitStatus && task.status == 0)) {
+//                task.status = 1;
+//                return task;
+//            }
+            if (task == null)
+                return null;
+            if (isInitStatus == true && task.status != 3) {
+                task.status = 1;
+                SingleWindow _window = getWindowByDeviceId(deviceId);
+                _window.position++;
+                _window.size--;
+                return task;
+            }
+            else if (!isInitStatus && task.status == 0) {
                 task.status = 1;
                 return task;
             }
@@ -145,9 +164,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
      */
     @Override
     public void markAsDone(Task task, int deviceId) {
+        Log.i("BUFFER", "Buffer status before markAsDone()");
+        offloadingBuffer.printBuffer(0, 9);
 
         // Check bufferIndex & id
-        if (offloadingBuffer.get(task.bufferIndex).id != task.id) {     // task over-written
+        Task t = offloadingBuffer.get(task.bufferIndex);
+        if (t == null)
+            return;
+        else if (t != null && t.id != task.id) {     // task over-written
             logIfError(TASK_NOT_EXIST);
             return;
         }
@@ -168,8 +192,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         if (offloadingBuffer.isHead(task.bufferIndex)) {
             // Then, check whether the 2st windows is occupied
             SingleWindow secondWindow = currentWindows.get(1);
-            if (offloadingBuffer.get(secondWindow.position) == null) {
+            if (isInitStatus == false && offloadingBuffer.get(secondWindow.position) == null) {
                 // All condition are met, slide window
+                Log.i("FQ", "Slide!");
                 int offset = 0;
                 int head = task.bufferIndex;
                 while (offloadingBuffer.get(head) != null && offloadingBuffer.get(head).status == 3) {
@@ -181,6 +206,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
                 allWindowsMoveForward(offset);
             }
         }
+        Log.i("BUFFER", "Buffer status after markAsDone()");
+        offloadingBuffer.printBuffer(0, 9);
     }
 
     @Override

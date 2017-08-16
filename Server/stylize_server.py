@@ -16,10 +16,14 @@ def sendFromQueue(socket):
     while True:
         if not sendQueue.empty():
             startTime = time.time()
-            socket.send(sendQueue.get())
+            _send = sendQueue.get()
+            # socket.send(_send)
+            socket.send_multipart([constant.ZMQ_ID.encode(), b'', _send])
+            # socket.send_multipart([constant.ZMQ_ID.encode(), _send])
             endTime = time.time()
             downloadingCost = (endTime - startTime) * 1000
             downloadingCostQueue.put(downloadingCost)
+            print("Send back a result: %s" % len(_send))
 
 def startServer():
 
@@ -44,9 +48,12 @@ def startServer():
     # Start receive request
     while True:
         request = socket.recv()
-        print("Receive request")
-
-        threading.Thread(target=inference.run_inference, args=(sess, request, downloadingCostQueue, sendQueue)).start()
+        print("Receive request (%s)" % len(request))
+        # continue
+        if len(request) > 100:
+            threading.Thread(target=inference.run_inference, args=(sess, request, downloadingCostQueue, sendQueue)).start()
+        else:
+            print("Content: %s", str(request))
 
 def main():
     startServer()

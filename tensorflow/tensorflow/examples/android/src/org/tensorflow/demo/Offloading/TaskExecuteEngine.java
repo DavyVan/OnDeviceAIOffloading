@@ -37,7 +37,7 @@ public class TaskExecuteEngine {
      *
      * \note    Last reviewed 2017.8.11 16:57
      */
-    public TaskExecuteEngine(ModelManager modelManager, DeviceManager deviceManager, Scheduler scheduler) {
+    public TaskExecuteEngine(ModelManager modelManager, final DeviceManager deviceManager, Scheduler scheduler) {
         this.modelManager = modelManager;
         this.deviceManager = deviceManager;
         this.scheduler = scheduler;
@@ -55,6 +55,7 @@ public class TaskExecuteEngine {
             public void handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 int deviceId = bundle.getInt("deviceId");
+                Log.i("FQ", "Device " + deviceManager.getAllDevices()[deviceId].deviceName + " call next task");
 
                 // Ask scheduler for next task
                 Task _next = TaskExecuteEngine.this.scheduler.next(deviceId);
@@ -63,6 +64,7 @@ public class TaskExecuteEngine {
                 }
                 else {      // If no task to do, mark isIdle = true
                     TaskExecuteEngine.this.deviceManager.markAsIdle(deviceId);
+                    Log.i("FQ", "Device " + deviceManager.getAllDevices()[deviceId].deviceName + " is marked as idle");
                 }
             }
         };
@@ -73,6 +75,7 @@ public class TaskExecuteEngine {
                 Task resultTask = (Task) msg.obj;
                 Bundle bundle = msg.getData();
                 int deviceId = bundle.getInt("deviceId");
+                Log.i("FQ", "Result returned from device " + deviceManager.getAllDevices()[deviceId].deviceName + ", resultTask is " + resultTask.toString());
 
                 // Tell scheduler task is done
                 TaskExecuteEngine.this.scheduler.markAsDone(resultTask, deviceId);
@@ -143,7 +146,7 @@ public class TaskExecuteEngine {
         DeviceAdapter[] devices = deviceManager.getAllDevices();
         for (int i = 0; i < devices.length; i++) {
             if (devices[i].isIdle) {        // If it's idle, try to ask scheduler for a task
-                Log.i("FQ", "Detected device-" + devices[i].deviceName + " is idle");
+                Log.i("IDLE", "Detected device-" + devices[i].deviceName + " is idle");
                 Task _next = scheduler.next(i);
                 if (_next != null) {
                     Log.i("FQ", "Run a new task on " + devices[i].deviceName);

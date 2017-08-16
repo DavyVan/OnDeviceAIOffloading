@@ -70,6 +70,7 @@ public class WiFiDevice extends DeviceAdapter {
                 Log.i("FQ", "Connecting to server...");
                 requester = context.socket(ZMQ.DEALER);
                 requester.setSendTimeOut(-1);       // Block
+                requester.setIdentity("FQ".getBytes());
                 requester.connect("tcp://" + SERVER_IP + ":" + SERVER_PORT);
                 Log.i("FQ", "Server connected");
 
@@ -118,7 +119,7 @@ public class WiFiDevice extends DeviceAdapter {
 
             packer.packArrayHeader(task.inputNodes.size());     // Task::inputNodes
             for (String s : task.inputNodes) {
-                packer.packString(s);
+                packer.packString(s + ":0");
             }
             packer.packArrayHeader(task.inputValues.size());    // Task::inputValues
             for (float[] x : task.inputValues) {
@@ -137,7 +138,7 @@ public class WiFiDevice extends DeviceAdapter {
 
             packer.packArrayHeader(task.outputNodes.length);    // Task::outputNodes
             for (String s : task.outputNodes) {
-                packer.packString(s);
+                packer.packString(s + ":0");
             }
             // No need to pack Task::outputs
             packer.packMapHeader(task.odims.size());            // Task::odims
@@ -152,6 +153,7 @@ public class WiFiDevice extends DeviceAdapter {
             // No need to pack Task::cost
 
             packer.flush();
+//            Log.i("FQ", "Packed data length: " + packer.toByteArray().length);
             long packEnd = System.currentTimeMillis();
             // time of msgpack should calc alone and += preprocess time
             task.cost.pre_process += packEnd - packStart;
@@ -199,11 +201,15 @@ public class WiFiDevice extends DeviceAdapter {
             @Override
             public void run() {
                 while (true) {
+                    Log.i("FQ", "Waiting for result on wifi...");
                     byte[] reply = requester.recv(0);
                     Log.i("FQ", "Receive a reply " + reply.length);
+                    if (reply.length == 0)
+                        continue;
+
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
                     try {
-                        long id = unpacker.unpackLong();                      // Task::id
+                        long id = unpacker.unpackInt();                      // Task::id
                         Log.i("FQ", "Received task id: " + id);
                         String appName = unpacker.unpackString();           // Task::appName
                         String modelName = unpacker.unpackString();         // Task::modelName
@@ -217,11 +223,11 @@ public class WiFiDevice extends DeviceAdapter {
                         int numOutputNodes = unpacker.unpackArrayHeader();  // Task::outputNodes
                         String[] outputNodes = new String[numOutputNodes];
                         for (int i = 0; i < numOutputNodes; i++)
-                            outputNodes[i] = unpacker.unpackString();
+                            outputNodes[i] = unpacker.unpackString().split(":")[0];
                         int numOutputs = unpacker.unpackMapHeader();        // Task::outputs
                         Map<String, float[]> outputs = new HashMap<>();
                         for (int i = 0; i < numOutputs; i++) {
-                            String key = unpacker.unpackString();
+                            String key = unpacker.unpackString().split(":")[0];
                             int n = unpacker.unpackArrayHeader();
                             float[] value = new float[n];
                             for (int j = 0; j < n; j++) {

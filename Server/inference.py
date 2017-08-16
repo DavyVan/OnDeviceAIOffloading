@@ -42,12 +42,12 @@ def run_inference(sess, request, dlcqueue, sendQueue):
     # prepare to feed
     inputs = {}
     for i in range(len(inputNodes)):
-        tensor = sess.graph.get_tensor_by_name(inputNodes[i])
-        inputs[tensor] = inputValues[i]
+        tensor = sess.graph.get_tensor_by_name(inputNodes[i].decode('utf-8'))
+        inputs[tensor] = np.array(inputValues[i]).reshape(dims[i])
 
     outputTensors = {}      
     for outputNode in outputNodes:
-        outputTensors[outputNode] = sess.graph.get_tensor_by_name(outputNode)
+        outputTensors[outputNode] = sess.graph.get_tensor_by_name(outputNode.decode('utf-8'))
 
     # run
     startTime = time.time()
@@ -57,8 +57,9 @@ def run_inference(sess, request, dlcqueue, sendQueue):
     computingCost = (endTime - startTime) * 1000        # microsecond
 
     # pack result - convert numpy.array to python list
-    for key in outputTensors:
-        outputTensors[key] = outputTensors[key].tolist()
+    for key in result:
+        # print(result[key])
+        result[key] = result[key].reshape([-1]).tolist()
     
     # pack result - obtain downloadingCost
     downloadingCost = 0        # N/A
@@ -66,5 +67,5 @@ def run_inference(sess, request, dlcqueue, sendQueue):
         downloadingCost = dlcqueue.get()
     
     # pack result
-    reply = packing.packRep(_id, appName, modelName, bufferIndex, outputNodes, outputTensors, odims, computingCost, downloadingCost)
+    reply = packing.packRep(_id, appName, modelName, bufferIndex, outputNodes, result, odims, computingCost, downloadingCost)
     sendQueue.put(reply)

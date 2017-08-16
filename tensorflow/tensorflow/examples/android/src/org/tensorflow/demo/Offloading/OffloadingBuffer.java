@@ -52,7 +52,7 @@ public class OffloadingBuffer {
         task.bufferIndex = nextSlot;
         buffer[nextSlot] = task;
         nextSlot = (nextSlot + 1) % BUFFER_SIZE;
-//        Log.i("FQ", "New task-" + task.id + " inserted");
+        Log.i("INSERT", "New task-" + task.id + " inserted");
         return SUCCESS;
     }
 
@@ -116,6 +116,7 @@ public class OffloadingBuffer {
                 p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
             }
         }
+        System.gc();
         return counter;
     }
 
@@ -129,5 +130,16 @@ public class OffloadingBuffer {
      */
     public boolean isHead(int index) {
         return head == index;
+    }
+
+    public void printBuffer(int start, int end) {
+        String s = "";
+        for (int i = start; i <= end; i++) {
+            if (buffer[i] == null)
+                s += "NULL" + "|";
+            else
+                s += buffer[i].id + "," + buffer[i].status + "|";
+        }
+        Log.i("BUFFER", s);
     }
 }

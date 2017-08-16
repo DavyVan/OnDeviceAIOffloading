@@ -19,12 +19,18 @@ def unpackReq(request):
 
 def packRep(taskId, appName, modelName, bufferIndex, outputNodes, outputs, odims, computingCost, downloadingCost):
     packer = msgpack.Packer(use_single_float=True, autoreset=False)
+    # packer.reset()
     packer.pack(taskId)
     packer.pack(appName)
     packer.pack(modelName)
     packer.pack(bufferIndex)
 
     packer.pack(outputNodes)
+    # packer.pack_map_header(len(outputNodes))
+    # for key in outputs:
+    #     packer.pack(key)
+    #     print(len(outputs[key]))
+    #     packer.pack(outputs[key])
     packer.pack(outputs)
     packer.pack(odims)
 

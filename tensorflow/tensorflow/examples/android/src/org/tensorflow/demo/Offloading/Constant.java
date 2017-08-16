@@ -12,7 +12,7 @@ import android.util.Log;
 public final class Constant {
 
     public static class Config {
-        public static final int BUFFER_SIZE = 100;
+        public static final int BUFFER_SIZE = 20;
 
         // Profiler
         // 1-Exponential Smoothing

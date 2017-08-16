@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
@@ -56,19 +57,23 @@ public class LocalDevice extends DeviceAdapter {
      * \note    Last reviewed 2017.8.11 16:59
      */
     @Override
-    public int uploadAndRun(final int deviceId, Task task) {
-        // record task
-        currentTask = task;
-
-        // Run - initialize TF
-        if (tf == null)
-            tf = new TensorFlowInferenceInterface(deviceManager.mainActivity.getAssets(), currentTask.modelName);
+    public int uploadAndRun(final int deviceId, final Task task) {
 
         handler.post(new Runnable() {
             @Override
             public void run() {
 
+                // record task
+                currentTask = task;
+                Log.i("FQ", "currentTask is assigned at thread " + Thread.currentThread().toString());
+
+                // Run - initialize TF
+                if (tf == null)
+                    tf = new TensorFlowInferenceInterface(deviceManager.mainActivity.getAssets(), currentTask.modelName);
+
                 // Run - feed
+//                Log.i("FQ", "currentTask: " + currentTask.toString());
+//                Log.i("FQ", "currentTask.inputNodes: " + currentTask.inputNodes.toString());
                 int n = currentTask.inputNodes.size();
                 for (int i = 0; i < n; i++) {
                     tf.feed(currentTask.inputNodes.get(i), currentTask.inputValues.get(i), currentTask.dims.get(i));
@@ -77,6 +82,7 @@ public class LocalDevice extends DeviceAdapter {
                 // Run
                 tf.run(currentTask.outputNodes, true);
 
+//                Log.i("FQ", "This uploadAndRun():post, thread " + Thread.currentThread().toString());
                 fetchResult(deviceId);
             }
         });
@@ -94,6 +100,7 @@ public class LocalDevice extends DeviceAdapter {
      */
     @Override
     public int fetchResult(int deviceId) {
+//        Log.i("FQ", "This is fetchResult(), thread " + Thread.currentThread().getName());
         // Run - fetch
         for (String s : currentTask.outputNodes) {
             long outputsize = 1;
@@ -112,8 +119,6 @@ public class LocalDevice extends DeviceAdapter {
         onResultBundle.putInt("deviceId", deviceId);
         onResultMsg.setData(onResultBundle);
 
-        deviceManager.onResultHandler.sendMessage(onResultMsg);
-
         // Callback - callNextHandler
         Message callNextMsg = Message.obtain();
 
@@ -122,9 +127,12 @@ public class LocalDevice extends DeviceAdapter {
         callNextMsg.setData(callNextBundle);
 
         deviceManager.callNextHandler.sendMessage(callNextMsg);
+        deviceManager.onResultHandler.sendMessage(onResultMsg);
+
 
         // clean currentTask
         currentTask = null;
+        Log.i("FQ", "currentTask is null at thread " + Thread.currentThread().toString());
 
         return 0;
     }
