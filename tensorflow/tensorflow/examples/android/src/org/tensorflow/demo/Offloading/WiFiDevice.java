@@ -201,16 +201,16 @@ public class WiFiDevice extends DeviceAdapter {
             @Override
             public void run() {
                 while (true) {
-                    Log.i("FQ", "Waiting for result on wifi...");
+//                    Log.i("FQ", "Waiting for result on wifi...");
                     byte[] reply = requester.recv(0);
-                    Log.i("FQ", "Receive a reply " + reply.length);
+//                    Log.i("FQ", "Receive a reply " + reply.length);
                     if (reply.length == 0)
                         continue;
 
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
                     try {
                         long id = unpacker.unpackInt();                      // Task::id
-                        Log.i("FQ", "Received task id: " + id);
+//                        Log.i("FQ", "Received task id: " + id);
                         String appName = unpacker.unpackString();           // Task::appName
                         String modelName = unpacker.unpackString();         // Task::modelName
                         int bufferIndex = unpacker.unpackInt();             // Task::bufferIndex

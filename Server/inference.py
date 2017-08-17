@@ -34,7 +34,7 @@ def run_inference(sess, request, dlcqueue, sendQueue):
 
     # Initialize tf.Session if needed
     if sess == None:
-        inference.create_graph()
+        create_graph()
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
         sess = tf.Session(config=config)
@@ -65,6 +65,7 @@ def run_inference(sess, request, dlcqueue, sendQueue):
     downloadingCost = 0        # N/A
     if not dlcqueue.empty():
         downloadingCost = dlcqueue.get()
+    print("Add downloadingCost in result: %f" % downloadingCost)
     
     # pack result
     reply = packing.packRep(_id, appName, modelName, bufferIndex, outputNodes, result, odims, computingCost, downloadingCost)

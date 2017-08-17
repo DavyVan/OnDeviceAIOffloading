@@ -4,6 +4,8 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-15.
  */
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -131,6 +133,11 @@ public class StreamInfo {
             }
             else    // local
                 schedulingCost = computing;
+        }
+
+        public void printToLog() {
+            Log.i("COST", String.format("pre-process: %d\nuploading: %d\ncomputing: %d\ndownloading: %d\npost-process: %d\nschedulingCost: %d",
+                    pre_process, uploading, computing, downloading, post_process, schedulingCost));
         }
     }
 

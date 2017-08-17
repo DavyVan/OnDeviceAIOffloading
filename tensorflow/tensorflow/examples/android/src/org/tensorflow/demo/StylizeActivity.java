@@ -63,6 +63,7 @@ import java.util.Vector;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 import org.tensorflow.demo.Offloading.OffloadingSystem;
 import org.tensorflow.demo.Offloading.Task;
+import org.tensorflow.demo.Offloading.Constant;
 import org.tensorflow.demo.OverlayView.DrawCallback;
 import org.tensorflow.demo.env.BorderedText;
 import org.tensorflow.demo.env.ImageUtils;
@@ -706,7 +707,8 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
         odims.put(OUTPUT_NODE, new long[]{desiredSize, desiredSize, 3});
 
         // commit
-        offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes, odims);
+        int errno = offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes, odims);
+        Constant.logIfError(errno);
         /**
          * Offloading - Commit - end
          */
@@ -732,7 +734,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     private void renderDebug(final Canvas canvas) {
         // TODO(andrewharp): move result display to its own View instead of using debug overlay.
         // This means all picture are rendered on debug overlay, using matrix to control the position
-        Log.i("FQ", "renderDebug called");
+//        Log.i("FQ", "renderDebug called");
         final Bitmap texture = textureCopyBitmap;
         if (texture != null) {
             final Matrix matrix = new Matrix();

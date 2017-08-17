@@ -77,8 +77,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         double lcm = Constant.Tools.lcm(temp);
 
         // K_i
-        for (double x : temp)
-            x = lcm / x;
+        for (int i = 0; i < n; i++)
+            temp[i] = lcm / temp[i];
 
         // K'_i
         double min = Constant.Tools.min(temp);
@@ -108,13 +108,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         Collections.sort(currentWindows, new Comparator<SingleWindow>() {
             @Override
             public int compare(SingleWindow lhs, SingleWindow rhs) {
-                return lhs.size - rhs.size;
+                return rhs.size - lhs.size;
             }
         });
 
         // change SingleWindow.position
         // NOTE: the first position keep fixed, since it equals to OffloadingBuffer.head
         int totalSize = currentWindows.get(0).size;
+        currentWindows.get(0).position = offloadingBuffer.getHead();
         for (int i = 1; i < currentWindows.size(); i++) {
             if (totalSize + currentWindows.get(i).size > BUFFER_SIZE) {     // If total size > buffer size
                 throw new RuntimeException("Total windows size is larger than buffer size. Abort.");
@@ -165,18 +166,11 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     @Override
     public void markAsDone(Task task, int deviceId) {
         Log.i("BUFFER", "Buffer status before markAsDone()");
-        offloadingBuffer.printBuffer(0, 9);
-
-        // Check bufferIndex & id
-        Task t = offloadingBuffer.get(task.bufferIndex);
-        if (t == null)
-            return;
-        else if (t != null && t.id != task.id) {     // task over-written
-            logIfError(TASK_NOT_EXIST);
-            return;
-        }
+        offloadingBuffer.printBuffer(0, 19);
 
         // Call Profiler to update statistics data
+        Log.i("COST", "New cost:");
+        task.cost.printToLog();
         profiler.updateInfo(new StreamInfo(task.modelName, task.appName, task.cost), deviceId);
 
         // Deal with task status
@@ -185,8 +179,26 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         // Check whether the device just processed a task is the slowest device
         // If so, trigger re-schedule
         // If not, nothing to be done
-        if (deviceId == currentWindows.get(currentWindows.size() - 1).deviceId)
+        if (deviceId == currentWindows.get(currentWindows.size() - 1).deviceId) {
+            Log.i("WIN", "ProfileInfo:");
+            profiler.print();
+            Log.i("WIN", "Windows before scheduling:");
+            printAllWindows();
+            Log.i("WIN", "sampleInterval: " + sampleInterval);
             calculateQuota(task.modelName);
+            Log.i("WIN", "Windows after scheduling:");
+            printAllWindows();
+            Log.i("WIN", "sampleInterval: " + sampleInterval);
+        }
+
+        // Check this task is current in buffer or not
+        Task t = offloadingBuffer.get(task.bufferIndex);
+        if (t == null)
+            return;
+        else if (t != null && t.id != task.id) {     // task over-written
+            logIfError(TASK_NOT_EXIST);
+            return;
+        }
 
         // Slide the windows. Firstly, check the task is the first task
         if (offloadingBuffer.isHead(task.bufferIndex)) {
@@ -207,7 +219,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             }
         }
         Log.i("BUFFER", "Buffer status after markAsDone()");
-        offloadingBuffer.printBuffer(0, 9);
+        offloadingBuffer.printBuffer(0, 19);
     }
 
     @Override
@@ -245,9 +257,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         }
         v = 1.0 / v;
         sampleInterval = (int) v;       // ground
+        Log.i("SAMPRATE", "Calculated sample interval: " + sampleInterval);
 
         // clean all untouched tasks in buffer
+        Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");
+        offloadingBuffer.printBuffer(0, 19);
         int c = offloadingBuffer.cleanUntouchedTask();
+        Log.i("BUFFER", "Buffer status after cleanUntouchedTask()");
+        offloadingBuffer.printBuffer(0, 19);
         Log.i("FQ", String.format("Sampling rate changed, %d tasks were cleaned.", c));
     }
 
@@ -269,6 +286,16 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             window.position += offset;
             window.position %= BUFFER_SIZE;
         }
+    }
+
+    public void printAllWindows() {
+        int n = currentWindows.size();
+        String ret = "";
+        for (int i = 0; i < n; i++) {
+            SingleWindow w = currentWindows.get(i);
+            ret += String.format("Window of device %d: position-%d, size-%d\n", w.deviceId, w.position, w.size);
+        }
+        Log.i("WIN", ret);
     }
 
     /**

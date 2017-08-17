@@ -44,7 +44,7 @@ public class OffloadingBuffer {
     public int insert(Task task, boolean force) {
 
         // if buffer is already full
-        if (buffer[nextSlot] != null && !force) {
+        if (buffer[nextSlot] != null && buffer[nextSlot].status != 3 && !force) {
             return BUFFER_FULL;
         }
 
@@ -116,6 +116,7 @@ public class OffloadingBuffer {
                 p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
             }
         }
+        nextSlot = (p + 1) % BUFFER_SIZE;
         System.gc();
         return counter;
     }
@@ -141,5 +142,9 @@ public class OffloadingBuffer {
                 s += buffer[i].id + "," + buffer[i].status + "|";
         }
         Log.i("BUFFER", s);
+    }
+
+    public int getHead() {
+        return head;
     }
 }

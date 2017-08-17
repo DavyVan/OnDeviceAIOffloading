@@ -53,7 +53,8 @@ def startServer():
         if len(request) > 100:
             threading.Thread(target=inference.run_inference, args=(sess, request, downloadingCostQueue, sendQueue)).start()
         else:
-            print("Content: %s", str(request))
+            # print("Content: %s", str(request))
+            pass
 
 def main():
     startServer()
