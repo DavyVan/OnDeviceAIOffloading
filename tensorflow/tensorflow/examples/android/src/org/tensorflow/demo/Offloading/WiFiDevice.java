@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.tensorflow.demo.Offloading.Constant.Config.SEND_DELAY_MS;
 import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP;
 import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_PORT;
 import static org.tensorflow.demo.Offloading.Constant.IO_EXCEPTION;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
+import static org.tensorflow.demo.Offloading.Constant.Tools.delay;
 
 /**
  * Created by fanquan on 17-7-17.
@@ -161,6 +163,7 @@ public class WiFiDevice extends DeviceAdapter {
 
             // Send
             long sendStart = System.currentTimeMillis();
+            delay(SEND_DELAY_MS);
             requester.send(packer.toByteArray(), 0);
             long sendEnd = System.currentTimeMillis();
             task.cost.uploading = (int) (sendEnd - sendStart);

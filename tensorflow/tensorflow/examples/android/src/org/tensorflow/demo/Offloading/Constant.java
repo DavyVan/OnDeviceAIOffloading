@@ -21,6 +21,7 @@ public final class Constant {
         // Network
         public static final String SERVER_IP = "192.168.0.126";
         public static final int SERVER_PORT = 2333;
+        public static final long SEND_DELAY_MS = 100;
     }
 
     // Error
@@ -92,6 +93,15 @@ public final class Constant {
             for (int i = 1; i < input.length; i++)
                 t = Math.min(t, input[i]);
             return t;
+        }
+
+        public static void delay(long time) {
+            try {
+                Thread.sleep(time);
+            }
+            catch (InterruptedException e) {
+                Log.e("FQ", e.getMessage());
+            }
         }
     }
 }

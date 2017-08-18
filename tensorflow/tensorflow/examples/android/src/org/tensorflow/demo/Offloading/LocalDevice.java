@@ -65,7 +65,7 @@ public class LocalDevice extends DeviceAdapter {
 
                 // record task
                 currentTask = task;
-                Log.i("FQ", "currentTask is assigned at thread " + Thread.currentThread().toString());
+//                Log.i("FQ", "currentTask is assigned at thread " + Thread.currentThread().toString());
 
                 // Run - initialize TF
                 if (tf == null)
@@ -135,7 +135,7 @@ public class LocalDevice extends DeviceAdapter {
 
         // clean currentTask
         currentTask = null;
-        Log.i("FQ", "currentTask is null at thread " + Thread.currentThread().toString());
+//        Log.i("FQ", "currentTask is null at thread " + Thread.currentThread().toString());
 
         return 0;
     }

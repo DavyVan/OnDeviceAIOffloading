@@ -147,4 +147,13 @@ public class OffloadingBuffer {
     public int getHead() {
         return head;
     }
+
+    /**
+     * \brief   Clean all task and reset all pointers
+     */
+    public void reset() {
+        buffer = new Task[BUFFER_SIZE];
+        nextSlot = 0;
+        head = 0;
+    }
 }
