@@ -21,7 +21,15 @@ public final class Constant {
         // Network
         public static final String SERVER_IP = "192.168.0.126";
         public static final int SERVER_PORT = 2333;
-        public static final long SEND_DELAY_MS = 100;
+        public static final long SEND_DELAY_MS = 300;
+
+        // Scheduler
+        public static final int INIT_SAMPLE_INTERVAL = 200;
+//        public static final int INIT_WIN_LOCAL = 1;
+//        public static final int INIT_WIN_WIFI = 8;
+        public static final int[] INIT_WINS = {1, 1};               /**< {Local, WiFi} */
+        public static final String BUFFER_TYPE = "Separated";       /**< {Separated|Single} */
+        public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
     }
 
     // Error

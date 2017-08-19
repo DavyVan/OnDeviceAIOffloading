@@ -708,7 +708,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
         // commit
         int errno = offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes, odims);
-        Constant.logIfError(errno);
+//        Constant.logIfError(errno);       // if dropped because sampling, output log
         /**
          * Offloading - Commit - end
          */

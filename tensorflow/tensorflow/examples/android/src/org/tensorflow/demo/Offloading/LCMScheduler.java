@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_SIZE;
+import static org.tensorflow.demo.Offloading.Constant.Config.INIT_SAMPLE_INTERVAL;
+import static org.tensorflow.demo.Offloading.Constant.Config.INIT_WINS;
 import static org.tensorflow.demo.Offloading.Constant.TASK_NOT_EXIST;
 import static org.tensorflow.demo.Offloading.Constant.logIfError;
 
@@ -35,6 +37,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     public LCMScheduler(Profiler profiler, OffloadingBuffer offloadingBuffer) {
         this.profiler = profiler;
         this.offloadingBuffer = offloadingBuffer;
+        if (offloadingBuffer instanceof SeparatedOffloadingBuffer)
+            ((SeparatedOffloadingBuffer) offloadingBuffer).setScheduler(this);
 
         // Allocate member variables
         currentWindows = new ArrayList<>();
@@ -49,11 +53,23 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     public void init(int deviceNum) {
         // Scheduling policy - fill the currentWindows & deviceId
         for (int i = 0; i < deviceNum; i++) {
-            currentWindows.add(new SingleWindow(BUFFER_SIZE, i));
+            try {
+                currentWindows.add(new SingleWindow(INIT_WINS[i], i));
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                Log.e("FQ", e.getMessage());
+                currentWindows.add(new SingleWindow(BUFFER_SIZE, i));
+            }
         }
+        Collections.sort(currentWindows, new Comparator<SingleWindow>() {
+            @Override
+            public int compare(SingleWindow lhs, SingleWindow rhs) {
+                return rhs.size - lhs.size;
+            }
+        });
 
         // Dynamic sampling - set sample interval as zero (no sampling)
-        sampleInterval = 0;
+        sampleInterval = INIT_SAMPLE_INTERVAL;
         lastSampleTime = System.currentTimeMillis();
 
         isInitStatus = true;
@@ -82,9 +98,11 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
         // K'_i
         double min = Constant.Tools.min(temp);
-        for (int i = 0; i < temp.length; i++)
-//            x = Math.ceil(x / min);
+        for (int i = 0; i < temp.length; i++) {
             temp[i] = Math.ceil(temp[i] / min);
+            if (((int)temp[i]) == 0)       // We don't allow size is 0, and this could occur at first round only
+                return;
+        }
 
         // write results back into SingleWindow in deviceId-increment order (i.e. reset all windows)
         // NOTE: apply() MUST be called right after following assignments
@@ -113,14 +131,20 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         });
 
         // change SingleWindow.position
-        // NOTE: the first position keep fixed, since it equals to OffloadingBuffer.head
         int totalSize = currentWindows.get(0).size;
-        currentWindows.get(0).position = offloadingBuffer.getHead();
-        for (int i = 1; i < currentWindows.size(); i++) {
-            if (totalSize + currentWindows.get(i).size > BUFFER_SIZE) {     // If total size > buffer size
-                throw new RuntimeException("Total windows size is larger than buffer size. Abort.");
+        if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {       // in SOB, position is maintained by heads
+            for (SingleWindow window : currentWindows)
+                window.position = ((SeparatedOffloadingBuffer) offloadingBuffer).getHead(window.deviceId);
+        }
+        else {
+            // NOTE: the first position keep fixed, since it equals to OffloadingBuffer.head
+            currentWindows.get(0).position = offloadingBuffer.getHead();
+            for (int i = 1; i < currentWindows.size(); i++) {
+                if (totalSize + currentWindows.get(i).size > BUFFER_SIZE) {     // If total size > buffer size
+                    throw new RuntimeException("Total windows size is larger than buffer size. Abort.");
+                }
+                currentWindows.get(i).position = (currentWindows.get(i - 1).position + currentWindows.get(i - 1).size) % BUFFER_SIZE;
             }
-            currentWindows.get(i).position = (currentWindows.get(i - 1).position + currentWindows.get(i - 1).size) % BUFFER_SIZE;
         }
     }
 
@@ -135,27 +159,52 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         int size = window.size;
         Task task = null;
 
-        while (size-- > 0) {
-            task = offloadingBuffer.get(start);
+        if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {        // SeparatedOffloadingBuffer
+            // From head, iterate to find next task
+            int doingTaskNum = 0;
+            int indexMultiplier = ((SeparatedOffloadingBuffer) offloadingBuffer).getIndexMultiplier();
+            int head = ((SeparatedOffloadingBuffer) offloadingBuffer).getHead(deviceId);
+            int p = head;
+            while (doingTaskNum < size && p < head + BUFFER_SIZE) {
+                task = offloadingBuffer.get(p % BUFFER_SIZE + deviceId * indexMultiplier);
+                if (task == null) {
+                    p++;
+                    continue;
+                }
+                else if (task.status != 0) {
+                    doingTaskNum++;
+                    p++;
+                    continue;
+                }
+                else if (task.status == 0) {
+                    task.status = 1;
+                    return task;
+                }
+            }
+        }
+        else {      // OffloadingBuffer
+            while (size-- > 0) {
+                task = offloadingBuffer.get(start);
 //            if ((task.status != 3 && isInitStatus) || (!isInitStatus && task.status == 0)) {
 //                task.status = 1;
 //                return task;
 //            }
-            if (task == null)
-                return null;
-            if (isInitStatus == true && task.status != 3) {
-                task.status = 1;
-                SingleWindow _window = getWindowByDeviceId(deviceId);
-                _window.position++;
-                _window.size--;
-                return task;
+                if (task == null)
+                    return null;
+                if (isInitStatus == true && task.status != 3) {
+                    task.status = 1;
+                    SingleWindow _window = getWindowByDeviceId(deviceId);
+                    _window.position++;
+                    _window.size--;
+                    return task;
+                }
+                else if (!isInitStatus && task.status == 0) {
+                    task.status = 1;
+                    return task;
+                }
+                start++;
+                start %= BUFFER_SIZE;
             }
-            else if (!isInitStatus && task.status == 0) {
-                task.status = 1;
-                return task;
-            }
-            start++;
-            start %= BUFFER_SIZE;
         }
         return null;
     }
@@ -200,22 +249,31 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             return;
         }
 
-        // Slide the windows. Firstly, check the task is the first task
-        if (offloadingBuffer.isHead(task.bufferIndex)) {
-            // Then, check whether the 2st windows is occupied
-            SingleWindow secondWindow = currentWindows.get(1);
-            if (isInitStatus == false && offloadingBuffer.get(secondWindow.position) == null) {
-                // All condition are met, slide window
-                Log.i("FQ", "Slide!");
-                int offset = 0;
-                int head = task.bufferIndex;
-                while (offloadingBuffer.get(head) != null && offloadingBuffer.get(head).status == 3) {
-                    offloadingBuffer.delete(head, -1);
-                    head++;
-                    head %= BUFFER_SIZE;
-                    offset++;
+        if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {
+            // Delete the task
+            Log.i("FQ", "1111");
+            offloadingBuffer.delete(task.bufferIndex, task.id);
+            Log.i("FQ", "3333");
+        }
+        else {
+            Log.i("FQ", "2222");
+            // Slide the windows. Firstly, check the task is the first task
+            if (offloadingBuffer.isHead(task.bufferIndex)) {
+                // Then, check whether the 2st windows is occupied
+                SingleWindow secondWindow = currentWindows.get(1);
+                if (isInitStatus == false && offloadingBuffer.get(secondWindow.position) == null) {
+                    // All condition are met, slide window
+                    Log.i("FQ", "Slide!");
+                    int offset = 0;
+                    int head = task.bufferIndex;
+                    while (offloadingBuffer.get(head) != null && offloadingBuffer.get(head).status == 3) {
+                        offloadingBuffer.delete(head, -1);
+                        head++;
+                        head %= BUFFER_SIZE;
+                        offset++;
+                    }
+                    allWindowsMoveForward(offset);
                 }
-                allWindowsMoveForward(offset);
             }
         }
         Log.i("BUFFER", "Buffer status after markAsDone()");
@@ -256,7 +314,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             v += 1.0 / (double) streamInfo.costs.get(i).schedulingCost;     // the formula is simplified
         }
         v = 1.0 / v;
-        sampleInterval = (int) v;       // ground
+        if ((int) v != 0)       // if 0, don't update exist value
+            sampleInterval = (int) v;       // ground
         Log.i("SAMPRATE", "Calculated sample interval: " + sampleInterval);
 
         // clean all untouched tasks in buffer
@@ -268,7 +327,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         Log.i("FQ", String.format("Sampling rate changed, %d tasks were cleaned.", c));
     }
 
-    private SingleWindow getWindowByDeviceId(int deviceId) {
+    public SingleWindow getWindowByDeviceId(int deviceId) {
         // iterate the list
         for (int i = 0; i < currentWindows.size(); i++) {
             if (currentWindows.get(i).deviceId != deviceId)
@@ -298,10 +357,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         Log.i("WIN", ret);
     }
 
+    public ArrayList<SingleWindow> getCurrentWindows() {
+        return currentWindows;
+    }
+
     /**
      * \brief   A struct that store attributes of a single window
      */
-    private class SingleWindow {
+    public class SingleWindow {
         public int size;        /**< Window size */
         public int position;    /**< Window start point */
         public int deviceId;    /**< As its name */
@@ -331,6 +394,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             this.size = size;
             this.position = position;
             this.deviceId = deviceId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof SingleWindow)
+                return this.deviceId == ((SingleWindow) o).deviceId;
+            else
+                return false;
         }
     }
 }

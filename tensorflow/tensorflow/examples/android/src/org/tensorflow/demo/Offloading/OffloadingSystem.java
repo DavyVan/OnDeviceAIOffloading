@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static org.tensorflow.contrib.android.TensorFlowInferenceInterface.ASSET_FILE_PREFIX;
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
+import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_TYPE;
 import static org.tensorflow.demo.Offloading.Constant.FRAME_DROPPED;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.SYSTEM_NOT_INIT;
@@ -68,7 +69,7 @@ public class OffloadingSystem implements FrontInterface {
         if (offloadingBuffer.insert(task, false) == BUFFER_FULL) {      // buffer is full, trigger the dynamic sampling
             dynamicSampler.calcSamplingRate(modelName);
             if (dynamicSampler.sample(modelName))
-                offloadingBuffer.insert(task, true);
+                offloadingBuffer.insert(task, false);       // Never use force insertion since we have clean strategy
             else
                 return FRAME_DROPPED;
         }
@@ -86,23 +87,26 @@ public class OffloadingSystem implements FrontInterface {
     public int init(Activity activity) {
         // Instantiate, keep the order
         profiler = new Profiler();
-        offloadingBuffer = new OffloadingBuffer();
-        // TODO: 17-7-17 Use JAVA Reflection to dynamic load different scheduler
-        scheduler = new LCMScheduler(profiler, offloadingBuffer);
-        dynamicSampler = (DynamicSampling) scheduler;
         deviceManager = new DeviceManager(activity);        // Constructor does nothing
-        modelManager = new ModelManager(deviceManager);
-        taskExecuteEngine = new TaskExecuteEngine(modelManager, deviceManager, scheduler);
-
         // Initialize devices
         int errno = deviceManager.init();
         if (errno != SUCCESS) {
             Log.e("FQ", getErrorMessage(errno));
             return errno;
         }
-
+        if (BUFFER_TYPE.equals("Separated"))
+            offloadingBuffer = new SeparatedOffloadingBuffer(deviceManager.getAllDevices().length);
+        else if (BUFFER_TYPE.equals("Single"))
+            offloadingBuffer = new OffloadingBuffer();
+        else
+            throw new RuntimeException("Unknown buffer type!");
+        // TODO: 17-7-17 Use JAVA Reflection to dynamic load different scheduler
+        scheduler = new LCMScheduler(profiler, offloadingBuffer);
+        dynamicSampler = (DynamicSampling) scheduler;
         scheduler.init(deviceManager.getAllDevices().length);
-//        taskExecuteEngine.run();
+        modelManager = new ModelManager(deviceManager);
+        taskExecuteEngine = new TaskExecuteEngine(modelManager, deviceManager, scheduler);
+
         isInitialized = true;
         return SUCCESS;
     }
