@@ -15,3 +15,4 @@ DESIRED_SIZE = 256
 # Runtime Configuration
 ENABLE_SINGLE_SESSION = True        # Use a single Sesssion for all threads, or one Session per thread
 ENABLE_PLOT = False
+ENABLE_SPAN_TIME_PLOT = False

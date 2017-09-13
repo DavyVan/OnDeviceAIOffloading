@@ -21,7 +21,7 @@ public final class Constant {
         // Network
         public static final String SERVER_IP = "192.168.0.126";
         public static final int SERVER_PORT = 2333;
-        public static final long SEND_DELAY_MS = 300;
+        public static final long SEND_DELAY_MS = 250;
 
         // Scheduler
         public static final int INIT_SAMPLE_INTERVAL = 200;

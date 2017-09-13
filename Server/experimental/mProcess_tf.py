@@ -33,8 +33,8 @@ def run_inference(queue=None):
     config.gpu_options.allow_growth = True
     # config.log_device_placement=True
     config.allow_soft_placement=False
-    config.intra_op_parallelism_threads=1
-    config.inter_op_parallelism_threads=1
+    # config.intra_op_parallelism_threads=1
+    # config.inter_op_parallelism_threads=1
     sess = tf.Session(config=config)
     # sess = tf.Session()
 
@@ -61,8 +61,10 @@ def run_inference(queue=None):
     result = sess.run(output_tensor, {input_tensor: image_data, style_tensor: styleVals})
     endTime = time.time()
     # print((endTime - startTime) * 1000)
-    if queue != None:
+    if constant.ENABLE_PLOT == True:
         queue.put((endTime - startTime) * 1000)
+    elif constant.ENABLE_SPAN_TIME_PLOT == True:
+        queue.put([startTime, endTime])
 
     result = np.array(result)
     result = result.reshape((-1))

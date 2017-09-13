@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Queue
 import time
+import numpy as np
 
 import sys
 sys.path.append("..")
@@ -18,7 +19,7 @@ def compute_avg_from_queue(queue):
         result += queue.get()
     return result / c
 
-def run_multi_process():
+def run_multi_process():        # for completion time (per & total)
     constant.ENABLE_PLOT = True
     print("Testing multiprocessing version...")
 
@@ -33,8 +34,8 @@ def run_multi_process():
             mProcess_tf.startServer(i, tsleep=sleep_time, queue=_queue)
             endTime = time.time()
             t = compute_avg_from_queue(_queue)
-            # results.append(t)
-            results.append((endTime - startTime) * 1000)        # Total completion time
+            results.append(t)       # Per-process avg completion time
+            # results.append((endTime - startTime) * 1000)        # Total completion time
             print("%s-concurrency test has finished in %s" % (i, t))
 
         # results[0] = 1421
@@ -86,5 +87,35 @@ def run_multi_process():
 # 15-concurrency test has finished in 4156.186723709106
 # 16-concurrency test has finished in 4402.360737323761
 
+def run_multi_process_for_per_span_time():
+    constant.ENABLE_SPAN_TIME_PLOT = True
+    print("Testing multiprocessing version for per process span time...")
+
+    _queue = Queue()
+    fig, ax = plt.subplots()
+    baseTime = time.time()
+    results = []
+
+    concurrency = int(input("Input concurrency:"))
+    sleep_time = float(input("Input sleep time in s:"))
+    mProcess_tf.startServer(concurrency, tsleep=sleep_time, queue=_queue)
+
+    c = _queue.qsize()
+    for i in range(c):
+        # line, = ax.plot((np.array(_queue.get())-baseTime)*1000, [i+1, i+1], label=str(i+1))
+        results.append(_queue.get())
+    results = np.array(results)
+    results = (results - baseTime) * 1000
+    t = results.min()
+    results -= t
+    for i in range(c):
+        line, = ax.plot(results[i], [i+1, i+1], label=str(i+1))
+
+    ax.set_xlabel('Time(ms)')
+    ax.set_ylabel('Per-process Time Span')
+    # ax.legend(loc='upper left')
+    plt.show()
+
 if __name__ == "__main__":
-    run_multi_process()
+    # run_multi_process()
+    run_multi_process_for_per_span_time()
