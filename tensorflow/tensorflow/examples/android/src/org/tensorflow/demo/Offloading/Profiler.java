@@ -63,8 +63,8 @@ public class Profiler {
             // 1-Exponential Smoothing: y'_(t+1) = y_(t) * alpha + y'_(t) * (1 - alpha)
             StreamInfo.Cost _cost = _streamInfo.costs.get(deviceId);
             StreamInfo.Cost _newCost = newInfo.costs.get(0);
-            Log.i("COST", "Old cost:");
-            _cost.printToLog();
+//            Log.i("COST", "Old cost:");
+//            _cost.printToLog();
             if (_cost.isRemote) {
                 if (_newCost.pre_process > 0) {
                     if (_cost.pre_process == 0)
@@ -96,8 +96,9 @@ public class Profiler {
             else
                 _cost.computing = (int) (_cost.computing * SMOOTHING_FACTOR + _newCost.computing * (1 - SMOOTHING_FACTOR));
             _cost.calculateSchedulingCost();
-            Log.i("COST", "Updated cost:");
-            _cost.printToLog();
+            _streamInfo.updateMaxCost();
+//            Log.i("COST", "Updated cost:");
+//            _cost.printToLog();
         }
     }
 

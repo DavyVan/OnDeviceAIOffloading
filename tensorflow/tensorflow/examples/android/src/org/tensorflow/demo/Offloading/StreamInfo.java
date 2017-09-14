@@ -17,6 +17,8 @@ public class StreamInfo {
     public String appName;          /**< Which app this stream belongs to */
 
     public ArrayList<Cost> costs;   /**< %Cost for each device, keep the order of device ID */
+    public int maxCost;             /**< Max cost for this stream, taking all devices into consideration */
+    public int maxCostDevice;       /**< Device ID of max cost */
 
     /**
      * \brief   Constructor
@@ -28,6 +30,8 @@ public class StreamInfo {
     public StreamInfo(String modelName, String appName, DeviceAdapter[] devices) {
         this.modelName = modelName;
         this.appName = appName;
+        maxCost = 0;
+        maxCostDevice = -1;
 
         costs = new ArrayList<>();
         int deviceNum = devices.length;
@@ -49,9 +53,28 @@ public class StreamInfo {
     public StreamInfo(String modelName, String appName, Cost cost) {
         this.modelName = modelName;
         this.appName = appName;
+        maxCost = 0;
+        maxCostDevice = -1;
 
         costs = new ArrayList<>();
         costs.add(cost);
+    }
+
+    public void updateMaxCost() {
+        int _maxCost = 0;
+        int _maxCostDevice = -1;
+
+        // For all of the costs
+        for (int i = 0; i < costs.size(); i++) {
+            Cost t = costs.get(i);
+            if (t.schedulingCost > _maxCost) {
+                _maxCost = t.schedulingCost;
+                _maxCostDevice = i;
+            }
+        }
+
+        maxCost = _maxCost;
+        maxCostDevice = _maxCostDevice;
     }
 
     /**

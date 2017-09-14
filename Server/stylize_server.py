@@ -23,7 +23,7 @@ def sendFromQueue(socket):
             endTime = time.time()
             downloadingCost = (endTime - startTime) * 1000
             downloadingCostQueue.put(downloadingCost)
-            print("Send back a result: %s" % len(_send))
+            # print("Send back a result: %s" % len(_send))
 
 def startServer():
 
@@ -48,7 +48,7 @@ def startServer():
     # Start receive request
     while True:
         request = socket.recv()
-        print("Receive request (%s)" % len(request))
+        # print("Receive request (%s)" % len(request))
         # continue
         if len(request) > 100:
             threading.Thread(target=inference.run_inference, args=(sess, request, downloadingCostQueue, sendQueue)).start()

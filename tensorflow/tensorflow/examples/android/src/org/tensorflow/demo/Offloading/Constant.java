@@ -12,30 +12,43 @@ import android.util.Log;
 public final class Constant {
 
     public static class Config {
-        public static final int BUFFER_SIZE = 20;
+        public static final int BUFFER_SIZE = 10;
 
         // Profiler
         // 1-Exponential Smoothing
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.126";
+        public static final String SERVER_IP = "192.168.0.237";
         public static final int SERVER_PORT = 2333;
-        public static final long SEND_DELAY_MS = 250;
+        public static final int SEND_DELAY_MS = 2;
 
         // Scheduler
         public static final int INIT_SAMPLE_INTERVAL = 200;
-//        public static final int INIT_WIN_LOCAL = 1;
-//        public static final int INIT_WIN_WIFI = 8;
+        public static final boolean ENABLE_FIXED_SAMPLE_RATE = true;
         public static final int[] INIT_WINS = {1, 1};               /**< {Local, WiFi} */
         public static final String BUFFER_TYPE = "Separated";       /**< {Separated|Single} */
         public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
+
+        // Smooth Send-Back
+        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 4};     /**< {Local, WiFi} */
+        public static final int DELTA_E_REAL_AVG_NUM = 50;
+        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;
+        public static final int DELTA_S_UPDATE_INTERVAL = 8;
+        /**
+         * SEND_DELAY_MS=250
+         * AVG_NUM=50
+         * lr=0.01
+         * with buffer cleaning
+         * Very good!
+         */
     }
 
     // Error
     public static final int SYSTEM_NOT_INIT = 1;
     public static final int NO_DEVICE_AVAILABLE = 2;
     public static final int IO_EXCEPTION = 3;
+    public static final int INTERRUPTED_EXCEPTION = 4;
 
     // Info
     public static final int SUCCESS = 100;
@@ -50,6 +63,7 @@ public final class Constant {
             case SYSTEM_NOT_INIT:       return "Offloading system is not initialized yet.";
             case NO_DEVICE_AVAILABLE:   return "No device available after device discovery.";
             case IO_EXCEPTION:          return "Vital IO exception occurred.";
+            case INTERRUPTED_EXCEPTION: return "Vital Interrupted exception occurred.";
 
             // Info
             case SUCCESS:               return "Action completed successfully.";

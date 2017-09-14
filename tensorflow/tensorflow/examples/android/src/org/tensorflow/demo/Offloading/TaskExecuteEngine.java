@@ -75,7 +75,7 @@ public class TaskExecuteEngine {
                 Task resultTask = (Task) msg.obj;
                 Bundle bundle = msg.getData();
                 int deviceId = bundle.getInt("deviceId");
-                Log.i("FQ", "Result returned from device " + deviceManager.getAllDevices()[deviceId].deviceName + ", resultTask is " + resultTask.id);
+                Log.i("FQ", "Result returned from device " + deviceManager.getAllDevices()[deviceId].deviceName + ", resultTask is -----------------------" + resultTask.id);
 
                 // Tell scheduler task is done
                 TaskExecuteEngine.this.scheduler.markAsDone(resultTask, deviceId);

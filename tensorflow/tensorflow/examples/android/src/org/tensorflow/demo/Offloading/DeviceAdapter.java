@@ -4,7 +4,8 @@ package org.tensorflow.demo.Offloading;
  * Created by fanquan on 17-7-15.
  */
 
-import android.os.Handler;
+
+import static org.tensorflow.demo.Offloading.Constant.Config.SEND_DELAY_MS;
 
 /**
  * \brief   Define most functionalities that computing device should support
@@ -20,6 +21,12 @@ public abstract class DeviceAdapter {
     public boolean isParallel;      /**< Indicate whether this device can run tasks in parallel */
     public boolean isIdle;          /**< Indicate whether this device is idle or not */
 
+    // Smooth Send-Back
+    public int delta_s;             /**< Start interval in ms */
+    public int delta_e_real;        /**< Measured end interval in ms */
+    public int delta_e_target;      /**< Target(computed) end interval in ms */
+    public long lastResultTime;      /**< The time get last result from remote */
+
     /**
      * \brief   Constructor called by specific adapter.
      *
@@ -30,15 +37,20 @@ public abstract class DeviceAdapter {
         this.isParallel = isParallel;
         this.deviceName = deviceName;
         isIdle = true;
+
+        delta_s = SEND_DELAY_MS;    // default value
+        delta_e_real = 0;
+        delta_e_target = SEND_DELAY_MS;
+        lastResultTime = System.currentTimeMillis();
     }
 
-    /**
-     * \brief   Constructor called by DeviceManager
-     */
-    public DeviceAdapter() {
-        isRemote = isParallel = isIdle = true;
-        deviceName = "N/A";
-    }
+//    /**
+//     * \brief   Constructor called by DeviceManager
+//     */
+//    public DeviceAdapter() {
+//        isRemote = isParallel = isIdle = true;
+//        deviceName = "N/A";
+//    }
 
     /**
      * \brief   Initialize the device

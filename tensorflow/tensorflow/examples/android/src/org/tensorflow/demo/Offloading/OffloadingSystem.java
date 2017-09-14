@@ -14,6 +14,7 @@ import java.util.Map;
 import static org.tensorflow.contrib.android.TensorFlowInferenceInterface.ASSET_FILE_PREFIX;
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_TYPE;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_FIXED_SAMPLE_RATE;
 import static org.tensorflow.demo.Offloading.Constant.FRAME_DROPPED;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.SYSTEM_NOT_INIT;
@@ -67,7 +68,17 @@ public class OffloadingSystem implements FrontInterface {
 
         // Insert into buffer
         if (offloadingBuffer.insert(task, false) == BUFFER_FULL) {      // buffer is full, trigger the dynamic sampling
-            dynamicSampler.calcSamplingRate(modelName);
+            if (!ENABLE_FIXED_SAMPLE_RATE)
+                dynamicSampler.calcSamplingRate(modelName);
+
+            // clean all untouched tasks in buffer
+            Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");
+            offloadingBuffer.printBuffer(0, 9);
+            offloadingBuffer.cleanUntouchedTask();
+            Log.i("BUFFER", "Buffer status after cleanUntouchedTask()");
+            offloadingBuffer.printBuffer(0, 9);
+
+            // Retry
             if (dynamicSampler.sample(modelName))
                 offloadingBuffer.insert(task, false);       // Never use force insertion since we have clean strategy
             else
@@ -104,6 +115,7 @@ public class OffloadingSystem implements FrontInterface {
         scheduler = new LCMScheduler(profiler, offloadingBuffer);
         dynamicSampler = (DynamicSampling) scheduler;
         scheduler.init(deviceManager.getAllDevices().length);
+        ((LCMScheduler) scheduler).setDeviceManager(deviceManager);
         modelManager = new ModelManager(deviceManager);
         taskExecuteEngine = new TaskExecuteEngine(modelManager, deviceManager, scheduler);
 

@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_SIZE;
+import static org.tensorflow.demo.Offloading.Constant.Config.DEVICE_CONCURRENCY_NUMS;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_FIXED_SAMPLE_RATE;
 import static org.tensorflow.demo.Offloading.Constant.Config.INIT_SAMPLE_INTERVAL;
 import static org.tensorflow.demo.Offloading.Constant.Config.INIT_WINS;
 import static org.tensorflow.demo.Offloading.Constant.TASK_NOT_EXIST;
@@ -30,6 +32,10 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     private boolean isInitStatus;                       /**< This scheduler is currently under initial status or not */
 
+    private DeviceManager deviceManager;                /**< Set by setDeviceManager(), and only used by update delta_e_target */
+
+    private int taskCompletionCounter = 0;
+    private long lastComputDtargetTime = System.currentTimeMillis();
 
     /**
      * \brief   Simple constructor only assign all member variables without initializing scheduling policy
@@ -112,7 +118,11 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         }
         apply();
 
-        calcSamplingRate(modelName);
+        if (!ENABLE_FIXED_SAMPLE_RATE)
+            calcSamplingRate(modelName);
+
+        // Calculate delta_e_target of remote device
+        updateDelta_s_target(modelName);
 
         isInitStatus = false;
     }
@@ -160,6 +170,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         Task task = null;
 
         if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {        // SeparatedOffloadingBuffer
+            size = DEVICE_CONCURRENCY_NUMS[deviceId];
+
             // From head, iterate to find next task
             int doingTaskNum = 0;
             int indexMultiplier = ((SeparatedOffloadingBuffer) offloadingBuffer).getIndexMultiplier();
@@ -214,8 +226,11 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
      */
     @Override
     public void markAsDone(Task task, int deviceId) {
+        if (deviceId == 1)      // Only take wifi into account
+            taskCompletionCounter++;
+
         Log.i("BUFFER", "Buffer status before markAsDone()");
-        offloadingBuffer.printBuffer(0, 19);
+        offloadingBuffer.printBuffer(0, 9);
 
         // Call Profiler to update statistics data
         Log.i("COST", "New cost:");
@@ -251,12 +266,9 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
         if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {
             // Delete the task
-            Log.i("FQ", "1111");
             offloadingBuffer.delete(task.bufferIndex, task.id);
-            Log.i("FQ", "3333");
         }
         else {
-            Log.i("FQ", "2222");
             // Slide the windows. Firstly, check the task is the first task
             if (offloadingBuffer.isHead(task.bufferIndex)) {
                 // Then, check whether the 2st windows is occupied
@@ -277,7 +289,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             }
         }
         Log.i("BUFFER", "Buffer status after markAsDone()");
-        offloadingBuffer.printBuffer(0, 19);
+        offloadingBuffer.printBuffer(0, 9);
     }
 
     @Override
@@ -317,14 +329,6 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         if ((int) v != 0)       // if 0, don't update exist value
             sampleInterval = (int) v;       // ground
         Log.i("SAMPRATE", "Calculated sample interval: " + sampleInterval);
-
-        // clean all untouched tasks in buffer
-        Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");
-        offloadingBuffer.printBuffer(0, 19);
-        int c = offloadingBuffer.cleanUntouchedTask();
-        Log.i("BUFFER", "Buffer status after cleanUntouchedTask()");
-        offloadingBuffer.printBuffer(0, 19);
-        Log.i("FQ", String.format("Sampling rate changed, %d tasks were cleaned.", c));
     }
 
     public SingleWindow getWindowByDeviceId(int deviceId) {
@@ -359,6 +363,30 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
 
     public ArrayList<SingleWindow> getCurrentWindows() {
         return currentWindows;
+    }
+
+    public void setDeviceManager(DeviceManager deviceManager) {
+        this.deviceManager = deviceManager;
+    }
+
+    private void updateDelta_s_target(String modelName) {
+        int maxC = profiler.fetchInfoByModel(modelName).maxCost;
+
+        // for every device
+        DeviceAdapter[] devices = deviceManager.getAllDevices();
+        for (int i = 1; i < devices.length; i++) {
+            Log.i("FQ", String.format("maxC=%d size=%d", maxC, getWindowByDeviceId(i).size));
+//            devices[i].delta_e_target = maxC / getWindowByDeviceId(i).size;
+
+            // Use throughtput to compute delta_e_target, it's more real
+            if (taskCompletionCounter != 0) {
+                long currentTime = System.currentTimeMillis();
+                int t = (int) (currentTime - lastComputDtargetTime);
+                devices[i].delta_e_target = t / taskCompletionCounter;
+                lastComputDtargetTime = currentTime;
+                taskCompletionCounter = 0;
+            }
+        }
     }
 
     /**

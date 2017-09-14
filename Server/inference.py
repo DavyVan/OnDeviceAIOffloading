@@ -69,4 +69,5 @@ def run_inference(sess, request, dlcqueue, sendQueue):
     
     # pack result
     reply = packing.packRep(_id, appName, modelName, bufferIndex, outputNodes, result, odims, computingCost, downloadingCost)
+    print("Task---%d completed!" % _id)
     sendQueue.put(reply)
