@@ -72,11 +72,11 @@ public class OffloadingSystem implements FrontInterface {
                 dynamicSampler.calcSamplingRate(modelName);
 
             // clean all untouched tasks in buffer
-            Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");
-            offloadingBuffer.printBuffer(0, 9);
+//            Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");
+//            offloadingBuffer.printBuffer(0, 19);
             offloadingBuffer.cleanUntouchedTask();
             Log.i("BUFFER", "Buffer status after cleanUntouchedTask()");
-            offloadingBuffer.printBuffer(0, 9);
+            offloadingBuffer.printBuffer(0, 19);
 
             // Retry
             if (dynamicSampler.sample(modelName))

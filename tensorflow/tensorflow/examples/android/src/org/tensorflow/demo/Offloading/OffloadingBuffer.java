@@ -27,7 +27,7 @@ public class OffloadingBuffer {
      */
     public OffloadingBuffer() {
         // Allocate memory for buffer
-        buffer = new Task[BUFFER_SIZE];
+        buffer = new Task[BUFFER_SIZE[0]];
         nextSlot = 0;
         head = 0;
     }
@@ -51,7 +51,7 @@ public class OffloadingBuffer {
         // insert action
         task.bufferIndex = nextSlot;
         buffer[nextSlot] = task;
-        nextSlot = (nextSlot + 1) % BUFFER_SIZE;
+        nextSlot = (nextSlot + 1) % BUFFER_SIZE[0];
         Log.i("INSERT", "New task-" + task.id + " inserted");
         return SUCCESS;
     }
@@ -101,10 +101,10 @@ public class OffloadingBuffer {
      */
     public int cleanUntouchedTask() {
         int counter = 0;
-        int p = (nextSlot - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+        int p = (nextSlot - 1 + BUFFER_SIZE[0]) % BUFFER_SIZE[0];
         while (p != nextSlot) {
             if (buffer[p] == null) {
-                p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                p = (p - 1 + BUFFER_SIZE[0]) % BUFFER_SIZE[0];
                 continue;
             }
 
@@ -113,10 +113,10 @@ public class OffloadingBuffer {
             else {
                 buffer[p] = null;
                 counter++;
-                p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                p = (p - 1 + BUFFER_SIZE[0]) % BUFFER_SIZE[0];
             }
         }
-        nextSlot = (p + 1) % BUFFER_SIZE;
+        nextSlot = (p + 1) % BUFFER_SIZE[0];
         System.gc();
         return counter;
     }
@@ -152,7 +152,7 @@ public class OffloadingBuffer {
      * \brief   Clean all task and reset all pointers
      */
     public void reset() {
-        buffer = new Task[BUFFER_SIZE];
+        buffer = new Task[BUFFER_SIZE[0]];
         nextSlot = 0;
         head = 0;
     }

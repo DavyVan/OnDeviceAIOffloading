@@ -64,7 +64,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             }
             catch (ArrayIndexOutOfBoundsException e) {
                 Log.e("FQ", e.getMessage());
-                currentWindows.add(new SingleWindow(BUFFER_SIZE, i));
+                currentWindows.add(new SingleWindow(BUFFER_SIZE[i], i));
             }
         }
         Collections.sort(currentWindows, new Comparator<SingleWindow>() {
@@ -150,10 +150,10 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             // NOTE: the first position keep fixed, since it equals to OffloadingBuffer.head
             currentWindows.get(0).position = offloadingBuffer.getHead();
             for (int i = 1; i < currentWindows.size(); i++) {
-                if (totalSize + currentWindows.get(i).size > BUFFER_SIZE) {     // If total size > buffer size
+                if (totalSize + currentWindows.get(i).size > BUFFER_SIZE[i]) {     // If total size > buffer size
                     throw new RuntimeException("Total windows size is larger than buffer size. Abort.");
                 }
-                currentWindows.get(i).position = (currentWindows.get(i - 1).position + currentWindows.get(i - 1).size) % BUFFER_SIZE;
+                currentWindows.get(i).position = (currentWindows.get(i - 1).position + currentWindows.get(i - 1).size) % BUFFER_SIZE[i];
             }
         }
     }
@@ -177,8 +177,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
             int indexMultiplier = ((SeparatedOffloadingBuffer) offloadingBuffer).getIndexMultiplier();
             int head = ((SeparatedOffloadingBuffer) offloadingBuffer).getHead(deviceId);
             int p = head;
-            while (doingTaskNum < size && p < head + BUFFER_SIZE) {
-                task = offloadingBuffer.get(p % BUFFER_SIZE + deviceId * indexMultiplier);
+            while (doingTaskNum < size && p < head + BUFFER_SIZE[deviceId]) {
+                task = offloadingBuffer.get(p % BUFFER_SIZE[deviceId] + deviceId * indexMultiplier);
                 if (task == null) {
                     p++;
                     continue;
@@ -215,7 +215,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
                     return task;
                 }
                 start++;
-                start %= BUFFER_SIZE;
+                start %= BUFFER_SIZE[deviceId];
             }
         }
         return null;
@@ -229,8 +229,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         if (deviceId == 1)      // Only take wifi into account
             taskCompletionCounter++;
 
-        Log.i("BUFFER", "Buffer status before markAsDone()");
-        offloadingBuffer.printBuffer(0, 9);
+//        Log.i("BUFFER", "Buffer status before markAsDone()");
+//        offloadingBuffer.printBuffer(0, 19);
 
         // Call Profiler to update statistics data
 //        Log.i("COST", "New cost:");
@@ -281,7 +281,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
                     while (offloadingBuffer.get(head) != null && offloadingBuffer.get(head).status == 3) {
                         offloadingBuffer.delete(head, -1);
                         head++;
-                        head %= BUFFER_SIZE;
+                        head %= BUFFER_SIZE[deviceId];
                         offset++;
                     }
                     allWindowsMoveForward(offset);
@@ -347,7 +347,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     private void allWindowsMoveForward(int offset) {
         for (SingleWindow window : currentWindows) {
             window.position += offset;
-            window.position %= BUFFER_SIZE;
+            window.position %= BUFFER_SIZE[0];
         }
     }
 

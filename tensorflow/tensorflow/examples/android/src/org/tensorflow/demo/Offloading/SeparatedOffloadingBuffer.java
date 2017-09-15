@@ -42,14 +42,14 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
         // insert
         task.bufferIndex = nextSlots[currentBuffer] + currentBuffer * indexMultiplier;      // Use indexMultiplier to indicate buffer
         buffer.get(currentBuffer)[nextSlots[currentBuffer]] = task;
-        nextSlots[currentBuffer] = (nextSlots[currentBuffer] + 1) % BUFFER_SIZE;
+        nextSlots[currentBuffer] = (nextSlots[currentBuffer] + 1) % BUFFER_SIZE[currentBuffer];
         Log.i("INSERT", "New task-" + task.id + " inserted in buffer-" + currentBuffer);
 
         // maintain currentBuffer
         if (scheduler instanceof LCMScheduler) {
             LCMScheduler.SingleWindow currentBufferWindow = ((LCMScheduler) scheduler).getWindowByDeviceId(currentBuffer);
             // if current buffer content size can be divided by window size, seek next window's device id
-            if ((nextSlots[currentBuffer] + BUFFER_SIZE - heads[currentBuffer]) % BUFFER_SIZE % currentBufferWindow.size == 0) {
+            if ((nextSlots[currentBuffer] + BUFFER_SIZE[currentBuffer] - heads[currentBuffer]) % BUFFER_SIZE[currentBuffer] % currentBufferWindow.size == 0) {
                 ArrayList<LCMScheduler.SingleWindow> windows = ((LCMScheduler) scheduler).getCurrentWindows();
 
                 int currentBufferWindowIndex = windows.indexOf(currentBufferWindow);
@@ -78,7 +78,7 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
 //                        heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE;
                     int _h = heads[bufferIndex];
                     do {
-                        heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE;
+                        heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE[bufferIndex];
                     } while (buffer.get(bufferIndex)[heads[bufferIndex]] == null && heads[bufferIndex] != _h);
                 }
                 return SUCCESS;
@@ -93,7 +93,7 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
 //                    heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE;
                 int _h = heads[bufferIndex];
                 do {
-                    heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE;
+                    heads[bufferIndex] = (heads[bufferIndex] + 1) % BUFFER_SIZE[bufferIndex];
                 } while (buffer.get(bufferIndex)[heads[bufferIndex]] == null && heads[bufferIndex] != _h);
             }
             return SUCCESS;
@@ -110,10 +110,10 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
                 Task[] _buffer = buffer.get(i);
                 int counter = 0;
 
-                int p = (nextSlot - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                int p = (nextSlot - 1 + BUFFER_SIZE[i]) % BUFFER_SIZE[i];
                 while (p != nextSlot) {
                     if (_buffer[p] == null) {
-                        p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                        p = (p - 1 + BUFFER_SIZE[i]) % BUFFER_SIZE[i];
                         continue;
                     }
 
@@ -122,10 +122,10 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
                     else {
                         _buffer[p] = null;
                         counter++;
-                        p = (p - 1 + BUFFER_SIZE) % BUFFER_SIZE;
+                        p = (p - 1 + BUFFER_SIZE[i]) % BUFFER_SIZE[i];
                     }
                 }
-                nextSlots[i] = (p + 1) % BUFFER_SIZE;
+                nextSlots[i] = (p + 1) % BUFFER_SIZE[i];
                 totalCounter += counter;
             }
         }
@@ -139,8 +139,8 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
                 int counter = 0;
 
                 // Find first untouched task
-                while (p < head + BUFFER_SIZE) {
-                    if (_buffer[p % BUFFER_SIZE] != null && _buffer[p % BUFFER_SIZE].status == 0) {
+                while (p < head + BUFFER_SIZE[i]) {
+                    if (_buffer[p % BUFFER_SIZE[i]] != null && _buffer[p % BUFFER_SIZE[i]].status == 0) {
                         break;
                     }
                     else {
@@ -151,23 +151,23 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
                 // Now p and nextSlot are point to first untouched task
 
                 // Start clean
-                while (p < head + BUFFER_SIZE && _buffer[p % BUFFER_SIZE] != null) {
+                while (p < head + BUFFER_SIZE[i] && _buffer[p % BUFFER_SIZE[i]] != null) {
                     if (flag) {
-                        _buffer[p % BUFFER_SIZE] = null;      // clean
+                        _buffer[p % BUFFER_SIZE[i]] = null;      // clean
                         counter++;
                         p++;
                         flag = !flag;
                     }
                     else {
-                        _buffer[nextSlot % BUFFER_SIZE] = _buffer[p % BUFFER_SIZE];     // compress buffer
-                        _buffer[p % BUFFER_SIZE] = null;
-                        _buffer[nextSlot % BUFFER_SIZE].bufferIndex = i * indexMultiplier + nextSlot % BUFFER_SIZE;       // change the Task.bufferIndex to new index
+                        _buffer[nextSlot % BUFFER_SIZE[i]] = _buffer[p % BUFFER_SIZE[i]];     // compress buffer
+                        _buffer[p % BUFFER_SIZE[i]] = null;
+                        _buffer[nextSlot % BUFFER_SIZE[i]].bufferIndex = i * indexMultiplier + nextSlot % BUFFER_SIZE[i];       // change the Task.bufferIndex to new index
                         p++;
                         nextSlot++;
                         flag = !flag;
                     }
                 }       // Clean done
-                nextSlots[i] = (nextSlot) % BUFFER_SIZE;
+                nextSlots[i] = (nextSlot) % BUFFER_SIZE[i];
                 totalCounter += counter;
                 Log.i("BUFFER", "Buffer-" + i + " has been cleaned, nextSlot is " + nextSlots[i]);
             }
@@ -188,17 +188,28 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
     @Override
     public void printBuffer(int start, int end) {
         for (int i = 0; i < deviceNum; i++) {
-            String s = "Buffer-" + i + ": ";
-            for (int j = start; j <= end; j++) {
-                if (buffer.get(i)[j] == null)
-                    s += "NULL|";
-                else {
-                    Task t = buffer.get(i)[j];
-                    s += t.id + "," + t.status + "|";
-                }
-            }
-            Log.i("BUFFER", s);
+            _printSingleBuffer(i, start, end);
         }
+    }
+
+    private void _printSingleBuffer(int i, int start, int end) {
+        if (start == -1 && end == -1) {     // print all
+            start = 0;
+            end = BUFFER_SIZE[i] - 1;
+        }
+        else if (end > BUFFER_SIZE[i] - 1)
+            end = BUFFER_SIZE[i] - 1;
+
+        String s = "Buffer-" + i + ": ";
+        for (int j = start; j <= end; j++) {
+            if (buffer.get(i)[j] == null)
+                s += "NULL|";
+            else {
+                Task t = buffer.get(i)[j];
+                s += t.id + "," + t.status + "|";
+            }
+        }
+        Log.i("BUFFER", s);
     }
 
     public synchronized int getHead(int deviceId) {
@@ -208,7 +219,7 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
     @Override
     public synchronized void reset() {
         for (int i = 0; i < deviceNum; i++)
-            buffer.add(new Task[BUFFER_SIZE]);
+            buffer.add(new Task[BUFFER_SIZE[i]]);
         nextSlots = new int[deviceNum];
         heads = new int[deviceNum];
         currentBuffer = 1;
