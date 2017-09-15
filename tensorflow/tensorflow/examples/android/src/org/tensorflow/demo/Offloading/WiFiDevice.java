@@ -13,20 +13,22 @@ import org.msgpack.core.MessageUnpacker;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_E_REAL_AVG_ALPHA;
 import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_E_REAL_AVG_NUM;
-import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_S_CALIBRATION_FACTOR;
+import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_E_REAL_VARIANCE_THRESHOLD;
+import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_S_CLIMBING_STEP;
+import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_S_SHRINKING_STEP;
 import static org.tensorflow.demo.Offloading.Constant.Config.DELTA_S_UPDATE_INTERVAL;
+import static org.tensorflow.demo.Offloading.Constant.Config.KEEP_STABLE_ROUND;
 import static org.tensorflow.demo.Offloading.Constant.Config.SEND_DELAY_MS;
 import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP;
 import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_PORT;
 import static org.tensorflow.demo.Offloading.Constant.INTERRUPTED_EXCEPTION;
 import static org.tensorflow.demo.Offloading.Constant.IO_EXCEPTION;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
-import static org.tensorflow.demo.Offloading.Constant.Tools.delay;
 
 /**
  * Created by fanquan on 17-7-17.
@@ -48,6 +50,9 @@ public class WiFiDevice extends DeviceAdapter {
     // Smooth Send-Back
     private int delta_e_real_counter_avg;           /**< counter for above */
     private int delta_e_real_counter_update;
+    private int stable_period_counter;
+    private int last_stable_delta_s;
+    private boolean skip_first_interval = true;
 
     public WiFiDevice(DeviceManager deviceManager) {
         super(true, true, "WiFi");
@@ -92,6 +97,8 @@ public class WiFiDevice extends DeviceAdapter {
 
         delta_e_real_counter_avg = 0;
         delta_e_real_counter_update = 0;
+        stable_period_counter = 0;
+        last_stable_delta_s = 0;    // zero is invalided
 
         return SUCCESS;
     }
@@ -227,7 +234,32 @@ public class WiFiDevice extends DeviceAdapter {
                     if (reply.length == 0)
                         continue;
 
-                    // update delta_e_real
+                    // update delta_e_real | Design V2.0
+//                    delta_e_real_counter_avg++;
+//                    delta_e_real_counter_update++;
+//                    long currentTime = System.currentTimeMillis();
+//                    int t = (int) (currentTime - lastResultTime);
+//                    lastResultTime = currentTime;
+//                    if (delta_e_real_counter_avg < DELTA_E_REAL_AVG_NUM) {
+//                        float smooth_factor = 1.0f / delta_e_real_counter_avg;
+//                        delta_e_real = (int) (delta_e_real * (1 - smooth_factor) + smooth_factor * t);
+//                    }
+//                    else
+//                        delta_e_real = (int) (delta_e_real * 0.98f + 0.02f * t);
+//                    Log.i("FQ", String.format("Measured delta_e=%d, Calculated delta_e_real=%d", t, delta_e_real));
+//
+//                    // Every DELTA_S_UPDATE_INTERVAL, update delta_s
+//                    if (delta_e_real_counter_update % DELTA_S_UPDATE_INTERVAL == 0) {
+//                        // Calibrate
+//                        t = (int) (delta_s - DELTA_S_CALIBRATION_FACTOR * (delta_e_real - delta_e_target));
+//                        if (t < 0)
+//                            Log.i("FQ", "Ds -0");
+//                        else
+//                            delta_s = t;
+//                        Log.i("FQ", String.format("Ds=%d Dreal=%d Dtarget=%d", delta_s, delta_e_real, delta_e_target));
+//                    }
+
+                    // update delta_e_real & delta_e_real^2 | Design V3.0
                     delta_e_real_counter_avg++;
                     delta_e_real_counter_update++;
                     long currentTime = System.currentTimeMillis();
@@ -235,21 +267,47 @@ public class WiFiDevice extends DeviceAdapter {
                     lastResultTime = currentTime;
                     if (delta_e_real_counter_avg < DELTA_E_REAL_AVG_NUM) {
                         float smooth_factor = 1.0f / delta_e_real_counter_avg;
-                        delta_e_real = (int) (delta_e_real * (1 - smooth_factor) + smooth_factor * t);
+                        delta_e_real = (long) (delta_e_real * (1 - smooth_factor) + smooth_factor * t);
+                        delta_e_real_squared = (long) (delta_e_real_squared * (1 - smooth_factor) + smooth_factor * t * t);
                     }
-                    else
-                        delta_e_real = (int) (delta_e_real * 0.98f + 0.02f * t);
-                    Log.i("FQ", String.format("Measured delta_e=%d, Calculated delta_e_real=%d", t, delta_e_real));
+                    else {
+                        delta_e_real = (long) (delta_e_real * (1 - DELTA_E_REAL_AVG_ALPHA) + DELTA_E_REAL_AVG_ALPHA * t);
+                        delta_e_real_squared = (long) (delta_e_real_squared * (1 - DELTA_E_REAL_AVG_ALPHA) + DELTA_E_REAL_AVG_ALPHA * t * t);
+                    }
+                    if (skip_first_interval) {      // skip the first very big interval
+                        skip_first_interval = false;
+                        delta_e_real_counter_avg--;
+                        delta_e_real_counter_update--;
+                        delta_e_real = 0;
+                        delta_e_real_squared = 0;
+                    }
 
-                    // Every DELTA_S_UPDATE_INTERVAL, update delta_s
+                    // Update delta_s
                     if (delta_e_real_counter_update % DELTA_S_UPDATE_INTERVAL == 0) {
-                        // Calibrate
-                        t = (int) (delta_s - DELTA_S_CALIBRATION_FACTOR * (delta_e_real - delta_e_target));
-                        if (t < 0)
-                            Log.i("FQ", "Ds -0");
-                        else
-                            delta_s = t;
-                        Log.i("FQ", String.format("Ds=%d Dreal=%d Dtarget=%d", delta_s, delta_e_real, delta_e_target));
+                        // Calculate variance of delta_e
+                        long variance = delta_e_real_squared - delta_e_real * delta_e_real;
+
+                        // if un-stable
+                        if (variance > DELTA_E_REAL_VARIANCE_THRESHOLD) {
+                            stable_period_counter = 0;
+//                            if (last_stable_delta_s != 0) {
+//                                delta_s = last_stable_delta_s;
+//                                last_stable_delta_s = 0;
+//                            }
+//                            else
+                                delta_s += DELTA_S_CLIMBING_STEP;
+                        }
+                        else {      // if stable
+                            stable_period_counter++;
+                            last_stable_delta_s = delta_s;
+                            if (stable_period_counter >= KEEP_STABLE_ROUND) {       // up to 5 periods
+                                stable_period_counter = 0;
+                                delta_s -= DELTA_S_SHRINKING_STEP;
+                                if (delta_s < 0)
+                                    delta_s = 0;
+                            }
+                        }
+                        Log.i("SSB", String.format("Variance=%d, Ds=%d, stable_period=%d", variance, delta_s, stable_period_counter));
                     }
 
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);

@@ -97,8 +97,8 @@ public class Profiler {
                 _cost.computing = (int) (_cost.computing * SMOOTHING_FACTOR + _newCost.computing * (1 - SMOOTHING_FACTOR));
             _cost.calculateSchedulingCost();
             _streamInfo.updateMaxCost();
-//            Log.i("COST", "Updated cost:");
-//            _cost.printToLog();
+            Log.i("COST", "Updated cost:");
+            _cost.printToLog();
         }
     }
 

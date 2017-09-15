@@ -233,8 +233,8 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         offloadingBuffer.printBuffer(0, 9);
 
         // Call Profiler to update statistics data
-        Log.i("COST", "New cost:");
-        task.cost.printToLog();
+//        Log.i("COST", "New cost:");
+//        task.cost.printToLog();
         profiler.updateInfo(new StreamInfo(task.modelName, task.appName, task.cost), deviceId);
 
         // Deal with task status

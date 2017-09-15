@@ -23,7 +23,8 @@ public abstract class DeviceAdapter {
 
     // Smooth Send-Back
     public int delta_s;             /**< Start interval in ms */
-    public int delta_e_real;        /**< Measured end interval in ms */
+    public long delta_e_real;        /**< Measured end interval in ms */
+    public long delta_e_real_squared;/**< Squared measured end interval in ms^2 */
     public int delta_e_target;      /**< Target(computed) end interval in ms */
     public long lastResultTime;      /**< The time get last result from remote */
 
@@ -40,6 +41,7 @@ public abstract class DeviceAdapter {
 
         delta_s = SEND_DELAY_MS;    // default value
         delta_e_real = 0;
+        delta_e_real_squared = 0;
         delta_e_target = SEND_DELAY_MS;
         lastResultTime = System.currentTimeMillis();
     }

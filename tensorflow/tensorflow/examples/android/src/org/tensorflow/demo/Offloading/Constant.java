@@ -19,9 +19,9 @@ public final class Constant {
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.237";
+        public static final String SERVER_IP = "192.168.0.240";
         public static final int SERVER_PORT = 2333;
-        public static final int SEND_DELAY_MS = 2;
+        public static final int SEND_DELAY_MS = 0;
 
         // Scheduler
         public static final int INIT_SAMPLE_INTERVAL = 200;
@@ -32,9 +32,14 @@ public final class Constant {
 
         // Smooth Send-Back
         public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 4};     /**< {Local, WiFi} */
-        public static final int DELTA_E_REAL_AVG_NUM = 50;
-        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;
+        public static final int DELTA_E_REAL_AVG_NUM = 16;
+        public static final float DELTA_E_REAL_AVG_ALPHA = 1.0f / DELTA_E_REAL_AVG_NUM;
+//        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;      // deprecated in design v3.0
         public static final int DELTA_S_UPDATE_INTERVAL = 8;
+        public static final int DELTA_S_CLIMBING_STEP = 50;         /**< in milliseconds */
+        public static final int DELTA_S_SHRINKING_STEP = 10;        /**< in milliseconds */
+        public static final int DELTA_E_REAL_VARIANCE_THRESHOLD = 70000;
+        public static final int KEEP_STABLE_ROUND = 2;
         /**
          * SEND_DELAY_MS=250
          * AVG_NUM=50
