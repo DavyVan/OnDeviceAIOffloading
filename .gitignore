@@ -105,3 +105,4 @@ ENV/
 
 # tensorflow demo assets
 assets
+*.pb

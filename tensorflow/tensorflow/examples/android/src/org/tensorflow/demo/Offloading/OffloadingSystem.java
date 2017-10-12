@@ -33,7 +33,7 @@ public class OffloadingSystem implements FrontInterface {
     private DeviceManager deviceManager;
     private ModelManager modelManager;
     private TaskExecuteEngine taskExecuteEngine;
-    private static long nextTaskId = 0;
+    private static long nextTaskId = 1;
 
     /**
      * \note    Last reviewed 2017.8.10 21:33
@@ -54,6 +54,7 @@ public class OffloadingSystem implements FrontInterface {
 
         // Do sampling
         if (!dynamicSampler.sample(modelName)) {        // dropped
+//            nextTaskId++;
             return FRAME_DROPPED;
         }
 

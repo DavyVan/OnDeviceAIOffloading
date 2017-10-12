@@ -265,11 +265,10 @@ public class TensorFlowImageClassifier implements Classifier {
         inferenceInterface.close();
     }
 
+    /**
+     * Offloading Initialization
+     */
     public void initOffloading(final ClassifierActivity activity) {
-        /**
-         * Offloading Initialization
-         */
-        // TODO: 17-10-11 handler init
         onResultHandler = new Handler(activity.handlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -314,8 +313,8 @@ public class TensorFlowImageClassifier implements Classifier {
         offloadingSystem.init(activity);
         offloadingSystem.setOnResultHandler(onResultHandler);
         Log.i("FQ", "Offloading system initialized.");
-        /**
-         * Offloading Initialization - End
-         */
     }
+    /**
+     * Offloading Initialization - End
+     */
 }
