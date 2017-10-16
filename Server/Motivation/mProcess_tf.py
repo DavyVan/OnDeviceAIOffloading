@@ -33,8 +33,9 @@ def run_inference(queue=None):
     config.gpu_options.allow_growth = True
     # config.log_device_placement=True
     config.allow_soft_placement=False
-    # config.intra_op_parallelism_threads=1
-    # config.inter_op_parallelism_threads=1
+    if constant.ENABLE_THREAD_LIMITATION == True:
+        config.intra_op_parallelism_threads=1
+        config.inter_op_parallelism_threads=1
     sess = tf.Session(config=config)
     # sess = tf.Session()
 
@@ -69,7 +70,6 @@ def run_inference(queue=None):
     result = np.array(result)
     result = result.reshape((-1))
 
-    # TODO: post process will be performed on client
     # post process
     # result_int = [constant.DESIRED_SIZE * constant.DESIRED_SIZE]
     # for i in range(len(result_int)):
