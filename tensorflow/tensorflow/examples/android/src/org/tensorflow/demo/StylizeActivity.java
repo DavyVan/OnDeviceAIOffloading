@@ -62,6 +62,7 @@ import java.util.Vector;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 import org.tensorflow.demo.Offloading.OffloadingSystem;
+import org.tensorflow.demo.Offloading.StreamInfo;
 import org.tensorflow.demo.Offloading.Task;
 import org.tensorflow.demo.Offloading.Constant;
 import org.tensorflow.demo.OverlayView.DrawCallback;
@@ -77,10 +78,16 @@ import org.tensorflow.demo.R;
 public class StylizeActivity extends CameraActivity implements OnImageAvailableListener {
     private static final Logger LOGGER = new Logger();
 
-    private static final String MODEL_FILE = "file:///android_asset/stylize_quantized.pb";
-    private static final String INPUT_NODE = "input";
+//    private static final String MODEL_FILE = "file:///android_asset/stylize_quantized.pb";
+    private static final String MODEL_FILE_FRONT = "file:///android_asset/alexnet_front.pb";
+    private static final String MODEL_FILE_BACK = "file:///android_asset/alexnet_back.pb";
+//    private static final String INPUT_NODE = "input";
+    private static final String INPUT_NODE_FRONT = "Placeholder";
+    private static final String INPUT_NODE_BACK = "Placeholder";
     private static final String STYLE_NODE = "style_num";
-    private static final String OUTPUT_NODE = "transformer/expand/conv3/conv/Sigmoid";
+//    private static final String OUTPUT_NODE = "transformer/expand/conv3/conv/Sigmoid";
+    private static final String OUTPUT_NODE_FRONT = "alexnet_v2_front/pool5/MaxPool";
+    private static final String OUTPUT_NODE_BACK = "alexnet_v2_back/fc8/squeezed";
     private static final int NUM_STYLES = 26;
 
     private static final boolean SAVE_PREVIEW_BITMAP = false;
@@ -93,14 +100,21 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
 
     private static final boolean DEBUG_MODEL = false;
 
-    private static final int[] SIZES = {128, 192, 256, 384, 512, 720};
-
     private static final Size DESIRED_PREVIEW_SIZE = new Size(1280, 720);
 
     // Start at a medium size, but let the user step up through smaller sizes so they don't get
     // immediately stuck processing a large image.
     private int desiredSizeIndex = -1;
-    private int desiredSize = 256;
+    /**
+     * Offloading - new size is [1, 224, 224, 3]
+     */
+//    private static final int[] SIZES = {128, 192, 256, 384, 512, 720};
+    private static final int[] SIZES = {224};
+    private int desiredSize = 224;
+//    private int desiredSize = 256;
+    /**
+     * Offloading - end
+     */
     private int initializedSize = 0;
 
     private Integer sensorOrientation;
@@ -129,8 +143,6 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     private BorderedText borderedText;
 
     private long lastProcessingTimeMs;
-
-    private TensorFlowInferenceInterface inferenceInterface;
 
     private int lastOtherStyle = 1;
 
@@ -195,6 +207,7 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
     private float[] floatValues_output;
     private Bitmap croppedBitmap_output = null;
     private OffloadingSystem offloadingSystem;
+    private TensorFlowInferenceInterface inferenceInterfaceFront;
 
     private Handler onResultHandler;
 
@@ -219,33 +232,35 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
             @Override
             public void handleMessage(Message msg) {
 
-                Task task = (Task) msg.obj;
-                // Prepare data
-                floatValues_output = new float[desiredSize * desiredSize * 3];
-                intValues_output = new int[desiredSize * desiredSize];
-                croppedBitmap_output = Bitmap.createBitmap(desiredSize, desiredSize, Config.ARGB_8888);
-                System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues_output, 0, task.outputs.get(OUTPUT_NODE).length);
-
-                // Comes from stylizeImage()
-                for (int i = 0; i < intValues_output.length; ++i) {
-                    intValues_output[i] =
-                            0xFF000000
-                                    | (((int) (floatValues_output[i * 3] * 255)) << 16)
-                                    | (((int) (floatValues_output[i * 3 + 1] * 255)) << 8)
-                                    | ((int) (floatValues_output[i * 3 + 2] * 255));
-                }
-
-                croppedBitmap_output.setPixels(intValues_output, 0, croppedBitmap_output.getWidth(), 0, 0, croppedBitmap_output.getWidth(), croppedBitmap_output.getHeight());
-
-                // Comes from onImageAvailable runInBackground()
-                textureCopyBitmap = Bitmap.createBitmap(croppedBitmap_output);
-                requestRender();
+                // Do nothing in Neurosurgeon case
+//                Task task = (Task) msg.obj;
+//                // Prepare data
+//                floatValues_output = new float[desiredSize * desiredSize * 3];
+//                intValues_output = new int[desiredSize * desiredSize];
+//                croppedBitmap_output = Bitmap.createBitmap(desiredSize, desiredSize, Config.ARGB_8888);
+//                System.arraycopy(task.outputs.get(OUTPUT_NODE), 0, floatValues_output, 0, task.outputs.get(OUTPUT_NODE).length);
+//
+//                // Comes from stylizeImage()
+//                for (int i = 0; i < intValues_output.length; ++i) {
+//                    intValues_output[i] =
+//                            0xFF000000
+//                                    | (((int) (floatValues_output[i * 3] * 255)) << 16)
+//                                    | (((int) (floatValues_output[i * 3 + 1] * 255)) << 8)
+//                                    | ((int) (floatValues_output[i * 3 + 2] * 255));
+//                }
+//
+//                croppedBitmap_output.setPixels(intValues_output, 0, croppedBitmap_output.getWidth(), 0, 0, croppedBitmap_output.getWidth(), croppedBitmap_output.getHeight());
+//
+//                // Comes from onImageAvailable runInBackground()
+//                textureCopyBitmap = Bitmap.createBitmap(croppedBitmap_output);
+//                requestRender();
             }
         };
 
         offloadingSystem = new OffloadingSystem();      // Constructor does nothing. Must call init() next.
         offloadingSystem.init(this);
         offloadingSystem.setOnResultHandler(onResultHandler);
+        inferenceInterfaceFront = new TensorFlowInferenceInterface(getAssets(), MODEL_FILE_FRONT);
         Log.i("FQ", "Offloading system initialized.");
         /**
          * Offloading Initialization - End
@@ -680,34 +695,37 @@ public class StylizeActivity extends CameraActivity implements OnImageAvailableL
          * Offloading - Commit
          * \note    Last reviewed 2017.8.10 21:24
          */
-//        inferenceInterface.feed(
-//                INPUT_NODE, floatValues, 1, bitmap.getWidth(), bitmap.getHeight(), 3);
-//        inferenceInterface.feed(STYLE_NODE, styleVals, NUM_STYLES);
-//
-//        inferenceInterface.run(new String[]{OUTPUT_NODE}, isDebug());
-//        inferenceInterface.fetch(OUTPUT_NODE, floatValues);
+        // AlexNet Front
+        inferenceInterfaceFront.feed(
+                INPUT_NODE_FRONT, floatValues, 1, bitmap.getWidth(), bitmap.getHeight(), 3);
+//        inferenceInterfaceFront.feed(STYLE_NODE, styleVals, NUM_STYLES);
 
+        inferenceInterfaceFront.run(new String[]{OUTPUT_NODE_FRONT}, isDebug());
+        floatValues_output = new float[1 * 5 * 5 * 256];
+        inferenceInterfaceFront.fetch(OUTPUT_NODE_FRONT, floatValues_output);
+
+        // AlexNet Back
         ArrayList<String> inputNodes = new ArrayList<>();
         ArrayList<float[]> inputValues = new ArrayList<>();
         ArrayList<long[]> dims = new ArrayList<>();
         Map<String, long[]> odims = new HashMap<>();
 
         // feed INPUT_NODE
-        inputNodes.add(INPUT_NODE);
-        inputValues.add(floatValues.clone());       // copy for thread safety
-        dims.add(new long[]{1, bitmap.getWidth(), bitmap.getHeight(), 3});
+        inputNodes.add(INPUT_NODE_BACK);
+        inputValues.add(floatValues_output.clone());       // copy for thread safety
+        dims.add(new long[]{1, 5, 5, 256});
 
         // feed STYLE_NODE
-        inputNodes.add(STYLE_NODE);
-        inputValues.add(styleVals.clone());     // copy for thread safety
-        dims.add(new long[]{NUM_STYLES});
+//        inputNodes.add(STYLE_NODE);
+//        inputValues.add(styleVals.clone());     // copy for thread safety
+//        dims.add(new long[]{NUM_STYLES});
 
         // output nodes
-        String[] outputNodes = new String[]{OUTPUT_NODE};
-        odims.put(OUTPUT_NODE, new long[]{desiredSize, desiredSize, 3});
+        String[] outputNodes = new String[]{OUTPUT_NODE_BACK};
+        odims.put(OUTPUT_NODE_BACK, new long[]{1, 1000});
 
         // commit
-        int errno = offloadingSystem.commit(MODEL_FILE, "TF Demo Stylize", inputNodes, inputValues, dims, outputNodes, odims);
+        int errno = offloadingSystem.commit(MODEL_FILE_BACK, "Neurosurgeon", inputNodes, inputValues, dims, outputNodes, odims);
 //        Constant.logIfError(errno);       // if dropped because sampling, output log
         /**
          * Offloading - Commit - end

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import static org.tensorflow.demo.Offloading.Constant.BUFFER_FULL;
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_CLEAN_TYPE;
 import static org.tensorflow.demo.Offloading.Constant.Config.BUFFER_SIZE;
+import static org.tensorflow.demo.Offloading.Constant.Config.FULLY_BOOST;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.TASK_NOT_EXIST;
 
@@ -222,7 +223,11 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
             buffer.add(new Task[BUFFER_SIZE[i]]);
         nextSlots = new int[deviceNum];
         heads = new int[deviceNum];
-        currentBuffer = 1;
+
+        if (FULLY_BOOST == 0)
+            currentBuffer = 1;
+        else
+            currentBuffer = 0;
     }
 
     public void setScheduler(Scheduler scheduler) {

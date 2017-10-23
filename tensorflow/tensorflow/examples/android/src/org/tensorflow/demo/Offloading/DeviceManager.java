@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static org.tensorflow.demo.Offloading.Constant.Config.FULLY_BOOST;
 import static org.tensorflow.demo.Offloading.Constant.NO_DEVICE_AVAILABLE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
@@ -48,25 +49,68 @@ public class DeviceManager {
      */
     public int init() {
         // Scan all possible devices
-        // 1. local
-        DeviceAdapter localDevice = new LocalDevice(this);
-        int errno = localDevice.init();
-        if (errno == SUCCESS) {
-            devices.add(localDevice);
-            localDevice.id = devices.size() - 1;
-        }
-        else
-            Log.e("FQ", getErrorMessage(errno));
+        if (FULLY_BOOST == 0) {     // both
+            // 1. local
+            DeviceAdapter localDevice = new LocalDevice(this);
+            int errno = localDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(localDevice);
+                localDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
 
-        // 2. Wi-Fi
-        DeviceAdapter wifiDevice = new WiFiDevice(this);
-        errno = wifiDevice.init();
-        if (errno == SUCCESS) {
-            devices.add(wifiDevice);
-            wifiDevice.id = devices.size() - 1;
+            // 2. Wi-Fi
+            DeviceAdapter wifiDevice = new WiFiDevice(this);
+            errno = wifiDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(wifiDevice);
+                wifiDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
         }
-        else
-            Log.e("FQ", getErrorMessage(errno));
+        else if (FULLY_BOOST == 1){     // local
+            // 1. local
+            DeviceAdapter localDevice = new LocalDevice(this);
+            int errno = localDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(localDevice);
+                localDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
+        }
+        else if (FULLY_BOOST == 2) {        // wifi
+            // 2. Wi-Fi
+            DeviceAdapter wifiDevice = new WiFiDevice(this);
+            int errno = wifiDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(wifiDevice);
+                wifiDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
+        }
+//        // 1. local
+//        DeviceAdapter localDevice = new LocalDevice(this);
+//        int errno = localDevice.init();
+//        if (errno == SUCCESS) {
+//            devices.add(localDevice);
+//            localDevice.id = devices.size() - 1;
+//        }
+//        else
+//            Log.e("FQ", getErrorMessage(errno));
+//
+//        // 2. Wi-Fi
+//        DeviceAdapter wifiDevice = new WiFiDevice(this);
+//        errno = wifiDevice.init();
+//        if (errno == SUCCESS) {
+//            devices.add(wifiDevice);
+//            wifiDevice.id = devices.size() - 1;
+//        }
+//        else
+//            Log.e("FQ", getErrorMessage(errno));
 
         if (devices.size() == 0)
             return NO_DEVICE_AVAILABLE;

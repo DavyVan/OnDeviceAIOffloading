@@ -16,22 +16,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92acf406-c9ae-4c4d-8936-70971f2ac1ac" name="Default" comment="AddA">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/percomptime_/2017_10_16_16_09_23.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/percomptime_limit/2017_10_16_14_44_34.1.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/percomptime_limit/2017_10_16_14_44_34.dat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/percomptime_limit/2017_10_16_15_43_39.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/percomptime_limit/2017_10_16_15_47_59.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/totalcomptime/2017_10_16_16_19_26.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/totalcomptime/2017_10_16_16_23_48.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/data/totalcomptime_limit/2017_10_16_16_31_28.npy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/DataFileManager.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/mProcess_tf.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/Motivation/run_and_plot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../../Server/experimental/mThread_single_sess.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../../Server/constant.py" afterPath="$PROJECT_DIR$/../../../../Server/constant.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android.iml" afterPath="$PROJECT_DIR$/android.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/base-strings.xml" afterPath="$PROJECT_DIR$/res/values/base-strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java" afterPath="$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java" />
     </list>
     <ignored path="android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,7 +61,82 @@
     <favorites_list name="android" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="StylizeActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2891">
+              <caret line="714" column="84" selection-start-line="714" selection-start-column="84" selection-end-line="714" selection-end-column="84" />
+              <folding>
+                <element signature="class#5523:7557" expanded="false" />
+                <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
+                <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constant.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="21" column="105" selection-start-line="21" selection-start-column="105" selection-end-line="21" selection-end-column="105" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="648">
+              <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+              <folding>
+                <element signature="e#2608#2639#0" expanded="true" />
+                <marker date="1508768063339" expanded="false" signature="1678:1716" ph="&quot;TF Classify&quot;" />
+                <marker date="1508768063339" expanded="false" signature="2155:2188" ph="&quot;TF Detect&quot;" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeparatedOffloadingBuffer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="628">
+              <caret line="229" column="30" selection-start-line="229" selection-start-column="30" selection-end-line="229" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base-strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/base-strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1058,25 +1127,26 @@
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/CameraActivity.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/FrontInterface.java" />
         <option value="$PROJECT_DIR$/../../../../../0MQtest/app/src/main/java/com/example/fanquan/a0mqtest/MainActivity.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Task.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LocalDevice.java" />
-        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java" />
-        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/StreamInfo.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/TaskExecuteEngine.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceAdapter.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingBuffer.java" />
-        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/LCMScheduler.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/ClassifierActivity.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/TensorFlowImageClassifier.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/DetectorActivity.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/TensorFlowMultiBoxDetector.java" />
-        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
         <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/OffloadingSystem.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java" />
+        <option value="$PROJECT_DIR$/res/values/base-strings.xml" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java" />
       </list>
     </option>
   </component>
@@ -1084,10 +1154,10 @@
     <scope name="Unnamed" pattern="src:org.tensorflow.demo.Offloading.*" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1093" />
-    <option name="y" value="215" />
-    <option name="width" value="1845" />
-    <option name="height" value="998" />
+    <option name="x" value="65" />
+    <option name="y" value="24" />
+    <option name="width" value="2495" />
+    <option name="height" value="1416" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1199,15 +1269,44 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="android" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1304,6 +1403,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1314,6 +1415,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1667,8 +1769,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1093" y="215" width="1845" height="998" extended-state="0" />
-    <editor active="false" />
+    <frame x="65" y="24" width="2495" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884312" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1676,20 +1778,20 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.51327074" sideWeight="0.4969375" order="8" side_tool="false" content_ui="tabs" x="2625" y="232" width="927" height="1056" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34573644" sideWeight="0.4969375" order="13" side_tool="false" content_ui="tabs" x="957" y="387" width="927" height="1056" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.4969375" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24989791" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945737" sideWeight="0.5030625" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16898277" sideWeight="0.49407583" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16864026" sideWeight="0.4893365" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993057" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16898277" sideWeight="0.50592417" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16864026" sideWeight="0.5106635" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993057" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39936608" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1719,20 +1821,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/CameraConnectionFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2322">
-          <caret line="63" column="13" selection-start-line="63" selection-start-column="13" selection-end-line="63" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/nio/ByteBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../java/src/main/java/org/tensorflow/Tensor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="401">
@@ -1762,23 +1850,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_camera.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/camera_connection_fragment_stylize.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/tracking/ObjectTracker.java">
@@ -1926,25 +2014,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="515" column="29" selection-start-line="515" selection-start-column="29" selection-end-line="515" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/android/util/SparseArray.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="421">
           <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2178">
-          <caret line="129" column="5" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1988,17 +2061,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3096">
-          <caret line="180" column="51" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
-          <folding>
-            <element signature="e#8428#8429#0" expanded="false" />
-            <element signature="e#8466#8467#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Profiler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1620">
@@ -2034,39 +2096,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="25" column="74" selection-start-line="25" selection-start-column="74" selection-end-line="25" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/WiFiDevice.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-180">
           <caret line="129" column="52" selection-start-line="129" selection-start-column="52" selection-end-line="129" selection-end-column="52" />
           <folding>
             <element signature="method#WiFiDevice#0;class#WiFiDevice#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="778" column="21" selection-start-line="778" selection-start-column="11" selection-end-line="778" selection-end-column="21" />
-          <folding>
-            <element signature="class#4856:6890" expanded="false" />
-            <element signature="method#onTouch#0;class#4856:6890" expanded="false" />
-            <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="method#onPreviewSizeChosen#0;class#StylizeActivity#0" expanded="false" />
-            <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2088,14 +2123,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/TensorFlowMultiBoxDetector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1650">
@@ -2104,7 +2131,7 @@
             <element signature="method#loadCoderOptions#0;class#TensorFlowMultiBoxDetector#0" expanded="false" />
             <element signature="method#decodeLocationsEncoding#0;class#TensorFlowMultiBoxDetector#0" expanded="false" />
             <element signature="method#decodeScoresEncoding#0;class#TensorFlowMultiBoxDetector#0" expanded="false" />
-            <element signature="e#16727#16740#0" expanded="true" />
+            <element signature="e#16727#16740#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2132,10 +2159,88 @@
         <state relative-caret-position="-823">
           <caret line="259" column="23" selection-start-line="259" selection-start-column="23" selection-end-line="259" selection-end-column="23" />
           <folding>
-            <element signature="e#7504#7505#0" expanded="true" />
-            <element signature="e#9582#9583#0" expanded="true" />
-            <element signature="e#13840#13841#0" expanded="true" />
+            <element signature="e#7504#7505#0" expanded="false" />
+            <element signature="e#9582#9583#0" expanded="false" />
+            <element signature="e#13840#13841#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/DeviceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="39" column="49" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/base-strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="402" column="53" selection-start-line="402" selection-start-column="53" selection-end-line="402" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+          <folding>
+            <element signature="e#2608#2639#0" expanded="true" />
+            <marker date="1508768063339" expanded="false" signature="1678:1716" ph="&quot;TF Classify&quot;" />
+            <marker date="1508768063339" expanded="false" signature="2155:2188" ph="&quot;TF Detect&quot;" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/SeparatedOffloadingBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="229" column="30" selection-start-line="229" selection-start-column="30" selection-end-line="229" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/StylizeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2891">
+          <caret line="714" column="84" selection-start-line="714" selection-start-column="84" selection-end-line="714" selection-end-column="84" />
+          <folding>
+            <element signature="class#5523:7557" expanded="false" />
+            <element signature="method#getBitmapFromAsset#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="class#ImageSlider#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="class#ImageGridAdapter#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="method#setStyle#0;class#StylizeActivity#0" expanded="false" />
+            <element signature="method#renderDebug#0;class#StylizeActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/tensorflow/demo/Offloading/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="105" selection-start-line="21" selection-start-column="105" selection-end-line="21" selection-end-column="105" />
+          <folding />
         </state>
       </provider>
     </entry>
