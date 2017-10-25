@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static org.tensorflow.demo.Offloading.Constant.Config.ONLY_REMOTE;
 import static org.tensorflow.demo.Offloading.Constant.NO_DEVICE_AVAILABLE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
@@ -48,15 +49,18 @@ public class DeviceManager {
      */
     public int init() {
         // Scan all possible devices
+        int errno;
         // 1. local
-        DeviceAdapter localDevice = new LocalDevice(this);
-        int errno = localDevice.init();
-        if (errno == SUCCESS) {
-            devices.add(localDevice);
-            localDevice.id = devices.size() - 1;
+        if (ONLY_REMOTE == 0) {
+            DeviceAdapter localDevice = new LocalDevice(this);
+            errno = localDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(localDevice);
+                localDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
         }
-        else
-            Log.e("FQ", getErrorMessage(errno));
 
         // 2. Wi-Fi
         DeviceAdapter wifiDevice = new WiFiDevice(this);
