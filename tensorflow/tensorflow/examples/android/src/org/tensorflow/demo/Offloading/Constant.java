@@ -13,12 +13,12 @@ public final class Constant {
 
     public static class Config {
         // Neurosurgeon only
-        public static final int FULLY_BOOST = 2;    // 0: both, 1: local, 2: wifi
+        public static final int FULLY_BOOST = 0;    // 0: both, 1: local, 2: wifi
 
         public static final int BUFFER_SIZE_LOCAL = 3;
         public static final int BUFFER_SIZE_WIFI = 9;
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_WIFI};     // Both Local & WiFi
-        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL};                       // Only local
+        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_WIFI};     // Both Local & WiFi
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL};                       // Only local
 //        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_WIFI};                        // Only Wifi
 
         // Profiler
@@ -26,12 +26,12 @@ public final class Constant {
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.113";
+        public static final String SERVER_IP = "192.168.0.122";
         public static final int SERVER_PORT = 2333;
-        public static final int SEND_DELAY_MS = 0;
+        public static final int SEND_DELAY_MS = 50;
 
         // Scheduler
-        public static final int INIT_SAMPLE_INTERVAL = 200;
+        public static final int INIT_SAMPLE_INTERVAL = 0;
         public static final boolean ENABLE_FIXED_SAMPLE_RATE = true;
         public static final int[] INIT_WINS = {1, 1};               /**< {Local, WiFi} */
         public static final String BUFFER_TYPE = "Separated";       /**< {Separated|Single} */
@@ -39,8 +39,8 @@ public final class Constant {
 
         // Smooth Send-Back
 //        public static final int[] DEVICE_CONCURRENCY_NUMS = {1};        // Only local
-        public static final int[] DEVICE_CONCURRENCY_NUMS = {4};        // Only wifi
-//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 4};     /**< {Local, WiFi} */
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only wifi
+        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
         public static final int DELTA_E_REAL_AVG_NUM = 10;
         public static final float DELTA_E_REAL_AVG_ALPHA = 1.0f / DELTA_E_REAL_AVG_NUM;
 //        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;      // deprecated in design v3.0
