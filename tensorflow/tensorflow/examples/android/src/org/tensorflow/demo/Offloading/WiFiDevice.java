@@ -307,7 +307,7 @@ public class WiFiDevice extends DeviceAdapter {
                                     delta_s = 0;
                             }
                         }
-                        Log.i("SSB", String.format("Variance=%d, Ds=%d, stable_period=%d", variance, delta_s, stable_period_counter));
+                        Log.i("SSB", String.format("Variance=%d Ds=%d stable_period=%d", variance, delta_s, stable_period_counter));
                     }
 
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);

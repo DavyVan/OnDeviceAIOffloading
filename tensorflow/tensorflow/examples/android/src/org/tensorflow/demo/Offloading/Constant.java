@@ -12,12 +12,12 @@ import android.util.Log;
 public final class Constant {
 
     public static class Config {
-        public static final int ONLY_REMOTE = 1;        // 1: True, 0: False
+        public static final int ONLY_REMOTE = 0;        // 1: True, 0: False
 
         public static final int BUFFER_SIZE_LOCAL = 2;
         public static final int BUFFER_SIZE_REMOTE = 9;     // 9 in style; 20 in detect & classify
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE};      // both
-        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE};       // Only remote
+        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE};      // both
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE};       // Only remote
 
         // Profiler
         // 1-Exponential Smoothing
@@ -36,15 +36,15 @@ public final class Constant {
         public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
 
         // Smooth Send-Back
-//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
-        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only remote
+        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only remote
         public static final int DELTA_E_REAL_AVG_NUM = 10;
         public static final float DELTA_E_REAL_AVG_ALPHA = 1.0f / DELTA_E_REAL_AVG_NUM;
 //        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;      // deprecated in design v3.0
         public static final int DELTA_S_UPDATE_INTERVAL = 8;
         public static final int DELTA_S_CLIMBING_STEP = 50;         /**< in milliseconds */
         public static final int DELTA_S_SHRINKING_STEP = 10;        /**< in milliseconds */
-        public static final int DELTA_E_REAL_VARIANCE_THRESHOLD = 70000;
+        public static final int DELTA_E_REAL_VARIANCE_THRESHOLD = 75000;
         public static final int KEEP_STABLE_ROUND = 1;
         /**
          * SEND_DELAY_MS=250
