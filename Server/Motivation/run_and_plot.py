@@ -104,10 +104,10 @@ def draw_plot_from_file(filename=None):
         _result = np.load(data_fd)
         print("Current data row is: " + str(_result))
         line1, = ax.plot(_concurrency_num, _result, label='sleep_time='+str(_sleep_times_s[i])+'s', marker=markers[i])
-    ax.set_xlabel('Number of Processes', fontsize='small')
-    ax.set_ylabel('Total Completion Time(ms)' if constant.ENABLE_TOTAL_TIME_PLOT else 'Per-process Completion Time(ms)', fontsize='small')
+    ax.set_xlabel('Number of Processes', fontsize=10)
+    ax.set_ylabel('Total Completion Time(ms)' if constant.ENABLE_TOTAL_TIME_PLOT else 'Per-process Completion Time(ms)', fontsize=10)
     ax.tick_params(labelsize='small')
-    ax.legend(loc='upper left', fontsize='small')
+    ax.legend(loc='upper left', fontsize=10)
     plt.show()
     print("Draw from file...done")
     data_fd.close()
@@ -142,6 +142,6 @@ def run_multi_process_for_per_span_time():
     plt.show()
 
 if __name__ == "__main__":
-    run_multi_process()
-    # draw_plot_from_file()
+    # run_multi_process()
+    draw_plot_from_file()
     # run_multi_process_for_per_span_time()

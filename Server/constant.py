@@ -5,7 +5,7 @@ ZMQ_ID = "FQ"
 
 # TensorFlow 
 PB_FILE_DIR = './'
-DEMO_INDICATOR = 1  # 1:style   2:Classify  3:Detect
+DEMO_INDICATOR = 2  # 1:style   2:Classify  3:Detect
 PB_FILE_NAME = ''
 if DEMO_INDICATOR == 1:
     PB_FILE_NAME = 'stylize_quantized.pb'
@@ -25,5 +25,5 @@ DESIRED_SIZE = 256
 ENABLE_SINGLE_SESSION = True        # Use a single Sesssion for all threads, or one Session per thread
 ENABLE_PLOT = False     # Always False, because mProcess_tf can run indenpently
 ENABLE_SPAN_TIME_PLOT = False       # Always False
-ENABLE_THREAD_LIMITATION = True
+ENABLE_THREAD_LIMITATION = False
 ENABLE_TOTAL_TIME_PLOT = True
