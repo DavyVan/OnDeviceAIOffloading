@@ -190,13 +190,15 @@ public class WiFiDevice extends DeviceAdapter {
             packer.close();
 
             // Wait for delta_s
-            Thread.sleep(delta_s + SEND_DELAY_MS);
+            long t = delta_s - packEnd + packStart;
+            if (t > 0)
+                Thread.sleep(t);
         }
         catch (IOException e) {
             Log.e("FQ", "IOException occurred when packing task!\n" + e.getMessage());
             return IO_EXCEPTION;
         }
-        catch (InterruptedException e) {
+        catch (InterruptedException e) {      // Regard to sleep()
             Log.e("FQ", "Interrupted exception occurred when it wait for delta_s!\n" + e.getMessage());
             return INTERRUPTED_EXCEPTION;
         }
@@ -356,6 +358,7 @@ public class WiFiDevice extends DeviceAdapter {
 
                         replyTask.cost.computing = unpacker.unpackInt();
                         replyTask.cost.downloading = unpacker.unpackInt();
+                        replyTask.cost.delta_s = delta_s;
 
                         // Callback - onResultHandler
                         Message onResultMsg = Message.obtain();

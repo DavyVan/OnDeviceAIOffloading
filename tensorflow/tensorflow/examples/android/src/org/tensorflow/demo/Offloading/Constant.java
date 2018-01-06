@@ -12,32 +12,32 @@ import android.util.Log;
 public final class Constant {
 
     public static class Config {
-        public static final int ONLY_REMOTE = 1;        // 1: True, 0: False
+        public static final int ONLY_REMOTE = 0;        // 1: True, 0: False
 
         public static final int BUFFER_SIZE_LOCAL = 2;
         public static final int BUFFER_SIZE_REMOTE = 9;     // 9 in style; 20 in detect & classify
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE};      // both
-        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE};       // Only remote
+        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE};      // both
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE};       // Only remote
 
         // Profiler
         // 1-Exponential Smoothing
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.122";
+        public static final String SERVER_IP = "192.168.0.140";
         public static final int SERVER_PORT = 2333;
-        public static final int SEND_DELAY_MS = 50;
+        public static final int SEND_DELAY_MS = 50;     /**< Also used to init delta_s (in devices) */
 
         // Scheduler
         public static final int INIT_SAMPLE_INTERVAL = 0;
-        public static final boolean ENABLE_FIXED_SAMPLE_RATE = true;
+        public static final boolean ENABLE_FIXED_SAMPLE_RATE = false;
         public static final int[] INIT_WINS = {1, 1};               /**< {Local, WiFi} */
         public static final String BUFFER_TYPE = "Separated";       /**< {Separated|Single} */
         public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
 
         // Smooth Send-Back
-//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
-        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only remote
+        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only remote
         public static final int DELTA_E_REAL_AVG_NUM = 10;
         public static final float DELTA_E_REAL_AVG_ALPHA = 1.0f / DELTA_E_REAL_AVG_NUM;
 //        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;      // deprecated in design v3.0

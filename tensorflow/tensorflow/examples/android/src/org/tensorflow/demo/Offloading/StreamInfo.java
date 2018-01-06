@@ -90,6 +90,7 @@ public class StreamInfo {
         public int downloading;     /**< Time cost of downloading result stage
                                          Measured by sender: http://ieeexplore.ieee.org/document/917505*/
         public int post_process;    /**< Time cost of post-process stage */
+        public int delta_s;         /**< As the name */
 
         public boolean isRemote;    /**< Indicate whether the device which bind with current cost instance is remote or local */
         public int schedulingCost;  /**< Accordingly, the cost considered by scheduler */
@@ -105,12 +106,13 @@ public class StreamInfo {
          * \param   post_process    ::post_process
          * \param   isRemote        ::isRemote
          */
-        public Cost(int pre_process, int uploading, int computing, int downloading, int post_process, boolean isRemote) {
+        public Cost(int pre_process, int uploading, int computing, int downloading, int post_process, int delta_s, boolean isRemote) {
             this.pre_process = pre_process;
             this.uploading = uploading;
             this.computing = computing;
             this.downloading = downloading;
             this.post_process = post_process;
+            this.delta_s = delta_s;
             this.isRemote = isRemote;
 
             calculateSchedulingCost();
@@ -127,6 +129,7 @@ public class StreamInfo {
             computing = 0;
             downloading = 0;
             post_process = 0;
+            delta_s = 0;
             this.isRemote = isRemote;
             schedulingCost = 0;
         }
@@ -140,6 +143,7 @@ public class StreamInfo {
             computing = 0;
             downloading = 0;
             post_process = 0;
+            delta_s = 0;
             isRemote = false;
             schedulingCost = 0;
         }
@@ -149,18 +153,21 @@ public class StreamInfo {
          */
         public void calculateSchedulingCost() {
             if (isRemote) {     // remote
-                if (pre_process + uploading > post_process + downloading)
-                    schedulingCost = pre_process + uploading;
-                else
-                    schedulingCost = post_process + downloading;
+                // Deprecated at 2018.1.5
+//                if (pre_process + uploading > post_process + downloading)
+//                    schedulingCost = pre_process + uploading;
+//                else
+//                    schedulingCost = post_process + downloading;
+                schedulingCost = Math.max(pre_process + uploading, delta_s);    // Actually, this is consist with the design
             }
             else    // local
                 schedulingCost = computing;
         }
 
         public void printToLog() {
-            Log.i("COST", String.format("pre-process: %d\nuploading: %d\ncomputing: %d\ndownloading: %d\npost-process: %d\nschedulingCost: %d",
-                    pre_process, uploading, computing, downloading, post_process, schedulingCost));
+//            Log.i("COST", String.format("pre-process: %d\nuploading: %d\ncomputing: %d\ndownloading: %d\npost-process: %d\ndelta_s in cost: %d\nschedulingCost: %d",
+//                    pre_process, uploading, computing, downloading, post_process, delta_s, schedulingCost));
+            Log.i("COST", String.format("pre-process: %d\nuploading: %d\ndelta_s: %d", pre_process, uploading, delta_s));
         }
     }
 

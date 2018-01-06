@@ -84,6 +84,7 @@ public class LocalDevice extends DeviceAdapter {
                 tf.run(currentTask.outputNodes, true);
                 long end = System.currentTimeMillis();
                 currentTask.cost.computing = (int) (end - start);
+                currentTask.cost.delta_s = currentTask.cost.computing;
 
 //                Log.i("FQ", "This uploadAndRun():post, thread " + Thread.currentThread().toString());
                 fetchResult(deviceId);

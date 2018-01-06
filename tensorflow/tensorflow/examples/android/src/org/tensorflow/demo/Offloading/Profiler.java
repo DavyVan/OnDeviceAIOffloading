@@ -95,6 +95,11 @@ public class Profiler {
                 _cost.computing = _newCost.computing;
             else
                 _cost.computing = (int) (_cost.computing * SMOOTHING_FACTOR + _newCost.computing * (1 - SMOOTHING_FACTOR));
+
+            // delta_s is passed straight.
+            if (_newCost.delta_s != 0)
+                _cost.delta_s = _newCost.delta_s;
+
             _cost.calculateSchedulingCost();
             _streamInfo.updateMaxCost();
 //            Log.i("COST", "Updated cost:");
