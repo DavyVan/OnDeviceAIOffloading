@@ -54,7 +54,7 @@ def run_inference(sess, request, dlcqueue, sendQueue):
     result = sess.run(outputTensors, inputs)        # dict<string, numpy.array>
     endTime = time.time()
     
-    computingCost = (endTime - startTime) * 1000        # microsecond
+    computingCost = (endTime - startTime) * 1000        # milisecond
 
     # pack result - convert numpy.array to python list
     for key in result:

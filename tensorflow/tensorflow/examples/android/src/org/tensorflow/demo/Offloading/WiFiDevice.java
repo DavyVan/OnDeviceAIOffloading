@@ -236,31 +236,6 @@ public class WiFiDevice extends DeviceAdapter {
                     if (reply.length == 0)
                         continue;
 
-                    // update delta_e_real | Design V2.0
-//                    delta_e_real_counter_avg++;
-//                    delta_e_real_counter_update++;
-//                    long currentTime = System.currentTimeMillis();
-//                    int t = (int) (currentTime - lastResultTime);
-//                    lastResultTime = currentTime;
-//                    if (delta_e_real_counter_avg < DELTA_E_REAL_AVG_NUM) {
-//                        float smooth_factor = 1.0f / delta_e_real_counter_avg;
-//                        delta_e_real = (int) (delta_e_real * (1 - smooth_factor) + smooth_factor * t);
-//                    }
-//                    else
-//                        delta_e_real = (int) (delta_e_real * 0.98f + 0.02f * t);
-//                    Log.i("FQ", String.format("Measured delta_e=%d, Calculated delta_e_real=%d", t, delta_e_real));
-//
-//                    // Every DELTA_S_UPDATE_INTERVAL, update delta_s
-//                    if (delta_e_real_counter_update % DELTA_S_UPDATE_INTERVAL == 0) {
-//                        // Calibrate
-//                        t = (int) (delta_s - DELTA_S_CALIBRATION_FACTOR * (delta_e_real - delta_e_target));
-//                        if (t < 0)
-//                            Log.i("FQ", "Ds -0");
-//                        else
-//                            delta_s = t;
-//                        Log.i("FQ", String.format("Ds=%d Dreal=%d Dtarget=%d", delta_s, delta_e_real, delta_e_target));
-//                    }
-
                     // update delta_e_real & delta_e_real^2 | Design V3.0
                     delta_e_real_counter_avg++;
                     delta_e_real_counter_update++;

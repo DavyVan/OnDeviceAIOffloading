@@ -1,11 +1,11 @@
 # Network
-SERVER_ADDR = '192.168.0.140'
+SERVER_ADDR = '192.168.0.155'
 SERVER_PORT = '2333'
 ZMQ_ID = "FQ"
 
 # TensorFlow 
 PB_FILE_DIR = './'
-DEMO_INDICATOR = 1  # 1:style   2:Classify  3:Detect
+DEMO_INDICATOR = 2  # 1:style   2:Classify  3:Detect
 PB_FILE_NAME = ''
 if DEMO_INDICATOR == 1:
     PB_FILE_NAME = 'stylize_quantized.pb'

@@ -1,5 +1,6 @@
 package com.example.fanquan.a0mqtest;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -20,6 +21,8 @@ import org.zeromq.ZMQ;
 
 import java.io.IOException;
 import java.net.StandardProtocolFamily;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     int count = 0;
     HandlerThread handlerThread;
     Handler handler;
-    String m = "";
+//    String m = "";
+    float[] m;
     byte[] serializedData;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Prepare data
-        for(int i = 0; i < 10000; i++)
-            m += i;
-        Log.i("FQ", m);
+//        for(int i = 0; i < 10000; i++)
+//            m += i;
+//        Log.i("FQ", m);
+        m = new float[20*20*3];
+        for (int i = 0; i < 20*20*3; i++)
+            m[i] = i;
+        m[0]=221;
+        Log.i("FQ", "Data inited.");
 
-        serializedData = packing(createTask());
-        Log.i("FQ", "serialized data length: " + serializedData.length);
+//        serializedData = packing(createTask());
+//        Log.i("FQ", "serialized data length: " + serializedData.length);
 
         handlerThread = new HandlerThread("NIO");
         handlerThread.start();
@@ -60,16 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 context = ZMQ.context(1);
                 Log.i("FQ", "Connecting to server...");
                 requester = context.socket(ZMQ.REQ);
-                requester.connect("tcp://192.168.0.126:5555");
+                requester.connect("tcp://192.168.0.156:5555");
                 Log.i("FQ", "Connected.");
 
 //                requester.send(("Hello" + (count++) + m).getBytes(), 0);
-                requester.send(serializedData, 0);
+//                requester.send(serializedData, 0);
 
-                byte[] reply = requester.recv(0);
-                Log.i("FQ", "Received: " + new String(reply).length());
-                if (reply.length != 0)
-                    unpacking(reply);
+//                byte[] reply = requester.recv(0);
+//                Log.i("FQ", "Received: " + new String(reply).length());
+//                if (reply.length != 0)
+//                    unpacking(reply);
             }
         });
 
@@ -82,13 +91,51 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-//                        requester.send(("Hello" + (count++) + m).getBytes(), 0);
-                        requester.send(serializedData, 0);
+//                        requester.send(serializedData, 0);
+//
+//                        byte[] reply = requester.recv(0);
+//                        Log.i("FQ", "Received: " + new String(reply).length());
+//                        if (reply.length != 0)
+//                            unpacking(reply);
 
-                        byte[] reply = requester.recv(0);
-                        Log.i("FQ", "Received: " + new String(reply).length());
-                        if (reply.length != 0)
-                            unpacking(reply);
+                        // To test serialize float array as binary for better performance
+                        try {
+                            // Pack as binary
+                            MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+                            long startt = System.currentTimeMillis();
+                            packer.packBinaryHeader(20*20*3*4);
+                            ByteBuffer byteBuffer = ByteBuffer.allocate(20*20*3*4);
+                            FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+                            floatBuffer.put(m);
+                            packer.writePayload(byteBuffer.array());
+                            packer.flush();
+                            long endt = System.currentTimeMillis();
+                            Log.i("FQ", "Pack as byte time: " + (endt - startt));
+                            serializedData = packer.toByteArray();
+                            packer.close();
+
+                            // send
+                            requester.send(serializedData, 0);
+
+                            byte[] reply = requester.recv(0);
+                            Log.i("FQ", "Received: " + reply.length);
+
+                            // try to unpack
+                            MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
+                            startt = System.currentTimeMillis();
+                            int binaryHeader = unpacker.unpackBinaryHeader();
+                            Log.i("FQ", "BinaryHeader is " + binaryHeader);
+                            byte[] result = unpacker.readPayload(binaryHeader);
+                            ByteBuffer resultBuffer = ByteBuffer.wrap(result);
+                            float[] finalResult = new float[binaryHeader/4];
+                            resultBuffer.asFloatBuffer().get(finalResult);
+                            endt = System.currentTimeMillis();
+                            Log.i("FQ", "Unpacking is finished in " + (endt - startt));
+                            Log.i("FQ", "Final result is " + finalResult[0] + " " + finalResult[1]);
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
