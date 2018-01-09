@@ -13,6 +13,8 @@ import org.msgpack.core.MessageUnpacker;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,11 +146,21 @@ public class WiFiDevice extends DeviceAdapter {
             }
             packer.packArrayHeader(task.inputValues.size());    // Task::inputValues
             for (float[] x : task.inputValues) {
-                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
-                for (float f : x) {
-                    packer.packFloat(f);
-                }
+                // Don't use msgpack to serialize large float array any more for performance consideration
+//                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
+//                for (float f : x) {
+//                    packer.packFloat(f);
+//                }
+                // pack as binary
+                int byteNum = x.length * 4;     // 4 pytes per float
+                ByteBuffer byteBuffer = ByteBuffer.allocate(byteNum);
+                FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+                floatBuffer.put(x);
+
+                packer.packBinaryHeader(byteNum);
+                packer.writePayload(byteBuffer.array());
             }
+
             packer.packArrayHeader(task.dims.size());           // Task::dims
             for (long[] x : task.dims) {
                 packer.packArrayHeader(x.length);
@@ -304,15 +316,25 @@ public class WiFiDevice extends DeviceAdapter {
                         String[] outputNodes = new String[numOutputNodes];
                         for (int i = 0; i < numOutputNodes; i++)
                             outputNodes[i] = unpacker.unpackString().split(":")[0];
+
                         int numOutputs = unpacker.unpackMapHeader();        // Task::outputs
                         Map<String, float[]> outputs = new HashMap<>();
                         for (int i = 0; i < numOutputs; i++) {
                             String key = unpacker.unpackString().split(":")[0];
-                            int n = unpacker.unpackArrayHeader();
-                            float[] value = new float[n];
-                            for (int j = 0; j < n; j++) {
-                                value[j] = unpacker.unpackFloat();
-                            }
+                            // if pack as array
+//                            int n = unpacker.unpackArrayHeader();
+//                            float[] value = new float[n];
+//                            for (int j = 0; j < n; j++) {
+//                                value[j] = unpacker.unpackFloat();
+//                            }
+
+                            // if pack as binary
+                            int n = unpacker.unpackBinaryHeader();
+                            float[] value = new float[n/4];
+                            byte[] valueByte = unpacker.readPayload(n);
+                            ByteBuffer valueBuffer = ByteBuffer.wrap(valueByte);
+                            valueBuffer.asFloatBuffer().get(value);
+
                             outputs.put(key, value);
                         }
                         int numOdims = unpacker.unpackMapHeader();          // Task::odims

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     HandlerThread handlerThread;
     Handler handler;
 //    String m = "";
-    float[] m;
+//    float[] m;
     byte[] serializedData;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +49,15 @@ public class MainActivity extends AppCompatActivity {
 //        for(int i = 0; i < 10000; i++)
 //            m += i;
 //        Log.i("FQ", m);
-        m = new float[20*20*3];
-        for (int i = 0; i < 20*20*3; i++)
-            m[i] = i;
-        m[0]=221;
-        Log.i("FQ", "Data inited.");
 
-//        serializedData = packing(createTask());
-//        Log.i("FQ", "serialized data length: " + serializedData.length);
+//        m = new float[20*20*3];
+//        for (int i = 0; i < 20*20*3; i++)
+//            m[i] = i;
+//        m[0]=221;
+//        Log.i("FQ", "Data inited.");
+
+        serializedData = packing(createTask());
+        Log.i("FQ", "serialized data length: " + serializedData.length);
 
         handlerThread = new HandlerThread("NIO");
         handlerThread.start();
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 context = ZMQ.context(1);
                 Log.i("FQ", "Connecting to server...");
                 requester = context.socket(ZMQ.REQ);
-                requester.connect("tcp://192.168.0.156:5555");
+                requester.connect("tcp://192.168.0.241:5555");
                 Log.i("FQ", "Connected.");
 
 //                requester.send(("Hello" + (count++) + m).getBytes(), 0);
@@ -91,51 +92,51 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-//                        requester.send(serializedData, 0);
-//
-//                        byte[] reply = requester.recv(0);
-//                        Log.i("FQ", "Received: " + new String(reply).length());
-//                        if (reply.length != 0)
-//                            unpacking(reply);
+                        requester.send(serializedData, 0);
+
+                        byte[] reply = requester.recv(0);
+                        Log.i("FQ", "Received: " + new String(reply).length());
+                        if (reply.length != 0)
+                            unpacking(reply);
 
                         // To test serialize float array as binary for better performance
-                        try {
-                            // Pack as binary
-                            MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-                            long startt = System.currentTimeMillis();
-                            packer.packBinaryHeader(20*20*3*4);
-                            ByteBuffer byteBuffer = ByteBuffer.allocate(20*20*3*4);
-                            FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
-                            floatBuffer.put(m);
-                            packer.writePayload(byteBuffer.array());
-                            packer.flush();
-                            long endt = System.currentTimeMillis();
-                            Log.i("FQ", "Pack as byte time: " + (endt - startt));
-                            serializedData = packer.toByteArray();
-                            packer.close();
-
-                            // send
-                            requester.send(serializedData, 0);
-
-                            byte[] reply = requester.recv(0);
-                            Log.i("FQ", "Received: " + reply.length);
-
-                            // try to unpack
-                            MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
-                            startt = System.currentTimeMillis();
-                            int binaryHeader = unpacker.unpackBinaryHeader();
-                            Log.i("FQ", "BinaryHeader is " + binaryHeader);
-                            byte[] result = unpacker.readPayload(binaryHeader);
-                            ByteBuffer resultBuffer = ByteBuffer.wrap(result);
-                            float[] finalResult = new float[binaryHeader/4];
-                            resultBuffer.asFloatBuffer().get(finalResult);
-                            endt = System.currentTimeMillis();
-                            Log.i("FQ", "Unpacking is finished in " + (endt - startt));
-                            Log.i("FQ", "Final result is " + finalResult[0] + " " + finalResult[1]);
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            // Pack as binary
+//                            MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+//                            long startt = System.currentTimeMillis();
+//                            packer.packBinaryHeader(20*20*3*4);
+//                            ByteBuffer byteBuffer = ByteBuffer.allocate(20*20*3*4);
+//                            FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+//                            floatBuffer.put(m);
+//                            packer.writePayload(byteBuffer.array());
+//                            packer.flush();
+//                            long endt = System.currentTimeMillis();
+//                            Log.i("FQ", "Pack as byte time: " + (endt - startt));
+//                            serializedData = packer.toByteArray();
+//                            packer.close();
+//
+//                            // send
+//                            requester.send(serializedData, 0);
+//
+//                            byte[] reply = requester.recv(0);
+//                            Log.i("FQ", "Received: " + reply.length);
+//
+//                            // try to unpack
+//                            MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
+//                            startt = System.currentTimeMillis();
+//                            int binaryHeader = unpacker.unpackBinaryHeader();
+//                            Log.i("FQ", "BinaryHeader is " + binaryHeader);
+//                            byte[] result = unpacker.readPayload(binaryHeader);
+//                            ByteBuffer resultBuffer = ByteBuffer.wrap(result);
+//                            float[] finalResult = new float[binaryHeader/4];
+//                            resultBuffer.asFloatBuffer().get(finalResult);
+//                            endt = System.currentTimeMillis();
+//                            Log.i("FQ", "Unpacking is finished in " + (endt - startt));
+//                            Log.i("FQ", "Final result is " + finalResult[0] + " " + finalResult[1]);
+//                        }
+//                        catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 });
             }
@@ -216,13 +217,27 @@ public class MainActivity extends AppCompatActivity {
             for (String s : task.inputNodes) {
                 packer.packString(s);
             }
+
+            // pack as array
+//            packer.packArrayHeader(task.inputValues.size());
+//            for (float[] x : task.inputValues) {
+//                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
+//                for (float f : x) {
+//                    packer.packFloat(f);
+//                }
+//            }
+            // pack as binary
             packer.packArrayHeader(task.inputValues.size());
-            for (float[] x : task.inputValues) {
-                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
-                for (float f : x) {
-                    packer.packFloat(f);
-                }
+            for (float[] array : task.inputValues) {
+                int byteNum = array.length * 4;     // 4 bytes per float
+                ByteBuffer byteBuffer = ByteBuffer.allocate(byteNum);
+                FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+                floatBuffer.put(array);
+
+                packer.packBinaryHeader(byteNum);
+                packer.writePayload(byteBuffer.array());
             }
+
             packer.packArrayHeader(task.dims.size());
             for (long[] x : task.dims) {
                 packer.packArrayHeader(x.length);
@@ -281,14 +296,25 @@ public class MainActivity extends AppCompatActivity {
             Map<String, float[]> outputs = new HashMap<>();
             for (int i = 0; i < numOutputs; i++) {
                 String key = unpacker.unpackString();
-                int n = unpacker.unpackArrayHeader();
-                float[] value = new float[n];
-                for (int j = 0; j < n; j++) {
-                    value[j] = unpacker.unpackFloat();
-                }
+                // if pack as array
+//                int n = unpacker.unpackArrayHeader();
+//                float[] value = new float[n];
+//                for (int j = 0; j < n; j++) {
+//                    value[j] = unpacker.unpackFloat();
+//                }
+
+                // if pack as binary
+                int n = unpacker.unpackBinaryHeader();
+                float[] value = new float[n/4];
+                byte[] valueByte = unpacker.readPayload(n);
+                ByteBuffer valueBuffer = ByteBuffer.wrap(valueByte);
+                valueBuffer.asFloatBuffer().get(value);
+
                 outputs.put(key, value);
             }
-            Log.i("FQ", "Unpacked outputs: " + outputs);
+            Log.i("FQ", "Unpacked outputs: ");
+            for (String s : outputs.keySet())
+                Log.i("FQ", "" + Arrays.toString(outputs.get(s)));
 
             int numOdims = unpacker.unpackMapHeader();
             Map<String, long[]> odims = new HashMap<>();

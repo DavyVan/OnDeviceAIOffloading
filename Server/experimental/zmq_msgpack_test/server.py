@@ -20,40 +20,54 @@ while True:
     # unpacking
     unpacker = msgpack.Unpacker()
     unpacker.feed(message)
-    # taskId = unpacker.unpack()
-    # print("Task ID: %d" % taskId)
-    # appName = unpacker.unpack()
-    # print("App name: %s" % appName)
-    # modelName = unpacker.unpack()
-    # print("Model name: %s" % modelName)
-    # inputNodes = unpacker.unpack()
-    # print("Input nodes: %s" % inputNodes)
+    taskId = unpacker.unpack()
+    print("Task ID: %d" % taskId)
+    appName = unpacker.unpack()
+    print("App name: %s" % appName)
+    modelName = unpacker.unpack()
+    print("Model name: %s" % modelName)
+    inputNodes = unpacker.unpack()
+    print("Input nodes: %s" % inputNodes)
     # unpacker.skip() # skip inputValues
-    # unpacker.skip() # skip dims
-    # outputNodes = unpacker.unpack()
-    # odims = unpacker.unpack()
+    # unpack inputValues if it's packed as binary
+    inputValues_t = unpacker.unpack()     # inputValues should be a list<byte[]>
+    inputValues = list()
+    for values in inputValues_t:
+        inputValues.append(unpack(">%df" % (len(values)/4), values))
+    print(inputValues)
+
+    unpacker.skip() # skip dims
+    outputNodes = unpacker.unpack()
+    odims = unpacker.unpack()
 
     # To test binary serialization
-    unpackStart = time.time() * 1000
-    bytesReq = unpacker.unpack()
-    floatReq = unpack(">" + str((int) (len(bytesReq)/4)) + "f", bytesReq)
-    unpackEnd = time.time() * 1000
-    print("Unpacking is finished in %f ms" % (unpackEnd - unpackStart))
-    print("The first two elements of request is: %f %f" % (floatReq[0], floatReq[1]))
+    # unpackStart = time.time() * 1000
+    # bytesReq = unpacker.unpack()
+    # floatReq = unpack(">" + str((int) (len(bytesReq)/4)) + "f", bytesReq)
+    # unpackEnd = time.time() * 1000
+    # print("Unpacking is finished in %f ms" % (unpackEnd - unpackStart))
+    # print("The first two elements of request is: %f %f" % (floatReq[0], floatReq[1]))
 
     # packing result
     packer = msgpack.Packer(use_single_float=True, autoreset=False)
-    # packer.pack(taskId)
-    # packer.pack(appName)
-    # packer.pack(modelName)
-    # packer.pack(outputNodes)
+    packer.pack(taskId)
+    packer.pack(appName)
+    packer.pack(modelName)
+    packer.pack(outputNodes)
     # packer.pack({"output_1":[0.1], "output_2":[1.0,2.0,2.0,4.0]})
-    # packer.pack(odims)
-    # packer.pack(456)
+    # pack outputs as binary
+    outputs = {"output_1":[0.1], "output_2":[1.0,2.0,2.0,4.0]}
+    packer.pack_map_header(len(outputs))
+    for key, value in outputs.items():
+        packer.pack(key)    # key
+        packer.pack(pack(">%df" % (len(value)), *value))    # value
 
-    bytesRep = pack(">" + str((int)(len(_data))) + "f", *_data)
-    print("Bytes data length is %d" % len(bytesRep))
-    packer.pack(bytesRep)
+    packer.pack(odims)
+    packer.pack(456)
+
+    # bytesRep = pack(">" + str((int)(len(_data))) + "f", *_data)
+    # print("Bytes data length is %d" % len(bytesRep))
+    # packer.pack(bytesRep)
 
     print("Packed len: %s" % len(packer.bytes()))
     socket.send(packer.bytes())
