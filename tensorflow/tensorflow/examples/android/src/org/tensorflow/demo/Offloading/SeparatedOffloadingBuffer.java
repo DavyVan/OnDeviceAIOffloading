@@ -25,6 +25,7 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
     private Scheduler scheduler;
 
     private final int indexMultiplier = 10000;
+    private int insertCounter;      /** 2018.01.10: Used by quota applying. I should find this bug earlier! */
 
 
     public SeparatedOffloadingBuffer(int deviceNum) {
@@ -44,17 +45,28 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
         task.bufferIndex = nextSlots[currentBuffer] + currentBuffer * indexMultiplier;      // Use indexMultiplier to indicate buffer
         buffer.get(currentBuffer)[nextSlots[currentBuffer]] = task;
         nextSlots[currentBuffer] = (nextSlots[currentBuffer] + 1) % BUFFER_SIZE[currentBuffer];
+        insertCounter++;
         Log.i("INSERT", "New task-" + task.id + " inserted in buffer-" + currentBuffer);
 
         // maintain currentBuffer
         if (scheduler instanceof LCMScheduler) {
             LCMScheduler.SingleWindow currentBufferWindow = ((LCMScheduler) scheduler).getWindowByDeviceId(currentBuffer);
+            // BUG:
             // if current buffer content size can be divided by window size, seek next window's device id
-            if ((nextSlots[currentBuffer] + BUFFER_SIZE[currentBuffer] - heads[currentBuffer]) % BUFFER_SIZE[currentBuffer] % currentBufferWindow.size == 0) {
+//            if ((nextSlots[currentBuffer] + BUFFER_SIZE[currentBuffer] - heads[currentBuffer]) % BUFFER_SIZE[currentBuffer] % currentBufferWindow.size == 0) {
+//                ArrayList<LCMScheduler.SingleWindow> windows = ((LCMScheduler) scheduler).getCurrentWindows();
+//
+//                int currentBufferWindowIndex = windows.indexOf(currentBufferWindow);
+//                currentBuffer = windows.get((currentBufferWindowIndex + 1) % deviceNum).deviceId;
+//            }
+            // Bug fixed: don't use current buffer content size any more, instead, use a insertCounter
+            if (insertCounter >= currentBufferWindow.size) {
                 ArrayList<LCMScheduler.SingleWindow> windows = ((LCMScheduler) scheduler).getCurrentWindows();
 
                 int currentBufferWindowIndex = windows.indexOf(currentBufferWindow);
                 currentBuffer = windows.get((currentBufferWindowIndex + 1) % deviceNum).deviceId;
+
+                insertCounter = 0;
             }
         }
 
@@ -228,6 +240,8 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
             currentBuffer = 1;
         else
             currentBuffer = 0;
+
+        insertCounter = 0;
     }
 
     public void setScheduler(Scheduler scheduler) {

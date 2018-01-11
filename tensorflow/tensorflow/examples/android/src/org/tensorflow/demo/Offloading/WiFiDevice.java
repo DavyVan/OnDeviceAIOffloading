@@ -205,6 +205,7 @@ public class WiFiDevice extends DeviceAdapter {
             long t = delta_s - packEnd + packStart;
             if (t > 0)
                 Thread.sleep(t);
+//            Thread.sleep(100);
         }
         catch (IOException e) {
             Log.e("FQ", "IOException occurred when packing task!\n" + e.getMessage());

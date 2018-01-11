@@ -24,7 +24,7 @@ public final class Constant {
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.241";
+        public static final String SERVER_IP = "192.168.0.240";
         public static final int SERVER_PORT = 2333;
         public static final int SEND_DELAY_MS = 50;     /**< Also used to init delta_s (in devices) */
 
