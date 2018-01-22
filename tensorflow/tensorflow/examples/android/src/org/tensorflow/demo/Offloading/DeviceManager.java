@@ -6,7 +6,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import static org.tensorflow.demo.Offloading.Constant.Config.ONLY_REMOTE;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_LOCAL;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_MLSTATION;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_PC;
+import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP;
+import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP_MLSTATION;
 import static org.tensorflow.demo.Offloading.Constant.NO_DEVICE_AVAILABLE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
@@ -51,7 +55,7 @@ public class DeviceManager {
         // Scan all possible devices
         int errno;
         // 1. local
-        if (ONLY_REMOTE == 0) {
+        if (ENABLE_LOCAL == 1) {
             DeviceAdapter localDevice = new LocalDevice(this);
             errno = localDevice.init();
             if (errno == SUCCESS) {
@@ -62,15 +66,29 @@ public class DeviceManager {
                 Log.e("FQ", getErrorMessage(errno));
         }
 
-        // 2. Wi-Fi
-        DeviceAdapter wifiDevice = new WiFiDevice(this);
-        errno = wifiDevice.init();
-        if (errno == SUCCESS) {
-            devices.add(wifiDevice);
-            wifiDevice.id = devices.size() - 1;
+        // 2. PC
+        if (ENABLE_PC == 1) {
+            DeviceAdapter wifiDevice = new WiFiDevice(this, SERVER_IP, "PC");
+            errno = wifiDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(wifiDevice);
+                wifiDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
         }
-        else
-            Log.e("FQ", getErrorMessage(errno));
+
+        // 3. MLStation
+        if (ENABLE_MLSTATION == 1) {
+            DeviceAdapter wifiDevice = new WiFiDevice(this, SERVER_IP_MLSTATION, "MLStation");
+            errno = wifiDevice.init();
+            if (errno == SUCCESS) {
+                devices.add(wifiDevice);
+                wifiDevice.id = devices.size() - 1;
+            }
+            else
+                Log.e("FQ", getErrorMessage(errno));
+        }
 
         if (devices.size() == 0)
             return NO_DEVICE_AVAILABLE;

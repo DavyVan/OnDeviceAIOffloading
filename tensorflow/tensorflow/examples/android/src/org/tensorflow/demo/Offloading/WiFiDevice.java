@@ -38,6 +38,8 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 
 public class WiFiDevice extends DeviceAdapter {
 
+    private String ip;                      /**< Remote's IP address */
+    private String name;                    /**< Device's name */
     private SparseArray<Task> ibuffer;      /**< Reuse OffloadingBuffer as internal buffer */
     private Thread IThread;                 /**< Thread for network input */
     private HandlerThread OThread;          /**< Thread for network output */
@@ -61,6 +63,13 @@ public class WiFiDevice extends DeviceAdapter {
         this.deviceManager = deviceManager;
     }
 
+    public WiFiDevice(DeviceManager deviceManager, String ip, String name) {
+        super(true, true, name);
+        this.deviceManager = deviceManager;
+        this.ip = ip;
+        this.name = name;
+    }
+
     /**
      * \note    Last reviewed 2017.8.11 17:12
      */
@@ -70,7 +79,7 @@ public class WiFiDevice extends DeviceAdapter {
         ibuffer = new SparseArray<>();
 
         // Initialize output thread
-        OThread = new HandlerThread("WiFi-upload");
+        OThread = new HandlerThread(name + "-upload");
         OThread.start();
         OThreadHandler = new Handler(OThread.getLooper()) {
             @Override
@@ -85,12 +94,12 @@ public class WiFiDevice extends DeviceAdapter {
             @Override
             public void run() {
                 context = ZMQ.context(2);
-                Log.i("FQ", "Connecting to server...");
+                Log.i(name, "Connecting to server...");
                 requester = context.socket(ZMQ.DEALER);
                 requester.setSendTimeOut(-1);       // Block
                 requester.setIdentity("FQ".getBytes());
-                requester.connect("tcp://" + SERVER_IP + ":" + SERVER_PORT);
-                Log.i("FQ", "Server connected");
+                requester.connect("tcp://" + ip + ":" + SERVER_PORT);
+                Log.i(name, "Server connected");
 
                 // Start to fetch result
                 fetchResult(WiFiDevice.this.id);
@@ -208,11 +217,11 @@ public class WiFiDevice extends DeviceAdapter {
 //            Thread.sleep(100);
         }
         catch (IOException e) {
-            Log.e("FQ", "IOException occurred when packing task!\n" + e.getMessage());
+            Log.e(name, "IOException occurred when packing task!\n" + e.getMessage());
             return IO_EXCEPTION;
         }
         catch (InterruptedException e) {      // Regard to sleep()
-            Log.e("FQ", "Interrupted exception occurred when it wait for delta_s!\n" + e.getMessage());
+            Log.e(name, "Interrupted exception occurred when it wait for delta_s!\n" + e.getMessage());
             return INTERRUPTED_EXCEPTION;
         }
 
@@ -297,7 +306,7 @@ public class WiFiDevice extends DeviceAdapter {
                                     delta_s = 0;
                             }
                         }
-                        Log.i("SSB", String.format("Variance=%d Ds=%d stable_period=%d", variance, delta_s, stable_period_counter));
+                        Log.i(name + "SSB", String.format("Variance=%d Ds=%d stable_period=%d", variance, delta_s, stable_period_counter));
                     }
 
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
@@ -371,7 +380,7 @@ public class WiFiDevice extends DeviceAdapter {
                         ibuffer.delete((int) id);
                     }
                     catch (IOException e) {
-                        Log.e("FQ", "IOException occurred when unpacking task!\n" + e.getMessage());
+                        Log.e(name, "IOException occurred when unpacking task!\n" + e.getMessage());
                     }
                 }
             }
