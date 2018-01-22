@@ -19,15 +19,18 @@ public final class Constant {
         public static final int BUFFER_SIZE_LOCAL = 2;
         public static final int BUFFER_SIZE_REMOTE = 9;     // 9 in style; 20 in detect & classify
         public static final int BUFFER_SIZE_MLSTATION = 15;
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};      // both
-        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};       // Only remote
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL};    // Local Only
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE};   // 1R
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE};      // 1L+1R
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};    // 1L+2R
+        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};       // 2R
 
         // Profiler
         // 1-Exponential Smoothing
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.115";
+        public static final String SERVER_IP = "192.168.0.137";
         public static final String SERVER_IP_MLSTATION = "192.168.0.100";
         public static final int SERVER_PORT = 2333;
         public static final int SEND_DELAY_MS = 50;     /**< Also used to init delta_s (in devices) */
@@ -40,6 +43,9 @@ public final class Constant {
         public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
 
         // Smooth Send-Back
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1};    // Local Only
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};    // 1R
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8}; // 1L+1R
 //        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8, 12};     /**< {Local, PC, MLStation} */
         public static final int[] DEVICE_CONCURRENCY_NUMS = {8, 12};        // Only remote
         public static final int DELTA_E_REAL_AVG_NUM = 10;

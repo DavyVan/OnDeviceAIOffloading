@@ -61,14 +61,14 @@ public class SeparatedOffloadingBuffer extends OffloadingBuffer {
 //                currentBuffer = windows.get((currentBufferWindowIndex + 1) % deviceNum).deviceId;
 //            }
             // Bug fixed: don't use current buffer content size any more, instead, use a insertCounter
-            if (insertCounter >= currentBufferWindow.size) {
+//            if (insertCounter >= currentBufferWindow.size) {
                 ArrayList<LCMScheduler.SingleWindow> windows = ((LCMScheduler) scheduler).getCurrentWindows();
 
                 int currentBufferWindowIndex = windows.indexOf(currentBufferWindow);
                 currentBuffer = windows.get((currentBufferWindowIndex - 1 + deviceNum) % deviceNum).deviceId;
 
                 insertCounter = 0;
-            }
+//            }
         }
 
         return SUCCESS;

@@ -63,11 +63,11 @@ public class LocalDevice extends DeviceAdapter {
             @Override
             public void run() {
 
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(300);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
                 // record task
                 currentTask = task;
