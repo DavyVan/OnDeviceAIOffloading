@@ -12,50 +12,44 @@ import android.util.Log;
 public final class Constant {
 
     public static class Config {
-        // Neurosurgeon only
-        public static final int FULLY_BOOST = 0;    // 0: both, 1: local, 2: wifi
+        public static final int ENABLE_LOCAL = 0;        // 1: True, 0: False
+        public static final int ENABLE_PC = 1;
+        public static final int ENABLE_MLSTATION = 1;
 
-        public static final int BUFFER_SIZE_LOCAL = 3;
-        public static final int BUFFER_SIZE_WIFI = 9;
-        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_WIFI};     // Both Local & WiFi
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL};                       // Only local
-//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_WIFI};                        // Only Wifi
+        public static final int BUFFER_SIZE_LOCAL = 2;
+        public static final int BUFFER_SIZE_REMOTE = 9;     // 9 in style; 20 in detect & classify
+        public static final int BUFFER_SIZE_MLSTATION = 15;
+//        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_LOCAL, BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};      // both
+        public static final int[] BUFFER_SIZE = {BUFFER_SIZE_REMOTE, BUFFER_SIZE_MLSTATION};       // Only remote
 
         // Profiler
         // 1-Exponential Smoothing
         public static final float SMOOTHING_FACTOR = 0.5f;      /**< factor on old data */
 
         // Network
-        public static final String SERVER_IP = "192.168.0.122";
+        public static final String SERVER_IP = "192.168.0.115";
+        public static final String SERVER_IP_MLSTATION = "192.168.0.100";
         public static final int SERVER_PORT = 2333;
-        public static final int SEND_DELAY_MS = 50;
+        public static final int SEND_DELAY_MS = 50;     /**< Also used to init delta_s (in devices) */
 
         // Scheduler
         public static final int INIT_SAMPLE_INTERVAL = 0;
-        public static final boolean ENABLE_FIXED_SAMPLE_RATE = true;
-        public static final int[] INIT_WINS = {1, 1};               /**< {Local, WiFi} */
+        public static final boolean ENABLE_FIXED_SAMPLE_RATE = false;
+        public static final int[] INIT_WINS = {1, 1, 1};               /**< {Local, PC, MLStation} */
         public static final String BUFFER_TYPE = "Separated";       /**< {Separated|Single} */
         public static final String BUFFER_CLEAN_TYPE = "Intersection";      /**< {All|Intersection} */
 
         // Smooth Send-Back
-//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1};        // Only local
-//        public static final int[] DEVICE_CONCURRENCY_NUMS = {8};        // Only wifi
-        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8};     /**< {Local, WiFi} */
+//        public static final int[] DEVICE_CONCURRENCY_NUMS = {1, 8, 12};     /**< {Local, PC, MLStation} */
+        public static final int[] DEVICE_CONCURRENCY_NUMS = {8, 12};        // Only remote
         public static final int DELTA_E_REAL_AVG_NUM = 10;
         public static final float DELTA_E_REAL_AVG_ALPHA = 1.0f / DELTA_E_REAL_AVG_NUM;
 //        public static final float DELTA_S_CALIBRATION_FACTOR = 0.1f;      // deprecated in design v3.0
         public static final int DELTA_S_UPDATE_INTERVAL = 8;
         public static final int DELTA_S_CLIMBING_STEP = 50;         /**< in milliseconds */
         public static final int DELTA_S_SHRINKING_STEP = 10;        /**< in milliseconds */
-        public static final int DELTA_E_REAL_VARIANCE_THRESHOLD = 70000;
+        public static final int DELTA_E_REAL_VARIANCE_THRESHOLD = 1000000;
         public static final int KEEP_STABLE_ROUND = 1;
-        /**
-         * SEND_DELAY_MS=250
-         * AVG_NUM=50
-         * lr=0.01
-         * with buffer cleaning
-         * Very good!
-         */
     }
 
     // Error
@@ -129,15 +123,6 @@ public final class Constant {
             for (int i = 1; i < input.length; i++)
                 t = Math.min(t, input[i]);
             return t;
-        }
-
-        public static void delay(long time) {
-            try {
-                Thread.sleep(time);
-            }
-            catch (InterruptedException e) {
-                Log.e("FQ", e.getMessage());
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
 import msgpack
+from struct import pack, unpack
 
 def unpackReq(request):
     unpacker = msgpack.Unpacker()
@@ -10,7 +11,12 @@ def unpackReq(request):
     modelName = unpacker.unpack()
     bufferIndex = unpacker.unpack()
     inputNodes = unpacker.unpack()
-    inputValues = unpacker.unpack()
+    # inputValues = unpacker.unpack()       # if pack as array
+    inputValues_t = unpacker.unpack()       # if pack as binary. inputValues_t should be a list<byte[]>
+    inputValues = list()
+    for values in inputValues_t:
+        inputValues.append(unpack(">%df" % (len(values)/4), values))
+
     dims = unpacker.unpack()
     outputNodes = unpacker.unpack()
     odims = unpacker.unpack()
@@ -26,12 +32,12 @@ def packRep(taskId, appName, modelName, bufferIndex, outputNodes, outputs, odims
     packer.pack(bufferIndex)
 
     packer.pack(outputNodes)
-    # packer.pack_map_header(len(outputNodes))
-    # for key in outputs:
-    #     packer.pack(key)
-    #     print(len(outputs[key]))
-    #     packer.pack(outputs[key])
-    packer.pack(outputs)
+    # packer.pack(outputs)        # if pack as array
+    packer.pack_map_header(len(outputs))    # if pack as binary
+    for key, value in outputs.items():
+        packer.pack(key)
+        packer.pack(pack(">%df" % (len(value)), *value))
+
     packer.pack(odims)
 
     packer.pack(int(computingCost))

@@ -6,7 +6,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import static org.tensorflow.demo.Offloading.Constant.Config.FULLY_BOOST;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_LOCAL;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_MLSTATION;
+import static org.tensorflow.demo.Offloading.Constant.Config.ENABLE_PC;
+import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP;
+import static org.tensorflow.demo.Offloading.Constant.Config.SERVER_IP_MLSTATION;
 import static org.tensorflow.demo.Offloading.Constant.NO_DEVICE_AVAILABLE;
 import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 import static org.tensorflow.demo.Offloading.Constant.getErrorMessage;
@@ -49,19 +53,22 @@ public class DeviceManager {
      */
     public int init() {
         // Scan all possible devices
-        if (FULLY_BOOST == 0) {     // both
-            // 1. local
+        int errno;
+        // 1. local
+        if (ENABLE_LOCAL == 1) {
             DeviceAdapter localDevice = new LocalDevice(this);
-            int errno = localDevice.init();
+            errno = localDevice.init();
             if (errno == SUCCESS) {
                 devices.add(localDevice);
                 localDevice.id = devices.size() - 1;
             }
             else
                 Log.e("FQ", getErrorMessage(errno));
+        }
 
-            // 2. Wi-Fi
-            DeviceAdapter wifiDevice = new WiFiDevice(this);
+        // 2. PC
+        if (ENABLE_PC == 1) {
+            DeviceAdapter wifiDevice = new WiFiDevice(this, SERVER_IP, "PC");
             errno = wifiDevice.init();
             if (errno == SUCCESS) {
                 devices.add(wifiDevice);
@@ -70,21 +77,11 @@ public class DeviceManager {
             else
                 Log.e("FQ", getErrorMessage(errno));
         }
-        else if (FULLY_BOOST == 1){     // local
-            // 1. local
-            DeviceAdapter localDevice = new LocalDevice(this);
-            int errno = localDevice.init();
-            if (errno == SUCCESS) {
-                devices.add(localDevice);
-                localDevice.id = devices.size() - 1;
-            }
-            else
-                Log.e("FQ", getErrorMessage(errno));
-        }
-        else if (FULLY_BOOST == 2) {        // wifi
-            // 2. Wi-Fi
-            DeviceAdapter wifiDevice = new WiFiDevice(this);
-            int errno = wifiDevice.init();
+
+        // 3. MLStation
+        if (ENABLE_MLSTATION == 1) {
+            DeviceAdapter wifiDevice = new WiFiDevice(this, SERVER_IP_MLSTATION, "MLStation");
+            errno = wifiDevice.init();
             if (errno == SUCCESS) {
                 devices.add(wifiDevice);
                 wifiDevice.id = devices.size() - 1;
@@ -92,25 +89,6 @@ public class DeviceManager {
             else
                 Log.e("FQ", getErrorMessage(errno));
         }
-//        // 1. local
-//        DeviceAdapter localDevice = new LocalDevice(this);
-//        int errno = localDevice.init();
-//        if (errno == SUCCESS) {
-//            devices.add(localDevice);
-//            localDevice.id = devices.size() - 1;
-//        }
-//        else
-//            Log.e("FQ", getErrorMessage(errno));
-//
-//        // 2. Wi-Fi
-//        DeviceAdapter wifiDevice = new WiFiDevice(this);
-//        errno = wifiDevice.init();
-//        if (errno == SUCCESS) {
-//            devices.add(wifiDevice);
-//            wifiDevice.id = devices.size() - 1;
-//        }
-//        else
-//            Log.e("FQ", getErrorMessage(errno));
 
         if (devices.size() == 0)
             return NO_DEVICE_AVAILABLE;

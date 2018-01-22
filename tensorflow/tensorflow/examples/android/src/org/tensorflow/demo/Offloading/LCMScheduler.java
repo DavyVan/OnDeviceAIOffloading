@@ -27,6 +27,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
     private OffloadingBuffer offloadingBuffer;          /**< A reference to a OffloadingBuffer instance */
     private ArrayList<SingleWindow> currentWindows;     /**< A array storing windows size*/
 
+    private int delta_display;
     private int sampleInterval;                         /**< in ms */
     private long lastSampleTime;                        /**< As its name */
 
@@ -75,6 +76,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         });
 
         // Dynamic sampling - set sample interval as zero (no sampling)
+        delta_display = INIT_SAMPLE_INTERVAL;
         sampleInterval = INIT_SAMPLE_INTERVAL;
         lastSampleTime = System.currentTimeMillis();
 
@@ -101,6 +103,14 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         // K_i
         for (int i = 0; i < n; i++)
             temp[i] = lcm / temp[i];
+
+        // 2018.1.6: Calculate delta_display
+        // sum of K'_i
+        double sum = 0;
+        for (int i = 0; i < temp.length; i++)
+            sum += temp[i];
+        // delta_display
+        delta_display = (int) Math.round(lcm / sum);
 
         // K'_i
         double min = Constant.Tools.min(temp);
@@ -170,7 +180,7 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
         Task task = null;
 
         if (offloadingBuffer instanceof SeparatedOffloadingBuffer) {        // SeparatedOffloadingBuffer
-            size = DEVICE_CONCURRENCY_NUMS[deviceId];
+            size = DEVICE_CONCURRENCY_NUMS[deviceId];       // 2018.1.4: The "size" is a borrowed name
 
             // From head, iterate to find next task
             int doingTaskNum = 0;
@@ -319,15 +329,16 @@ public class LCMScheduler implements Scheduler, DynamicSampling {
      */
     @Override
     public void calcSamplingRate(String modelName) {        // the modelName is useless now
-        double v = 0;
-        StreamInfo streamInfo = profiler.fetchInfoByModel(modelName);
-        int n = streamInfo.costs.size();
-        for (int i = 0; i < n; i++) {
-            v += 1.0 / (double) streamInfo.costs.get(i).schedulingCost;     // the formula is simplified
-        }
-        v = 1.0 / v;
-        if ((int) v != 0)       // if 0, don't update exist value
-            sampleInterval = (int) v;       // ground
+//        double v = 0;
+//        StreamInfo streamInfo = profiler.fetchInfoByModel(modelName);
+//        int n = streamInfo.costs.size();
+//        for (int i = 0; i < n; i++) {
+//            v += 1.0 / (double) streamInfo.costs.get(i).schedulingCost;     // the formula is simplified
+//        }
+//        v = 1.0 / v;
+//        if ((int) v != 0)       // if 0, don't update exist value
+//            sampleInterval = (int) v;       // ground
+        sampleInterval = delta_display / 2;
         Log.i("SAMPRATE", "Calculated sample interval: " + sampleInterval);
     }
 

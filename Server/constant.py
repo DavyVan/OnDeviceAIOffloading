@@ -27,5 +27,5 @@ DESIRED_SIZE = 256
 ENABLE_SINGLE_SESSION = True        # Use a single Sesssion for all threads, or one Session per thread
 ENABLE_PLOT = False     # Always False, because mProcess_tf can run indenpently
 ENABLE_SPAN_TIME_PLOT = False       # Always False
-ENABLE_THREAD_LIMITATION = True
+ENABLE_THREAD_LIMITATION = False
 ENABLE_TOTAL_TIME_PLOT = True

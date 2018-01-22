@@ -13,6 +13,8 @@ import org.msgpack.core.MessageUnpacker;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ import static org.tensorflow.demo.Offloading.Constant.SUCCESS;
 
 public class WiFiDevice extends DeviceAdapter {
 
+    private String ip;                      /**< Remote's IP address */
+    private String name;                    /**< Device's name */
     private SparseArray<Task> ibuffer;      /**< Reuse OffloadingBuffer as internal buffer */
     private Thread IThread;                 /**< Thread for network input */
     private HandlerThread OThread;          /**< Thread for network output */
@@ -59,6 +63,13 @@ public class WiFiDevice extends DeviceAdapter {
         this.deviceManager = deviceManager;
     }
 
+    public WiFiDevice(DeviceManager deviceManager, String ip, String name) {
+        super(true, true, name);
+        this.deviceManager = deviceManager;
+        this.ip = ip;
+        this.name = name;
+    }
+
     /**
      * \note    Last reviewed 2017.8.11 17:12
      */
@@ -68,7 +79,7 @@ public class WiFiDevice extends DeviceAdapter {
         ibuffer = new SparseArray<>();
 
         // Initialize output thread
-        OThread = new HandlerThread("WiFi-upload");
+        OThread = new HandlerThread(name + "-upload");
         OThread.start();
         OThreadHandler = new Handler(OThread.getLooper()) {
             @Override
@@ -83,12 +94,12 @@ public class WiFiDevice extends DeviceAdapter {
             @Override
             public void run() {
                 context = ZMQ.context(2);
-                Log.i("FQ", "Connecting to server...");
+                Log.i(name, "Connecting to server...");
                 requester = context.socket(ZMQ.DEALER);
                 requester.setSendTimeOut(-1);       // Block
                 requester.setIdentity("FQ".getBytes());
-                requester.connect("tcp://" + SERVER_IP + ":" + SERVER_PORT);
-                Log.i("FQ", "Server connected");
+                requester.connect("tcp://" + ip + ":" + SERVER_PORT);
+                Log.i(name, "Server connected");
 
                 // Start to fetch result
                 fetchResult(WiFiDevice.this.id);
@@ -144,11 +155,21 @@ public class WiFiDevice extends DeviceAdapter {
             }
             packer.packArrayHeader(task.inputValues.size());    // Task::inputValues
             for (float[] x : task.inputValues) {
-                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
-                for (float f : x) {
-                    packer.packFloat(f);
-                }
+                // Don't use msgpack to serialize large float array any more for performance consideration
+//                packer.packArrayHeader(x.length);       // should calculate dims to length for accuracy
+//                for (float f : x) {
+//                    packer.packFloat(f);
+//                }
+                // pack as binary
+                int byteNum = x.length * 4;     // 4 pytes per float
+                ByteBuffer byteBuffer = ByteBuffer.allocate(byteNum);
+                FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+                floatBuffer.put(x);
+
+                packer.packBinaryHeader(byteNum);
+                packer.writePayload(byteBuffer.array());
             }
+
             packer.packArrayHeader(task.dims.size());           // Task::dims
             for (long[] x : task.dims) {
                 packer.packArrayHeader(x.length);
@@ -190,14 +211,17 @@ public class WiFiDevice extends DeviceAdapter {
             packer.close();
 
             // Wait for delta_s
-            Thread.sleep(delta_s + SEND_DELAY_MS);
+            long t = delta_s - packEnd + packStart;
+            if (t > 0)
+                Thread.sleep(t);
+//            Thread.sleep(100);
         }
         catch (IOException e) {
-            Log.e("FQ", "IOException occurred when packing task!\n" + e.getMessage());
+            Log.e(name, "IOException occurred when packing task!\n" + e.getMessage());
             return IO_EXCEPTION;
         }
-        catch (InterruptedException e) {
-            Log.e("FQ", "Interrupted exception occurred when it wait for delta_s!\n" + e.getMessage());
+        catch (InterruptedException e) {      // Regard to sleep()
+            Log.e(name, "Interrupted exception occurred when it wait for delta_s!\n" + e.getMessage());
             return INTERRUPTED_EXCEPTION;
         }
 
@@ -233,31 +257,6 @@ public class WiFiDevice extends DeviceAdapter {
                     byte[] reply = requester.recv(0);
                     if (reply.length == 0)
                         continue;
-
-                    // update delta_e_real | Design V2.0
-//                    delta_e_real_counter_avg++;
-//                    delta_e_real_counter_update++;
-//                    long currentTime = System.currentTimeMillis();
-//                    int t = (int) (currentTime - lastResultTime);
-//                    lastResultTime = currentTime;
-//                    if (delta_e_real_counter_avg < DELTA_E_REAL_AVG_NUM) {
-//                        float smooth_factor = 1.0f / delta_e_real_counter_avg;
-//                        delta_e_real = (int) (delta_e_real * (1 - smooth_factor) + smooth_factor * t);
-//                    }
-//                    else
-//                        delta_e_real = (int) (delta_e_real * 0.98f + 0.02f * t);
-//                    Log.i("FQ", String.format("Measured delta_e=%d, Calculated delta_e_real=%d", t, delta_e_real));
-//
-//                    // Every DELTA_S_UPDATE_INTERVAL, update delta_s
-//                    if (delta_e_real_counter_update % DELTA_S_UPDATE_INTERVAL == 0) {
-//                        // Calibrate
-//                        t = (int) (delta_s - DELTA_S_CALIBRATION_FACTOR * (delta_e_real - delta_e_target));
-//                        if (t < 0)
-//                            Log.i("FQ", "Ds -0");
-//                        else
-//                            delta_s = t;
-//                        Log.i("FQ", String.format("Ds=%d Dreal=%d Dtarget=%d", delta_s, delta_e_real, delta_e_target));
-//                    }
 
                     // update delta_e_real & delta_e_real^2 | Design V3.0
                     delta_e_real_counter_avg++;
@@ -307,7 +306,7 @@ public class WiFiDevice extends DeviceAdapter {
                                     delta_s = 0;
                             }
                         }
-                        Log.i("SSB", String.format("Variance=%d, Ds=%d, stable_period=%d", variance, delta_s, stable_period_counter));
+                        Log.i(name + "SSB", String.format("Variance=%d Ds=%d stable_period=%d", variance, delta_s, stable_period_counter));
                     }
 
                     MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(reply);
@@ -327,15 +326,25 @@ public class WiFiDevice extends DeviceAdapter {
                         String[] outputNodes = new String[numOutputNodes];
                         for (int i = 0; i < numOutputNodes; i++)
                             outputNodes[i] = unpacker.unpackString().split(":")[0];
+
                         int numOutputs = unpacker.unpackMapHeader();        // Task::outputs
                         Map<String, float[]> outputs = new HashMap<>();
                         for (int i = 0; i < numOutputs; i++) {
                             String key = unpacker.unpackString().split(":")[0];
-                            int n = unpacker.unpackArrayHeader();
-                            float[] value = new float[n];
-                            for (int j = 0; j < n; j++) {
-                                value[j] = unpacker.unpackFloat();
-                            }
+                            // if pack as array
+//                            int n = unpacker.unpackArrayHeader();
+//                            float[] value = new float[n];
+//                            for (int j = 0; j < n; j++) {
+//                                value[j] = unpacker.unpackFloat();
+//                            }
+
+                            // if pack as binary
+                            int n = unpacker.unpackBinaryHeader();
+                            float[] value = new float[n/4];
+                            byte[] valueByte = unpacker.readPayload(n);
+                            ByteBuffer valueBuffer = ByteBuffer.wrap(valueByte);
+                            valueBuffer.asFloatBuffer().get(value);
+
                             outputs.put(key, value);
                         }
                         int numOdims = unpacker.unpackMapHeader();          // Task::odims
@@ -356,6 +365,7 @@ public class WiFiDevice extends DeviceAdapter {
 
                         replyTask.cost.computing = unpacker.unpackInt();
                         replyTask.cost.downloading = unpacker.unpackInt();
+                        replyTask.cost.delta_s = delta_s;
 
                         // Callback - onResultHandler
                         Message onResultMsg = Message.obtain();
@@ -370,7 +380,7 @@ public class WiFiDevice extends DeviceAdapter {
                         ibuffer.delete((int) id);
                     }
                     catch (IOException e) {
-                        Log.e("FQ", "IOException occurred when unpacking task!\n" + e.getMessage());
+                        Log.e(name, "IOException occurred when unpacking task!\n" + e.getMessage());
                     }
                 }
             }

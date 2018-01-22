@@ -69,8 +69,9 @@ public class OffloadingSystem implements FrontInterface {
 
         // Insert into buffer
         if (offloadingBuffer.insert(task, false) == BUFFER_FULL) {      // buffer is full, trigger the dynamic sampling
-            if (!ENABLE_FIXED_SAMPLE_RATE)
-                dynamicSampler.calcSamplingRate(modelName);
+            // 2018.1.7: Don't do such calculation here. It doesn't make much sense.
+//            if (!ENABLE_FIXED_SAMPLE_RATE)
+//                dynamicSampler.calcSamplingRate(modelName);
 
             // clean all untouched tasks in buffer
 //            Log.i("BUFFER", "Buffer status before cleanUntouchedTask()");

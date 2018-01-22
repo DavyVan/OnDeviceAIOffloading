@@ -63,6 +63,12 @@ public class LocalDevice extends DeviceAdapter {
             @Override
             public void run() {
 
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 // record task
                 currentTask = task;
 //                Log.i("FQ", "currentTask is assigned at thread " + Thread.currentThread().toString());
@@ -84,6 +90,7 @@ public class LocalDevice extends DeviceAdapter {
                 tf.run(currentTask.outputNodes, true);
                 long end = System.currentTimeMillis();
                 currentTask.cost.computing = (int) (end - start);
+                currentTask.cost.delta_s = currentTask.cost.computing;
 
 //                Log.i("FQ", "This uploadAndRun():post, thread " + Thread.currentThread().toString());
                 fetchResult(deviceId);
