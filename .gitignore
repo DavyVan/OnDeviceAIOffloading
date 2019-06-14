@@ -99,3 +99,14 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# vscode
+.vscode
+
+# tensorflow demo assets
+assets
+*.pb
+*.meta
+*.index
+save-*
+tfb_log
